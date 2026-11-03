@@ -1,14 +1,17 @@
+import { useAtomValue } from "jotai";
 import type { ExperimentalMessageMetadataProps } from "@get-bb/plugin-sdk";
 import { usePointerCoarse } from "@bb/shared-ui/hooks/use-pointer-coarse";
 import {
   collectPluginAppRegistrations,
   definePluginApp,
 } from "@/lib/plugin-app-definition";
+import { showTimelineTimestampsAtom } from "@/lib/ui-preferences/timeline-preferences";
 import { formatShortMessageTime, MessageTime } from "./message-time.js";
 
 function InlineMessageTime({ message }: ExperimentalMessageMetadataProps) {
   const isPointerCoarse = usePointerCoarse();
-  if (isPointerCoarse) return null;
+  const showTimestamps = useAtomValue(showTimelineTimestampsAtom);
+  if (isPointerCoarse || !showTimestamps) return null;
   return (
     <MessageTime
       timestamp={message.createdAt}

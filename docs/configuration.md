@@ -852,6 +852,8 @@ list|get|set|reset` or `sdk.system.uiPreferences` (see
 | `sidebar.footerOrder`         | Footer action order                                                                                                                                       |
 | `sidebar.hiddenFooterItems`   | Footer actions moved into More                                                                                                                            |
 | `threadContextCard.pinned`    | `true` (default) keeps a thread pane's thread context card open beside the transcript when the pane is wide enough; `false` opens it only from the header |
+| `timeline.showTimestamps`     | `true` (default) shows each timeline message's time beside its actions; `false` hides it                                                                  |
+| `timeline.density`            | `comfy` (default) keeps normal spacing between timeline messages; `compact` tightens it                                                                   |
 | `infoPanel.collapsedSections` | Collapsed thread Info panel sections (`commits`, `uncommittedChanges`, `childThreads`, `forks`, `threadStorage`, or `<pluginId>/<sectionId>`)             |
 
 A legacy `__builtin__` thread list selection resolves to the bundled plugin.

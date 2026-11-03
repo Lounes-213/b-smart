@@ -13,6 +13,17 @@ import { useIsCompactViewport } from "@bb/shared-ui/hooks/use-compact-viewport";
 import { useThreadActions } from "@/components/thread/ThreadActionsProvider";
 import { useRouteState } from "@/hooks/useRouteState";
 import { copyToClipboardWithToast } from "@/lib/clipboard";
+import { saveFile } from "@/lib/save-file";
+import {
+  buildThreadExportFileName,
+  buildThreadJsonExport,
+  buildThreadMarkdownExport,
+  collectThreadExportMessages,
+  isThreadExportFormat,
+  loadAllThreadTimelineRows,
+  threadExportContentType,
+  type ThreadExportFormat,
+} from "@/lib/thread-export";
 import { appToast } from "@/components/ui/app-toast";
 import { showMutationErrorToast } from "@/lib/mutation-errors";
 import { resolveThread } from "@/lib/cached-thread";
@@ -268,6 +279,79 @@ export const CORE_THREAD_ACTIONS: readonly PluginThreadActionRegistration<unknow
             successMessage: "Thread link copied",
             errorMessage: "Failed to copy thread link",
           }).then(() => undefined),
+      }),
+    }),
+    coreThreadAction({
+      id: "export",
+      group: GROUPS.open,
+      order: 25,
+      title: "Export thread",
+      icon: "Download",
+      item: ({ thread, sdk }) => ({
+        label: "Export thread",
+        icon: "Download",
+        choices: {
+          heading: "Export thread",
+          items: [
+            { id: "markdown", label: "Markdown (.md)" },
+            { id: "json", label: "JSON (.json)" },
+          ],
+        },
+        run: async ({ value }) => {
+          const format: ThreadExportFormat =
+            value !== undefined && isThreadExportFormat(value)
+              ? value
+              : "markdown";
+          try {
+            const [detail, rows] = await Promise.all([
+              sdk.threads.get({ threadId: thread.id }),
+              loadAllThreadTimelineRows(thread.id, async (args) => {
+                const page = await sdk.threads.timeline({
+                  threadId: args.threadId,
+                  ...(args.beforeAnchorSeq === undefined
+                    ? {}
+                    : { beforeAnchorSeq: args.beforeAnchorSeq }),
+                  ...(args.beforeAnchorId === undefined
+                    ? {}
+                    : { beforeAnchorId: args.beforeAnchorId }),
+                });
+                return {
+                  rows: page.rows,
+                  olderCursor: page.timelinePage.olderCursor,
+                };
+              }),
+            ]);
+            const title = detail.title ?? "Untitled thread";
+            const source = {
+              threadId: thread.id,
+              title,
+              messages: collectThreadExportMessages(rows),
+              exportedAt: new Date(),
+            };
+            const content =
+              format === "json"
+                ? buildThreadJsonExport(source)
+                : buildThreadMarkdownExport(source);
+            const outcome = await saveFile({
+              fileName: buildThreadExportFileName(title, format),
+              blob: new Blob([content], {
+                type: threadExportContentType(format),
+              }),
+            });
+            if (outcome === "started") {
+              appToast.success(
+                format === "json"
+                  ? "Thread exported as JSON"
+                  : "Thread exported as Markdown",
+              );
+            }
+          } catch (error) {
+            showMutationErrorToast({
+              error,
+              fallbackMessage: "Failed to export thread.",
+            });
+          }
+        },
       }),
     }),
     coreThreadAction({

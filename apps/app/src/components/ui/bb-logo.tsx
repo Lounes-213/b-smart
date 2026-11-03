@@ -7,7 +7,7 @@ export function BbLogo({ className = "size-4" }: { className?: string }) {
       src={bbLogoUrl}
       alt=""
       aria-hidden="true"
-      className={cn(className, "object-contain dark:invert")}
+      className={cn(className, "object-contain dark:invert dark:hue-rotate-180")}
     />
   );
 }

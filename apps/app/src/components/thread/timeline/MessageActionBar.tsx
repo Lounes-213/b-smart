@@ -9,7 +9,9 @@ import { CopyButton } from "../../ui/copy-button.js";
 import { Icon } from "@bb/shared-ui/icon";
 import { useIsCompactViewport } from "@bb/shared-ui/hooks/use-compact-viewport";
 import { usePointerCoarse } from "@bb/shared-ui/hooks/use-pointer-coarse";
+import { useAtomValue } from "jotai";
 import { copyToClipboardWithToast } from "@/lib/clipboard";
+import { showTimelineTimestampsAtom } from "@/lib/ui-preferences/timeline-preferences";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -278,6 +280,8 @@ function MessageActionMenuItems({
 }
 
 function MessageTimestampFooter({ timestamp }: { timestamp: number }) {
+  const showTimestamps = useAtomValue(showTimelineTimestampsAtom);
+  if (!showTimestamps) return null;
   return (
     <div
       className="mt-1 border-t border-border px-2 pt-2 pb-1 text-xs text-subtle-foreground"

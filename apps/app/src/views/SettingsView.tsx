@@ -59,6 +59,7 @@ import { SidebarThreadListSetting } from "@/components/settings/SidebarThreadLis
 import { SidebarNavigationProviderSetting } from "@/components/settings/SidebarNavigationProviderSetting";
 import { SidebarFooterSettings } from "@/components/settings/SidebarFooterSettings";
 import { SplitDimmingSetting } from "@/components/settings/SplitDimmingSetting";
+import { TimelineDisplaySettings } from "@/components/settings/TimelineDisplaySettings";
 import { useSettingsNavState } from "@/components/settings/settings-nav";
 import { useRevealSettingsSearchTarget } from "@/components/settings/useRevealSettingsSearchTarget";
 import { PluginsOverview } from "@/components/plugin/PluginsOverview";
@@ -851,6 +852,7 @@ export function AppearanceSettingsSection({
           <SidebarNavigationProviderSetting />
           <SidebarThreadListSetting />
           <CodeRendererSettings />
+          <TimelineDisplaySettings />
           <SidebarFooterSettings />
         </div>
       </SettingsSection>

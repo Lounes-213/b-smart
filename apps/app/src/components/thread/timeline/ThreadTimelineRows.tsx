@@ -12,6 +12,8 @@ import {
 } from "react";
 import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import { useComposedRefs } from "@radix-ui/react-compose-refs";
+import { useAtomValue } from "jotai";
+import { timelineDensityAtom, type TimelineDensity } from "@/lib/ui-preferences/timeline-preferences";
 import { TimelineImageGallery } from "./TimelineImageGallery";
 import type { PromptInput, ThreadRuntimeDisplayStatus } from "@bb/domain";
 import type {
@@ -619,13 +621,27 @@ function timelineRowHorizontalPadding(
 
 function timelineRowsListGapClassName(
   spacing: TimelineRowsListSpacing,
+  density: TimelineDensity,
 ): string {
   switch (spacing) {
     case "top-level":
     case "nested":
-      return "gap-2";
+      return density === "compact" ? "gap-1" : "gap-2";
     case "bundle":
       return "gap-0";
+  }
+}
+
+function timelineRowsListGapPixels(
+  spacing: TimelineRowsListSpacing,
+  density: TimelineDensity,
+): number {
+  switch (spacing) {
+    case "top-level":
+    case "nested":
+      return density === "compact" ? 4 : 8;
+    case "bundle":
+      return 0;
   }
 }
 
@@ -2090,9 +2106,11 @@ function TimelineRowItemWrapper({
 function estimateTimelineWindowedRowHeight(
   row: ThreadTimelineViewRow,
   spacing: TimelineRowsListSpacing,
+  density: TimelineDensity,
 ): number {
   if (row.kind !== "conversation") {
-    return spacing === "top-level" ? 20 : spacing === "bundle" ? 24 : 28;
+    const height = spacing === "top-level" ? 20 : spacing === "bundle" ? 24 : 28;
+    return density === "compact" ? height - 4 : height;
   }
   const charsPerLine =
     spacing === "top-level" ? (row.role === "user" ? 76 : 95) : 64;
@@ -2118,6 +2136,7 @@ function TimelineRowsList({
   unreadDividerAutoScroll,
   unreadDividerPlacement,
 }: TimelineRowsListProps) {
+  const density = useAtomValue(timelineDensityAtom);
   const { threadId } = useTimelineRendererStaticContext();
   const bottomAnchor = useBottomAnchoredScroll();
   const scrollRestore = useContext(TimelineScrollRestoreContext);
@@ -2201,7 +2220,7 @@ function TimelineRowsList({
           ref={isTopLevelList ? messageColumnWidthSourceRef : undefined}
           className={cn(
             "flex min-w-0 flex-col [&_button:not(:disabled)]:cursor-pointer",
-            timelineRowsListGapClassName(spacing),
+            timelineRowsListGapClassName(spacing, density),
             className,
           )}
           data-timeline-row-list={spacing}
@@ -2213,10 +2232,10 @@ function TimelineRowsList({
             estimateItemHeight={(index) => {
               const item = items[index];
               return item?.kind === "row"
-                ? estimateTimelineWindowedRowHeight(item.row, spacing)
+                ? estimateTimelineWindowedRowHeight(item.row, spacing, density)
                 : 28;
             }}
-            gap={spacing === "bundle" ? 0 : 8}
+            gap={timelineRowsListGapPixels(spacing, density)}
             initialWindowAnchor={
               isTopLevelList && detailScrollRoot === null ? scrollRestore : null
             }

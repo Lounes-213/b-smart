@@ -50,6 +50,8 @@ export const UI_PREFERENCE_KEYS = [
   "sidebar.navigationProvider",
   "sidebar.threadListProvider",
   "composer.provider",
+  "timeline.showTimestamps",
+  "timeline.density",
   "infoPanel.collapsedSections",
   "threadContextCard.pinned",
 ] as const;
@@ -155,6 +157,16 @@ export const uiPreferenceDefinitions = {
     uiPreferenceStringSchema,
     "__automatic__",
     "Plugin that draws the composer's input box: a plugin key such as bb--composer/composer, or __automatic__ for the first composer from a plugin you installed, then the bundled Composer plugin. With no composer plugin enabled, no composer is shown.",
+  ),
+  "timeline.showTimestamps": defineUiPreference(
+    z.boolean(),
+    true,
+    "Whether each message in a thread's timeline shows its time beside the message actions.",
+  ),
+  "timeline.density": defineUiPreference(
+    z.enum(["compact", "comfy"]),
+    "comfy",
+    "How tightly messages stack in a thread's timeline: compact trims the vertical gaps between rows, comfy keeps BB's default spacing.",
   ),
   "threadContextCard.pinned": defineUiPreference(
     z.boolean(),

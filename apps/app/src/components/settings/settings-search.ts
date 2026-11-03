@@ -175,6 +175,14 @@ export const SETTINGS_SEARCH_INDEX: Record<
         when: "composers",
       },
       {
+        title: "Message timestamps",
+        keywords: ["time", "date", "timeline", "messages", "clock"],
+      },
+      {
+        title: "Message spacing",
+        keywords: ["density", "compact", "comfy", "timeline", "gap"],
+      },
+      {
         title: "Sidebar footer",
         keywords: ["reorder", "buttons", "navigation"],
       },

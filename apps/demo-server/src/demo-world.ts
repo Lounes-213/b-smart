@@ -186,6 +186,8 @@ function createUiPreferences(): UiPreferenceEntries {
       "sidebar.threadListProvider",
     ),
     "composer.provider": uiPreferenceEntry("composer.provider"),
+    "timeline.showTimestamps": uiPreferenceEntry("timeline.showTimestamps"),
+    "timeline.density": uiPreferenceEntry("timeline.density"),
     "infoPanel.collapsedSections": uiPreferenceEntry(
       "infoPanel.collapsedSections",
     ),

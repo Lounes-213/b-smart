@@ -1,50 +1,46 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/e40bda56-54a4-47f8-a417-6bbadf2e5b40">
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/4d9d02fb-c179-449b-a38a-041955143232">
-    <img alt="bb" src="https://github.com/user-attachments/assets/4d9d02fb-c179-449b-a38a-041955143232" width="128">
-  </picture>
+  <img alt="b smart" src="assets/bb-logo.svg" width="128">
 </p>
 
-# bb
+# b smart
 
 [![npm version](https://img.shields.io/npm/v/bb-app.svg)](https://www.npmjs.com/package/bb-app)
 [![Join Discord](https://img.shields.io/badge/Discord-Join%20server-5865F2?logo=discord&logoColor=white)](https://discord.gg/kvBU6tJhcJ)
 
-bb is an agentic IDE that builds itself. It can control, customize, and automate
+b smart is an agentic IDE that builds itself. It can control, customize, and automate
 itself, laying the groundwork for your own software factory.
 
 Every surface — the desktop app, web app, CLI, and HTTP API — is a first-class
-way to drive bb. Work runs in threads you can follow live, steer at any point,
+way to drive b smart. Work runs in threads you can follow live, steer at any point,
 or hand off to another agent.
 
 > [!NOTE]
-> bb is in active development. Core architecture is stable, but workflows
+> b smart is in active development. Core architecture is stable, but workflows
 > and surfaces are still evolving.
 
 <p align="center">
-  <img alt="bb desktop app showing a code review thread, dispatch panel, and task board" src="assets/app-screenshot.png" width="800">
+  <img alt="b smart desktop app showing a code review thread, dispatch panel, and task board" src="assets/app-screenshot.png" width="800">
 </p>
 
-## Use bb
+## Use b smart
 
 ### Download the desktop app
 
-The recommended way to start using bb is the desktop app:
+The recommended way to start using b smart is the desktop app:
 
 **[Download the latest desktop app](https://github.com/get-bb/bb/releases/tag/desktop-latest)**
 
 The desktop app supports macOS on Apple Silicon (arm64). The Linux x64 AppImage
 and the Windows x64 installer are alpha: expect problems, and please report
-them. Intel Mac users should run bb with `npx` instead. Native Windows needs
-[Git for Windows](https://git-scm.com/download/win), which bb uses for Git and
-for environment setup scripts. You can also run bb inside
+them. Intel Mac users should run b smart with `npx` instead. Native Windows needs
+[Git for Windows](https://git-scm.com/download/win), which b smart uses for Git and
+for environment setup scripts. You can also run b smart inside
 [WSL2 (Windows Subsystem for Linux)](https://learn.microsoft.com/windows/wsl/install):
 install WSL2 first, then run the `npx` command below from your WSL2 (Linux)
 shell.
 
 Early adopters can install
-**[bb Nightly](https://github.com/get-bb/bb/releases/tag/desktop-nightly)**
+**[b smart Nightly](https://github.com/get-bb/bb/releases/tag/desktop-nightly)**
 alongside the stable desktop app. It has a separate application identity,
 yellow icon, and auto-update feed.
 
@@ -56,7 +52,7 @@ npx bb-app@latest
 
 Then open `http://localhost:38886`.
 
-To control bb from outside bb with the `bb` CLI, open **Settings → General →
+To control b smart from outside b smart with the `bb` CLI, open **Settings → General →
 Command line** and choose **Install**. See
 [The bb Command On PATH](./docs/configuration.md#the-bb-command-on-path).
 
@@ -66,7 +62,7 @@ To run the newest automated build instead:
 npx bb-app@nightly
 ```
 
-npm 12 and later block dependency install scripts by default. bb needs those
+npm 12 and later block dependency install scripts by default. b smart needs those
 scripts to build its native add-ons. If your npm version is 12 or later, allow
 the scripts for the install:
 
@@ -80,7 +76,7 @@ Or set the policy once for all global installs:
 npm config set allow-scripts=better-sqlite3,node-pty,@parcel/watcher --location=user
 ```
 
-bb uses the provider CLI you already have authenticated.
+b smart uses the provider CLI you already have authenticated.
 
 For install requirements, provider setup, configuration, and package-focused
 docs, start with
@@ -91,7 +87,7 @@ docs, start with
 Production runs (the desktop app, `npx bb-app`, and `pnpm start` checkouts) send
 anonymous usage telemetry (app starts, thread creation counts, user message
 counts, and plugin installs) to help us understand adoption. Each event carries
-the app version, how bb was installed (desktop, npm, or source checkout), and
+the app version, how b smart was installed (desktop, npm, or source checkout), and
 the OS release, CPU architecture, and Node version. Source checkouts report whether
 `origin` points to `github.com/get-bb/bb`, another repository, or is unavailable.
 Telemetry never includes Git commit hashes or remote URLs. Identification is a random per-install
@@ -104,7 +100,7 @@ path, a private git or npm source, or a third-party marketplace report no name. 
 
 ## Development
 
-Use the development loop when working on bb itself:
+Use the development loop when working on b smart itself:
 
 ```bash
 pnpm dev
@@ -126,7 +122,7 @@ pnpm start:worktree
 ```
 
 This builds the same optimized frontend and runtime artifacts as `pnpm start`,
-then serves the app from the BB server on the checkout-specific dev server port.
+then serves the app from the b smart server on the checkout-specific dev server port.
 It keeps the normal checkout-specific dev data directory and host-daemon port.
 There is no Vite dev server or hot reload in this mode; rerun the command after
 source changes. As with `pnpm dev`, worktree starts do not send telemetry.
@@ -246,7 +242,7 @@ See [System overview](docs/system-overview.md) for runtime architecture, data mo
 - [Vision](docs/VISION.md)
 - [Platform support](docs/platform-support.md)
 - [Configuration](docs/configuration.md)
-- [Using bb on multiple devices](docs/multiple-devices.md)
+- [Using b smart on multiple devices](docs/multiple-devices.md)
 - [Worktrees and setup scripts](docs/worktrees.md)
 
 ## Contributing
@@ -257,9 +253,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ### `Could not locate the bindings file`
 
-bb uses native add-ons, for example `better-sqlite3` and `@parcel/watcher`. npm
+b smart uses native add-ons, for example `better-sqlite3` and `@parcel/watcher`. npm
 downloads or builds those binaries in a package install script. If npm does not
-run install scripts, the binaries are absent. bb then stops at startup with this
+run install scripts, the binaries are absent. b smart then stops at startup with this
 error:
 
 ```
@@ -271,7 +267,7 @@ There are two usual causes.
 
 The first cause is npm 12 or later. Since npm 12, npm blocks dependency install
 scripts by default and prints
-`npm warn install-scripts N packages had install scripts blocked`. Name bb's
+`npm warn install-scripts N packages had install scripts blocked`. Name b smart's
 native add-ons in `--allow-scripts` to let this one command run their install
 scripts:
 

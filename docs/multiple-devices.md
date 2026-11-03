@@ -1,6 +1,6 @@
-# Using bb on multiple devices
+# Using b smart on multiple devices
 
-There are two separate ways to use more than one device with bb:
+There are two separate ways to use more than one device with b smart:
 
 - A browser device is a control surface for one bb server. It can view projects,
   send prompts, and manage threads, but it does not execute them.

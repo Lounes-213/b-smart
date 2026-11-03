@@ -59,6 +59,7 @@ import {
   MACOS_WINDOW_DRAG_CLASS,
   shouldUseMacosDesktopChrome,
 } from "@/lib/bb-desktop";
+import { NavRailMobileButton } from "./NavRailMobileButton";
 import { NavRailSettingsButton } from "./NavRailSettingsButton";
 import { SidebarNavigationHeader } from "./SidebarNavigationHeader";
 import {
@@ -419,13 +420,14 @@ export function AppSidebar({
             {placement === "rail" ? (
               <div
                 className={cn(
-                  "col-start-1 row-start-2 flex shrink-0 items-center justify-center",
+                  "col-start-1 row-start-2 flex shrink-0 flex-col items-center justify-center gap-0.5 pb-1",
                   NAV_RAIL_WIDTH_CLASS,
                   isFramed
                     ? "h-(--bb-app-chrome-row-height)"
                     : "bg-surface-recessed -mb-[env(safe-area-inset-bottom)] pt-2 pb-[calc(var(--bb-frame-footer-inset)_+_env(safe-area-inset-bottom))]",
                 )}
               >
+                <NavRailMobileButton />
                 <NavRailSettingsButton
                   isSettingsActive={isSettingsActive}
                   settingsRoutePath={settingsRoutePath}

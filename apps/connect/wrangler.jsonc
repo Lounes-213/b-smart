@@ -22,9 +22,9 @@
 //         mobile app links). Unset until the Android app is signed.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bb-connect",
+  "name": "bs-connect",
   "main": "./src/worker.ts",
-  "account_id": "7bb84c630057dafa53e2aacbe6bd094f",
+  "account_id": "564581154699f9f3cc7813bdc34c7e33",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "observability": { "enabled": true },
@@ -44,8 +44,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "bb-connect-prod",
-      "database_id": "5e37a076-93e9-4dcf-933f-761c22f7cf8b",
+      "database_name": "bs-connect",
+      "database_id": "5b6c3bac-1f9f-430c-9143-8148738751c6",
       // Shared schema lives in connect-db; CI runs `wrangler d1 migrations
       // apply DB --remote` from this config before every deploy (the
       // d1_migrations tracking tables were seeded with the hand-applied
@@ -53,10 +53,9 @@
       "migrations_dir": "../../packages/connect-db/migrations",
     },
   ],
-  "analytics_engine_datasets": [
-    { "binding": "GATE_EVENTS", "dataset": "bb_connect_gate_events" },
-  ],
-  "routes": [{ "pattern": "*.getbb.app/*", "zone_name": "getbb.app" }],
+  // "analytics_engine_datasets": disabled
+  "workers_dev": true,
+  "routes": [],
   "env": {
     "staging": {
       "migrations": [{ "tag": "v1", "new_sqlite_classes": ["TunnelDO"] }],

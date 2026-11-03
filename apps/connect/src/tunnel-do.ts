@@ -36,7 +36,7 @@ export interface Env {
   DB: D1Database;
   BASE_DOMAIN: string;
   BETTER_AUTH_SECRET: string;
-  GATE_EVENTS: AnalyticsEngineDataset;
+  GATE_EVENTS?: AnalyticsEngineDataset;
   ACCOUNT_APP_URL?: string;
   CLOUD_DEV?: string;
   ASSETLINKS_SHA256_FINGERPRINTS?: string;
@@ -432,7 +432,7 @@ export class TunnelDO {
         : lostAt !== undefined
           ? "lost"
           : "closed";
-    this.env.GATE_EVENTS.writeDataPoint({
+    this.env.GATE_EVENTS?.writeDataPoint({
       indexes: [host],
       blobs: [
         "tunnel-gap",

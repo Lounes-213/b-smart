@@ -19,8 +19,8 @@ maybeReexecViaBbCli();
 const program = new Command();
 
 program
-  .name("bb")
-  .description("BB CLI - manage your AI coding agents")
+  .name("bs")
+  .description("BS (b smart) CLI - manage your AI coding agents")
   .enablePositionalOptions()
   .exitOverride()
   .showSuggestionAfterError(false)

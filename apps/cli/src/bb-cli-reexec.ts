@@ -47,7 +47,7 @@ export function maybeReexecViaBbCli(
     return;
   }
 
-  const targetRaw = env.BB_CLI?.trim();
+  const targetRaw = (env.BS_CLI ?? env.BB_CLI)?.trim();
   if (!targetRaw) {
     return;
   }

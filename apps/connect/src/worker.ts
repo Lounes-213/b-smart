@@ -798,7 +798,7 @@ function writeGateDelay(
   tunnel: TunnelLiveness | null,
 ): void {
   console.error(`bb connect: request ${delay.kind}`, { ...delay, tunnel });
-  env.GATE_EVENTS.writeDataPoint({
+  env.GATE_EVENTS?.writeDataPoint({
     indexes: [delay.host],
     blobs: [
       delay.kind,

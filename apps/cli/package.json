@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "bin": {
+    "bs": "./bin/bs",
     "bb": "./bin/bb",
     "title": "./bin/title"
   },

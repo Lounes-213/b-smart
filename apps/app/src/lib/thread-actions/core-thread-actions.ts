@@ -27,6 +27,7 @@ import {
 import { appToast } from "@/components/ui/app-toast";
 import { showMutationErrorToast } from "@/lib/mutation-errors";
 import { resolveThread } from "@/lib/cached-thread";
+import { getThreadDisplayTitle } from "@/lib/thread-title";
 import { PARENT_NOTIFICATIONS_OPTIONS } from "@/lib/parent-notifications";
 import { getThreadRoutePath } from "@/lib/route-paths";
 import { countPanes, listPanes } from "@/lib/split-layout";
@@ -321,7 +322,7 @@ export const CORE_THREAD_ACTIONS: readonly PluginThreadActionRegistration<unknow
                 };
               }),
             ]);
-            const title = detail.title ?? "Untitled thread";
+            const title = getThreadDisplayTitle(detail);
             const source = {
               threadId: thread.id,
               title,

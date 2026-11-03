@@ -8,15 +8,15 @@ export interface DesktopUpdateMetadataFileNames {
 }
 
 export interface DesktopReleaseConfig {
-  appId: "dev.bb.desktop" | "dev.bb.desktop.nightly";
-  applicationName: "bb" | "bb Nightly";
+  appId: "dev.bsmart.ide" | "dev.bsmart.ide.nightly";
+  applicationName: "b smart" | "b smart Nightly";
   artifactName: string;
   iconFileName: "icon.png" | "icon-nightly.png";
   linuxExecutableName: "bb" | "bb-nightly";
   macIconPath: "assets/icon.icns" | "assets/icon-nightly.icns";
   releaseTag: "desktop-latest" | "desktop-nightly";
   updateMetadataFileNames: DesktopUpdateMetadataFileNames;
-  windowsInstallName: "bb" | "bb-nightly";
+  windowsInstallName: "b-smart" | "bb-nightly";
 }
 
 export function resolveDesktopReleaseChannel(

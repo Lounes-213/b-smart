@@ -559,7 +559,7 @@ describe("electron-builder signing config", () => {
 
     expect(config.publish[0]).toMatchObject(DESKTOP_AUTO_UPDATE_FEED_CONFIG);
     expect(DESKTOP_AUTO_UPDATE_FEED_CONFIG.url).toBe(
-      "https://github.com/get-bb/bb/releases/download/desktop-latest/",
+      "https://github.com/Lounes-213/b-smart/releases/download/desktop-latest/",
     );
   });
 
@@ -569,9 +569,9 @@ describe("electron-builder signing config", () => {
     });
     const nightlyRelease = createDesktopReleaseInfo("nightly");
 
-    expect(config.appId).toBe("dev.bb.desktop.nightly");
-    expect(config.productName).toBe("bb Nightly");
-    expect(config.artifactName).toBe("bb-nightly-${version}-${arch}.${ext}");
+    expect(config.appId).toBe("dev.bsmart.ide.nightly");
+    expect(config.productName).toBe("b smart Nightly");
+    expect(config.artifactName).toBe("b-smart-nightly-${version}-${arch}.${ext}");
     expect(config.linux.icon).toBe("assets/icon-nightly.png");
     expect(config.linux.executableName).toBe("bb-nightly");
     expect(config.mac.icon).toBe("assets/icon-nightly.icns");

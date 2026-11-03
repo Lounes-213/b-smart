@@ -6,8 +6,8 @@ import {
 type DesktopReleaseChannel = "latest" | "nightly";
 
 interface DesktopReleaseInfo {
-  appId: "dev.bb.desktop" | "dev.bb.desktop.nightly";
-  applicationName: "bb" | "bb Nightly";
+  appId: "dev.bsmart.ide" | "dev.bsmart.ide.nightly";
+  applicationName: "b smart" | "b smart Nightly";
   channel: DesktopReleaseChannel;
   iconFileName: "icon.png" | "icon-nightly.png";
   releaseTag: "desktop-latest" | "desktop-nightly";
@@ -21,12 +21,12 @@ export function createDesktopReleaseInfo(
   const releaseTag = nightly ? "desktop-nightly" : "desktop-latest";
 
   return {
-    appId: nightly ? "dev.bb.desktop.nightly" : "dev.bb.desktop",
-    applicationName: nightly ? "bb Nightly" : "bb",
+    appId: nightly ? "dev.bsmart.ide.nightly" : "dev.bsmart.ide",
+    applicationName: nightly ? "b smart Nightly" : "b smart",
     channel,
     iconFileName: nightly ? "icon-nightly.png" : "icon.png",
     releaseTag,
-    updateReleaseBaseUrl: `https://github.com/get-bb/bb/releases/download/${releaseTag}/`,
+    updateReleaseBaseUrl: `https://github.com/Lounes-213/b-smart/releases/download/${releaseTag}/`,
   };
 }
 

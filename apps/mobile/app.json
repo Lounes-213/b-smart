@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "b smart",
-    "slug": "bb-app",
+    "slug": "bs-app",
     "owner": "bb-team",
     "version": "0.39.0",
-    "scheme": "bb",
+    "scheme": ["bs", "bb"],
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",

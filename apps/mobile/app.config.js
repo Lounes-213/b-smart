@@ -24,7 +24,7 @@ module.exports = ({ config }) => {
     extra: { ...config.extra, bbMobileVariant: variant },
     ...(isDev
       ? {
-          name: "bb dev",
+          name: "b smart dev",
           icon: "./assets/icon-dev.png",
           web: { ...config.web, favicon: "./assets/favicon-dev.png" },
           plugins: config.plugins.map((plugin) =>

@@ -217,7 +217,7 @@ function createWindowOptions(
     minHeight: MIN_WINDOW_HEIGHT,
     minWidth: MIN_WINDOW_WIDTH,
     show: false,
-    title: "smart bb",
+    title: "b smart",
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,

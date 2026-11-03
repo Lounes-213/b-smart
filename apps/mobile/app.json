@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "bb",
+    "name": "b smart",
     "slug": "bb-app",
     "owner": "bb-team",
     "version": "0.39.0",
@@ -16,10 +16,10 @@
         "dark": "./assets/ios-icon-dark.png"
       },
       "infoPlist": {
-        "NSLocalNetworkUsageDescription": "bb connects to a bb server on your local network or tailnet.",
-        "NSCameraUsageDescription": "bb attaches photos you take to your prompts.",
-        "NSMicrophoneUsageDescription": "bb records voice input and transcribes it into your prompt.",
-        "NSPhotoLibraryUsageDescription": "bb attaches photos you pick to your prompts.",
+        "NSLocalNetworkUsageDescription": "b smart connects to a b smart server on your local network or tailnet.",
+        "NSCameraUsageDescription": "b smart attaches photos you take to your prompts.",
+        "NSMicrophoneUsageDescription": "b smart records voice input and transcribes it into your prompt.",
+        "NSPhotoLibraryUsageDescription": "b smart attaches photos you pick to your prompts.",
         "ITSAppUsesNonExemptEncryption": false,
         "NSAppTransportSecurity": {
           "NSAllowsLocalNetworking": true

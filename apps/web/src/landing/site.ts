@@ -1,10 +1,8 @@
-export const GITHUB_URL = "https://github.com/get-bb/bb";
-export const DISCORD_URL = "https://discord.gg/kvBU6tJhcJ";
-export const X_URL = "https://x.com/get_bb_app";
+export const GITHUB_URL = "https://github.com/Lounes-213/b-smart";
 export const DOWNLOAD_FALLBACK_URL =
-  "https://github.com/get-bb/bb/releases/tag/desktop-latest";
+  "https://github.com/Lounes-213/b-smart/releases/tag/desktop-latest";
 export const DOWNLOAD_RELEASE_ASSET_BASE_URL =
-  "https://github.com/get-bb/bb/releases/download/desktop-latest";
+  "https://github.com/Lounes-213/b-smart/releases/download/desktop-latest";
 
 export type DesktopPlatform = "macos" | "linux" | "windows";
 
@@ -82,11 +80,11 @@ export function downloadHref(
 
 declare const __SITE_ORIGIN__: string;
 const SITE_URL = __SITE_ORIGIN__;
-export const SITE_TITLE = "bb: the IDE that builds itself";
+export const SITE_TITLE = "b smart: the IDE that builds itself";
 export const SITE_DESCRIPTION =
-  "bb can control, customize, and automate itself, laying the groundwork for your own software factory. Fully open source and local-first, with Claude Code, Codex, Cursor, Pi, OpenCode, Grok, omp, and Hermes.";
+  "b smart can control, customize, and automate itself, laying the groundwork for your own software factory. Fully open source and local-first, with Claude Code, Codex, Cursor, Pi, OpenCode, Grok, omp, and Hermes.";
 export const OG_DESCRIPTION =
-  "bb can control, customize, and automate itself, laying the groundwork for your own software factory.";
+  "b smart can control, customize, and automate itself, laying the groundwork for your own software factory.";
 
 export function unfurlMeta(
   title: string,
@@ -96,7 +94,7 @@ export function unfurlMeta(
     path: "/og.png",
     width: 2400,
     height: 1260,
-    alt: "bb logo — The IDE that builds itself. Free, open source, and local-first.",
+    alt: "b smart logo — The IDE that builds itself. Free, open source, and local-first.",
   },
 ) {
   return [
@@ -104,7 +102,7 @@ export function unfurlMeta(
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
     { property: "og:url", content: `${SITE_URL}${path}` },
-    { property: "og:site_name", content: "bb" },
+    { property: "og:site_name", content: "b smart" },
     { property: "og:image", content: `${SITE_URL}${image.path}` },
     { property: "og:image:width", content: String(image.width) },
     { property: "og:image:height", content: String(image.height) },

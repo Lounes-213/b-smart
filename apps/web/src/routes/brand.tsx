@@ -6,9 +6,9 @@ import { SiteFooter, SiteNav } from "../landing/site-chrome";
 import blogCss from "../blog/blog.css?url";
 import brandCss from "../landing/brand.css?url";
 
-const PAGE_TITLE = "Brand assets — bb";
+const PAGE_TITLE = "Brand assets — b smart";
 const PAGE_DESCRIPTION =
-  "Download the bb logo as SVG or high-resolution PNG with a transparent background.";
+  "Download the b smart logo as SVG or high-resolution PNG with a transparent background.";
 
 interface LogoVariant {
   file: string;
@@ -53,8 +53,8 @@ function BrandRoute() {
         <div className="post-body">
           <h1>Brand assets</h1>
           <p className="lede">
-            Download the bb logo for slides, posts, and docs. Every file has a
-            transparent background.
+            Download the b smart logo for slides, posts, and docs. Every file
+            has a transparent background.
           </p>
 
           <ul className="brand-grid">
@@ -63,7 +63,7 @@ function BrandRoute() {
                 <div className={`brand-tile brand-tile-${variant.tile}`}>
                   <img
                     src={`/brand/${variant.file}.svg`}
-                    alt={`bb logo, ${variant.name.toLowerCase()}`}
+                    alt={`b smart logo, ${variant.name.toLowerCase()}`}
                     width={507}
                     height={405}
                   />

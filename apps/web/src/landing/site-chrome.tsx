@@ -1,7 +1,6 @@
 import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import GithubIcon from "@hugeicons/core-free-icons/GithubIcon";
-import NewTwitterIcon from "@hugeicons/core-free-icons/NewTwitterIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   useEffect,
@@ -20,10 +19,8 @@ import {
 } from "./content-links";
 import {
   DesktopDownloadButton,
-  DiscordLink,
   DownloadLink,
   GitHubLink,
-  XLink,
 } from "./cta";
 import { useDesktopPlatform } from "./desktop-platform";
 
@@ -200,7 +197,7 @@ export function SiteNav({
   return (
     <nav className="nav">
       {}
-      <a className="logo" href="/" aria-label="bb">
+      <a className="logo" href="/" aria-label="b smart">
         <span className="bb-mark logo-mark" />
       </a>
       <div className="nav-links">
@@ -315,18 +312,6 @@ export function SiteFooter({ current }: { current?: string }) {
         <li>
           <GitHubLink placement="footer">GitHub</GitHubLink>
         </li>
-        <li>
-          <DiscordLink placement="footer">Discord</DiscordLink>
-        </li>
-        <li>
-          <XLink placement="footer" aria-label="X">
-            <HugeiconsIcon
-              icon={NewTwitterIcon}
-              className="footer-x"
-              aria-hidden="true"
-            />
-          </XLink>
-        </li>
       </FooterColumn>
       <FooterColumn title="Legal">
         <li>
@@ -336,7 +321,7 @@ export function SiteFooter({ current }: { current?: string }) {
           <a href="/brand">Brand assets</a>
         </li>
         <li>
-          <a href="https://github.com/get-bb/bb/blob/main/LICENSE">
+          <a href="https://github.com/Lounes-213/b-smart/blob/main/LICENSE">
             Software License
           </a>
         </li>

@@ -65,7 +65,7 @@ import zooxLogo from "../assets/company-logos/zoox.png";
 import hermesAvatar from "../assets/hermes-avatar.jpg";
 import vscodeIcon from "../assets/vscode.png";
 import { parseChangelog } from "../../../../changelog-parser";
-import { DiscordLink, GitHubLink, SubscribeSection } from "../landing/cta";
+import { GitHubLink, SubscribeSection } from "../landing/cta";
 import { siteHeadLinks } from "../landing/page-head";
 import { SiteFooter, SiteNav } from "../landing/site-chrome";
 import { ClaudeIcon } from "../landing/icons";
@@ -79,11 +79,9 @@ import {
   useScrollReveal,
 } from "../landing/landing-visuals";
 import {
-  DISCORD_URL,
   GITHUB_URL,
   OG_DESCRIPTION,
   SITE_DESCRIPTION,
-  X_URL,
   unfurlMeta,
 } from "../landing/site";
 
@@ -214,9 +212,9 @@ const LATEST_RELEASE_URL = `/changelog#${LATEST_RELEASE.version.replaceAll(".", 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "bb: agentic IDE · The IDE that builds itself" },
+      { title: "b smart: agentic IDE · The IDE that builds itself" },
       { name: "description", content: SITE_DESCRIPTION },
-      ...unfurlMeta("bb", OG_DESCRIPTION, "/"),
+      ...unfurlMeta("b smart", OG_DESCRIPTION, "/"),
     ],
     links: siteHeadLinks(),
     scripts: [
@@ -227,24 +225,24 @@ export const Route = createFileRoute("/")({
           "@graph": [
             {
               "@type": "Organization",
-              "@id": "https://getbb.app/#organization",
-              name: "bb",
-              url: "https://getbb.app/",
-              logo: "https://getbb.app/brand/bb-logo-flat-black.png",
-              sameAs: [GITHUB_URL, X_URL, DISCORD_URL],
+              "@id": `${GITHUB_URL}/#organization`,
+              name: "b smart",
+              url: GITHUB_URL,
+              logo: `${GITHUB_URL}/raw/main/apps/web/public/brand/bb-logo-flat-black.png`,
+              sameAs: [GITHUB_URL],
             },
             {
               "@type": "SoftwareApplication",
-              "@id": "https://getbb.app/#software",
-              name: "bb",
-              url: "https://getbb.app/",
+              "@id": `${GITHUB_URL}/#software`,
+              name: "b smart",
+              url: GITHUB_URL,
               description: SITE_DESCRIPTION,
               applicationCategory: "DeveloperApplication",
               operatingSystem: ["macOS", "Windows", "Linux"],
               isAccessibleForFree: true,
               offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
-              publisher: { "@id": "https://getbb.app/#organization" },
-              sameAs: [GITHUB_URL, X_URL, DISCORD_URL],
+              publisher: { "@id": `${GITHUB_URL}/#organization` },
+              sameAs: [GITHUB_URL],
             },
           ],
         }).replace(/</g, "\\u003c"),

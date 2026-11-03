@@ -8,9 +8,7 @@ import { LinuxIcon } from "./icons";
 import type { CtaPlacement, DesktopPlatform } from "./site";
 import {
   DESKTOP_DOWNLOADS,
-  DISCORD_URL,
   GITHUB_URL,
-  X_URL,
   SUBSCRIBE_PATH,
   downloadHref,
 } from "./site";
@@ -137,22 +135,6 @@ export function GitHubLink(props: CtaLinkProps & { "aria-label"?: string }) {
       href={GITHUB_URL}
       event="landing_github_clicked"
     />
-  );
-}
-
-export function DiscordLink(props: CtaLinkProps) {
-  return (
-    <TrackedExternalLink
-      {...props}
-      href={DISCORD_URL}
-      event="landing_discord_clicked"
-    />
-  );
-}
-
-export function XLink(props: CtaLinkProps & { "aria-label"?: string }) {
-  return (
-    <TrackedExternalLink {...props} href={X_URL} event="landing_x_clicked" />
   );
 }
 

@@ -28,7 +28,7 @@ or hand off to another agent.
 
 The recommended way to start using b smart is the desktop app:
 
-**[Download the latest desktop app](https://github.com/get-bb/bb/releases/tag/desktop-latest)**
+**[Download the latest desktop app](https://github.com/Lounes-213/b-smart/releases/tag/desktop-latest)**
 
 The desktop app supports macOS on Apple Silicon (arm64). The Linux x64 AppImage
 and the Windows x64 installer are alpha: expect problems, and please report
@@ -40,7 +40,7 @@ install WSL2 first, then run the `npx` command below from your WSL2 (Linux)
 shell.
 
 Early adopters can install
-**[b smart Nightly](https://github.com/get-bb/bb/releases/tag/desktop-nightly)**
+**[b smart Nightly](https://github.com/Lounes-213/b-smart/releases/tag/desktop-nightly)**
 alongside the stable desktop app. It has a separate application identity,
 yellow icon, and auto-update feed.
 

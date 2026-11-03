@@ -99,3 +99,6 @@ provider-recordings/raw/
 /plugins/*/.bundled-runtime/
 
 .ci-health/
+
+.vercel
+.env*

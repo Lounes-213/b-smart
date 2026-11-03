@@ -39,7 +39,15 @@ export default defineConfig(({ command }) => {
   return {
     define: { __SITE_ORIGIN__: JSON.stringify(siteOrigin) },
     resolve: {
-      alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "cf-workers-og": fileURLToPath(
+          new URL("./src/server/cf-workers-og-stub.ts", import.meta.url),
+        ),
+        "cloudflare:workers": fileURLToPath(
+          new URL("./src/server/cloudflare-stub.ts", import.meta.url),
+        ),
+      },
       dedupe: ["react", "react-dom"],
     },
     server: {

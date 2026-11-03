@@ -1,6 +1,6 @@
 {
-  "appId": "dev.bb.desktop",
-  "productName": "bb",
+  "appId": "dev.smartbb.ide",
+  "productName": "SMART BB IDE",
   "artifactName": "${productName}-${version}-${arch}.${ext}",
   "toolsets": {
     "appimage": "1.0.3"

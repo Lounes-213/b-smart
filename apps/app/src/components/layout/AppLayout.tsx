@@ -14,6 +14,7 @@ import {
 import type { ProjectResponse } from "@bb/server-contract";
 import { Icon } from "@bb/shared-ui/icon";
 import { useRedirectRetiredPluginPaths } from "@/lib/retired-plugin-redirect";
+import { APP_BRAND_NAME } from "@/lib/app-brand";
 import { TooltipProvider } from "@bb/shared-ui/tooltip";
 import {
   SidebarInset,
@@ -336,7 +337,7 @@ function SidebarTriggerOverlay({
 }
 
 const routeTitles: Record<string, { title: string }> = {
-  "/": { title: "bb" },
+  "/": { title: APP_BRAND_NAME },
   "/settings": { title: "Settings" },
   "/automations": { title: "Automations" },
   "/skills": { title: "Skills" },
@@ -704,7 +705,7 @@ function AppLayoutContent({ children }: AppLayoutProps) {
       return projectLabel ?? projectId;
     }
     const routeTitle = resolveRouteTitle(location.pathname)?.title;
-    return routeTitle && routeTitle.length > 0 ? routeTitle : "BB";
+    return routeTitle && routeTitle.length > 0 ? routeTitle : APP_BRAND_NAME;
   })();
   const currentThreadPendingInteractionsQuery = useThreadPendingInteractions(
     threadId ?? "",

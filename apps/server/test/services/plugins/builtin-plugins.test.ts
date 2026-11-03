@@ -602,10 +602,10 @@ describe("builtin plugin reconciliation", () => {
         ]),
       ),
     ).toMatchObject({
-      "prompt-library": false,
-      mcp: false,
+      "prompt-library": true,
+      mcp: true,
       "plugin-api-tester": false,
-      "monaco-editor": false,
+      "monaco-editor": true,
       "plugin-api-docs": false,
       workflows: false,
       "provider-usage": true,

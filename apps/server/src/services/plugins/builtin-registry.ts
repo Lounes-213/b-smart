@@ -63,7 +63,7 @@ export const BUILTIN_PLUGINS = [
   {
     name: "bb-account",
     pluginId: "bb-account",
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     name: "bb-ai",
@@ -113,7 +113,7 @@ export const BUILTIN_PLUGINS = [
   {
     name: "monaco-editor",
     pluginId: "monaco-editor",
-    defaultEnabled: false,
+    defaultEnabled: true,
   },
   {
     name: "pdf-preview",
@@ -198,12 +198,12 @@ export const BUILTIN_PLUGINS = [
   {
     name: "prompt-library",
     pluginId: "bb--prompt-library",
-    defaultEnabled: false,
+    defaultEnabled: true,
   },
   {
     name: "mcp",
     pluginId: "bb--mcp",
-    defaultEnabled: false,
+    defaultEnabled: true,
   },
   {
     name: "scheduled-send",

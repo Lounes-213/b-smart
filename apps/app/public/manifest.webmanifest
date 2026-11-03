@@ -1,6 +1,6 @@
 {
-  "name": "SMART BB IDE",
-  "short_name": "SMART BB",
+  "name": "smart bb",
+  "short_name": "smart bb",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

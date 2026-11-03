@@ -1,2 +1,2 @@
-export const APP_BRAND_NAME = "SMART BB IDE";
-export const APP_BRAND_SHORT_NAME = "SMART BB";
+export const APP_BRAND_NAME = "smart bb";
+export const APP_BRAND_SHORT_NAME = "smart bb";

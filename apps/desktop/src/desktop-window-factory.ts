@@ -217,7 +217,7 @@ function createWindowOptions(
     minHeight: MIN_WINDOW_HEIGHT,
     minWidth: MIN_WINDOW_WIDTH,
     show: false,
-    title: "SMART BB IDE",
+    title: "smart bb",
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,

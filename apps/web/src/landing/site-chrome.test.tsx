@@ -14,7 +14,7 @@ describe("site navigation", () => {
     const guideLinks = guideMenu().flatMap((item) =>
       "links" in item ? item.links : [item],
     );
-    expect(links).toHaveLength(7 + guideLinks.length);
+    expect(links).toHaveLength(6 + guideLinks.length);
     expect(html).toMatch(
       /<details class="nav-menu"><summary class="nav-current">Plugins/,
     );
@@ -24,8 +24,7 @@ describe("site navigation", () => {
     expect(html).toContain('href="/plugin-guide">Building plugins');
     expect(html).toContain('href="/blog">Blog');
     expect(html).toContain('href="/changelog">Changelog');
-    expect(html.indexOf("Changelog")).toBeLessThan(html.indexOf("Sign in"));
-    expect(html).toContain("Sign in");
+    expect(html).not.toContain("Sign in");
     expect(html).toContain('aria-label="GitHub"');
     expect(html).toContain('href="/download/macos?placement=nav"');
     expect(html).toContain("Download for macOS");

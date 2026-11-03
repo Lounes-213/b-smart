@@ -217,7 +217,6 @@ export function SiteNav({
         >
           Changelog
         </a>
-        <a href={DASHBOARD_PATH}>Sign in</a>
         <GitHubLink
           placement="nav"
           className="nav-icon-button"
@@ -294,9 +293,6 @@ export function SiteFooter({ current }: { current?: string }) {
         </li>
         <li>
           <a href="/changelog">Changelog</a>
-        </li>
-        <li>
-          <a href={DASHBOARD_PATH}>Sign in</a>
         </li>
       </FooterColumn>
       <FooterColumn title="Guides">

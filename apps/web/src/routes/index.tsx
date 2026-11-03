@@ -1225,8 +1225,8 @@ function LandingPage() {
         </a>
         <h1>The IDE that builds itself</h1>
         <p className="sub">
-          bb can control, customize, and automate itself, laying the groundwork
-          for your own software factory.
+          b smart can control, customize, and automate itself, laying the
+          groundwork for your own software factory.
         </p>
 
         <InstallOptions placement="hero" />

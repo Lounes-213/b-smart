@@ -23,7 +23,7 @@
   "main": "./src/worker.ts",
   // Pinned so a CI token that can see more than one account never stops to
   // ask which one; same account as bb-connect and bb-web.
-  "account_id": "7bb84c630057dafa53e2aacbe6bd094f",
+  "account_id": "564581154699f9f3cc7813bdc34c7e33",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {

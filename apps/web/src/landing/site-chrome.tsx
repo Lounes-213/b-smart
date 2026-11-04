@@ -226,7 +226,7 @@ export function SiteNav({
         </GitHubLink>
         <a
           href="/download/android"
-          className="btn btn-secondary btn-sm nav-download"
+          className="btn btn-secondary btn-sm nav-download nav-mobile-cta"
         >
           Mobile App
         </a>

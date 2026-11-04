@@ -63,13 +63,13 @@ export function InstallOptions({ placement }: { placement: CtaPlacement }) {
         <span className="install-choice">
           <a
             href="/download/android"
-            className="btn btn-secondary btn-install install-download flex items-center justify-center gap-2"
+            className="btn btn-secondary btn-install install-mobile-btn flex items-center justify-center gap-2"
           >
             <HugeiconsIcon icon={SmartPhone01Icon} className="btn-ic" aria-hidden />
-            Mobile App (APK)
+            Mobile App (Android)
           </a>
           <span className="install-note">
-            Android APK · Connect anywhere
+            Android APK &amp; PWA · Connect anywhere
           </span>
         </span>
         <span className="install-choice">

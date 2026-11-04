@@ -582,10 +582,18 @@ body {
   font-family: var(--font-sans);
 }
 
+.install-mobile-btn {
+  display: inline-flex !important;
+}
+
 @media (hover: none) and (pointer: coarse) {
-  .install-choice .install-download,
+  .install-choice .install-download:not(.install-mobile-btn),
   .install-choice .install-note-desktop {
     display: none;
+  }
+
+  .install-choice .install-mobile-btn {
+    display: inline-flex !important;
   }
 
   .install-choice .install-send {
@@ -3237,10 +3245,12 @@ html.js .mock[data-construct]:not(.constructing):not(.constructed) {
     justify-content: flex-start;
   }
 
-  /* The full download CTA is repeated immediately below in the hero. Hide the
-     nav copy on mobile so the three utility links retain comfortable spacing. */
-  .nav-links .btn {
+  /* The full download CTA is repeated immediately below in the hero. */
+  .nav-links .btn:not(.nav-mobile-cta) {
     display: none;
+  }
+  .nav-links .nav-mobile-cta {
+    display: inline-flex !important;
   }
 }
 

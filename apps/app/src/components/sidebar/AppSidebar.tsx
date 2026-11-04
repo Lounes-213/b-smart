@@ -272,6 +272,12 @@ export function AppSidebar({
           isFooterCustomizing && "hidden",
         )}
       >
+        {placement === "list" ? (
+          <>
+            <UserProfileAvatar size="compact" />
+            <NavRailMobileButton />
+          </>
+        ) : null}
         <PluginSidebarFooterItems
           onCustomize={() => {
             pluginSidebarFooter.dismiss();

@@ -39,6 +39,7 @@ import {
 import { AppBreadcrumbs } from "./AppBreadcrumbs";
 import { PageTitleHeader } from "./PageTitleHeader";
 import { UserProfileAvatar } from "@/components/sidebar/UserProfileAvatar";
+import { NavRailMobileButton } from "@/components/sidebar/NavRailMobileButton";
 import {
   PageTitleHookHost,
   usePageTitleValue,
@@ -444,6 +445,7 @@ function AppHeader({
           ) : null}
         </>
       ) : null}
+      <NavRailMobileButton className="size-7" />
       <UserProfileAvatar size="compact" />
     </div>
   );

@@ -115,13 +115,13 @@ async function waitForLogin(
 
 describe("base URL", () => {
   it("uses the worktree-local Cloud only in development", () => {
-    expect(resolveDefaultBaseUrl({})).toBe("https://getbb.app");
+    expect(resolveDefaultBaseUrl({})).toBe("https://b-smart-five.vercel.app");
     expect(
       resolveDefaultBaseUrl({
         NODE_ENV: "production",
         BB_DEV_CONNECT_BASE_URL: "http://bb.localhost:59329",
       }),
-    ).toBe("https://getbb.app");
+    ).toBe("https://b-smart-five.vercel.app");
     expect(
       resolveDefaultBaseUrl({
         NODE_ENV: "development",

@@ -515,6 +515,16 @@ export class AccountService {
     });
   }
 
+  async directConnect(
+    profile: AccountProfile,
+    credential: StoredCredential,
+  ): Promise<AccountStatus> {
+    await this.serialize(async () => {
+      await this.storeAccount(credential, profile);
+    });
+    return this.status();
+  }
+
   private async storeAccount(
     credential: StoredCredential,
     profile: AccountProfile | null,

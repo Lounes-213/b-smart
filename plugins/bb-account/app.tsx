@@ -193,7 +193,7 @@ function SignOutDialog({
             <DialogHeader>
               <DialogTitle>Sign out of your bb account?</DialogTitle>
               <DialogDescription>
-                getbb.app forgets this bb. Remote access and hosted services
+                b smart forgets this bs. Remote access and hosted services
                 stop until you sign in again.
               </DialogDescription>
             </DialogHeader>
@@ -428,25 +428,114 @@ function PairCodeForm({
   );
 }
 
+function DirectGithubForm({
+  rpc,
+  onDone,
+}: {
+  rpc: AccountRpc;
+  onDone: (state: AccountState) => void;
+}) {
+  const [username, setUsername] = useState("Lounes-213");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const clean = username.trim().replace(/^@/, "");
+    if (!clean) return;
+    setLoading(true);
+    setError(null);
+    try {
+      let name = clean;
+      let avatarUrl = `https://github.com/${clean}.png`;
+      try {
+        const res = await fetch(`https://api.github.com/users/${encodeURIComponent(clean)}`);
+        if (res.ok) {
+          const gh = await res.json();
+          name = gh.name || gh.login || clean;
+          avatarUrl = gh.avatar_url || avatarUrl;
+        }
+      } catch {
+      }
+      const status = await rpc.call("directGithubLogin", {
+        githubLogin: clean,
+        name,
+        avatarUrl,
+      });
+      onDone({ status, login: null });
+    } catch (err) {
+      setError(errorText(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3 pt-2">
+      <div className="space-y-1 text-left">
+        <label htmlFor="direct-github-account-input" className="text-xs font-medium text-foreground">
+          GitHub Username
+        </label>
+        <div className="relative">
+          <Input
+            id="direct-github-account-input"
+            type="text"
+            placeholder="e.g. Lounes-213"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={loading}
+            className="text-xs h-9 pl-7 pr-3 font-mono"
+          />
+          <span className="absolute left-2.5 top-2.5 text-xs text-muted-foreground select-none">
+            @
+          </span>
+        </div>
+      </div>
+      {error && <p className="text-xs text-destructive-text">{error}</p>}
+      <Button
+        type="submit"
+        disabled={loading || !username.trim()}
+        className="w-full gap-2 text-xs h-9"
+      >
+        {loading ? <Icon name="Spinner" className="size-4 animate-spin" /> : <Icon name="Github" className="size-4" />}
+        <span>{loading ? "Connecting to b smart…" : "Connect with GitHub directly"}</span>
+      </Button>
+    </form>
+  );
+}
+
 function SignInDialogBody({
   login,
   starting,
   startError,
   onRetry,
+  rpc,
+  onLogin,
 }: {
   login: LoginView | null;
   starting: boolean;
   startError: string | null;
   onRetry: () => void;
+  rpc: AccountRpc;
+  onLogin: (state: AccountState) => void;
 }) {
   const navigate = useBbNavigate();
   if (startError !== null) {
     return (
       <div className="space-y-3">
-        <p className="text-sm text-destructive-text">{startError}</p>
-        <Button type="button" variant="outline" onClick={onRetry}>
-          Try again
-        </Button>
+        <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 text-xs text-destructive-text space-y-1">
+          <p className="font-semibold">b smart server offline or unreachable</p>
+          <p>{startError}</p>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          In b smart, your workspace connection is linked to your GitHub account. You can connect directly below:
+        </p>
+        <DirectGithubForm rpc={rpc} onDone={onLogin} />
+        <div className="pt-2 border-t border-border flex justify-end">
+          <Button type="button" variant="outline" size="sm" onClick={onRetry}>
+            Retry server link
+          </Button>
+        </div>
       </div>
     );
   }
@@ -572,6 +661,11 @@ function SignInDialog({
               starting={starting}
               startError={startError}
               onRetry={start}
+              rpc={rpc}
+              onLogin={(nextState) => {
+                onLogin(nextState);
+                onOpenChange(false);
+              }}
             />
             <DialogFooter>
               <Button
@@ -602,15 +696,24 @@ function SignedOutContent({
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [codeOpen, setCodeOpen] = useState(false);
+  const [directOpen, setDirectOpen] = useState(false);
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         Sign in to link this bs to your b smart account. Remote access and
         hosted services such as title and commit message generation use it.
+        In b smart, connection is powered by your GitHub profile.
       </p>
       <div className="flex flex-wrap items-center gap-2">
         <Button type="button" onClick={() => setDialogOpen(true)}>
           Sign in
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setDirectOpen((val) => !val)}
+        >
+          Direct GitHub
         </Button>
         <Button
           type="button"
@@ -622,6 +725,18 @@ function SignedOutContent({
           Have a pairing code?
         </Button>
       </div>
+      {directOpen ? (
+        <div className="p-4 rounded-2xl bg-surface-recessed border border-border space-y-2">
+          <p className="text-xs font-semibold">Direct GitHub Connection</p>
+          <DirectGithubForm
+            rpc={rpc}
+            onDone={(st) => {
+              onLogin(st);
+              onChanged();
+            }}
+          />
+        </div>
+      ) : null}
       {codeOpen ? <PairCodeForm rpc={rpc} onDone={onChanged} /> : null}
       <p className="text-xs text-subtle-foreground">
         From a terminal: <span className="font-mono">bs account login</span>

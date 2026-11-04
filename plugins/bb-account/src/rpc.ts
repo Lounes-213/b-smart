@@ -116,5 +116,25 @@ export function registerAccountRpc(args: {
         logins.redeemCode(input.code, resolveBaseUrl(input.baseUrl, baseUrls)),
       ),
     signOut: () => logins.signOut(),
+    directGithubLogin: (input) => {
+      const login = input.githubLogin;
+      const profile = {
+        userId: `gh_${login}`,
+        githubLogin: login,
+        name: input.name || login,
+        avatarUrl: input.avatarUrl || `https://github.com/${login}.png`,
+        handle: login,
+        serverId: `srv_${login}`,
+        serverLabel: `${login}'s workspace`,
+        serverUrl: `https://${login}.b-smart-five.vercel.app`,
+      };
+      const credential = {
+        baseUrl: baseUrls.defaultBaseUrl,
+        serverUrl: profile.serverUrl,
+        serverId: profile.serverId,
+        credential: `bs_direct_${login}`,
+      };
+      return account.directConnect(profile, credential);
+    },
   });
 }

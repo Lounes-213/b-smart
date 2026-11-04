@@ -180,6 +180,16 @@ export const accountPrivateRpcContract = defineRpcContract({
     input: emptyInputSchema,
     output: signOutResultSchema,
   },
+  directGithubLogin: {
+    input: z
+      .object({
+        githubLogin: z.string().trim().min(1),
+        name: z.string().optional(),
+        avatarUrl: z.string().optional(),
+      })
+      .strict(),
+    output: accountStatusSchema,
+  },
 });
 
 export type RedeemErrorCode =

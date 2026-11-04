@@ -181,7 +181,7 @@ export const comparison: Comparison = {
               use and change it for anything, including at work. Conductor is
               closed source and free only for local workspaces on a Mac, with
               Pro at $50 a month and Teams at $60 per person a month.{" "}
-              <a href="/download/macos">Download bb</a>.
+              <a href="/download/macos">Download b smart</a>.
             </p>
           ),
         },

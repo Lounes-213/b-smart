@@ -140,7 +140,7 @@ export const comparison: Comparison = {
           answer: (
             <ol>
               <li>
-                Download bb for <a href="/download/macos">macOS</a> (Apple
+                Download b smart for <a href="/download/macos">macOS</a> (Apple
                 Silicon), <a href={WINDOWS_DOWNLOAD_URL}>Windows (Alpha)</a>, or{" "}
                 <a href="/download/linux">Linux (Alpha)</a>.
               </li>

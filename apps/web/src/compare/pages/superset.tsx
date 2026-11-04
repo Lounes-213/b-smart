@@ -268,7 +268,7 @@ export const comparison: Comparison = {
               use and change it for anything, including at work. Superset
               charges $15 per user a month for teams, billed yearly, and its
               Elastic License 2.0 makes the code public but isn’t an open-source
-              license. <a href="/download/macos">Download bb</a>.
+              license. <a href="/download/macos">Download b smart</a>.
             </p>
           ),
         },

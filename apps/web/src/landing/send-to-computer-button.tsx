@@ -23,7 +23,7 @@ export function SendToComputerButton({
       try {
         await navigator.share({
           title: SITE_TITLE,
-          text: "Download bb on your computer",
+          text: "Download b smart on your computer",
           url,
         });
         return;

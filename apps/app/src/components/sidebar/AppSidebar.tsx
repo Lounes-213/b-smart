@@ -61,6 +61,7 @@ import {
 } from "@/lib/bb-desktop";
 import { NavRailMobileButton } from "./NavRailMobileButton";
 import { NavRailSettingsButton } from "./NavRailSettingsButton";
+import { UserProfileAvatar } from "./UserProfileAvatar";
 import { SidebarNavigationHeader } from "./SidebarNavigationHeader";
 import {
   SidebarNavigationProviderMount,
@@ -74,7 +75,7 @@ import {
 
 import { NAV_RAIL_WIDTH_CLASS } from "./navRailWidth";
 
-const BUG_REPORT_NEW_ISSUE_URL = "https://github.com/get-bb/bb/issues/new";
+const BUG_REPORT_NEW_ISSUE_URL = "https://github.com/Lounes-213/b-smart/issues/new";
 
 interface AppSidebarProps {
   onResizeMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -420,13 +421,14 @@ export function AppSidebar({
             {placement === "rail" ? (
               <div
                 className={cn(
-                  "col-start-1 row-start-2 flex shrink-0 flex-col items-center justify-center gap-0.5 pb-1",
+                  "col-start-1 row-start-2 flex shrink-0 flex-col items-center justify-center gap-1 pb-1",
                   NAV_RAIL_WIDTH_CLASS,
                   isFramed
                     ? "h-(--bb-app-chrome-row-height)"
                     : "bg-surface-recessed -mb-[env(safe-area-inset-bottom)] pt-2 pb-[calc(var(--bb-frame-footer-inset)_+_env(safe-area-inset-bottom))]",
                 )}
               >
+                <UserProfileAvatar size="rail" />
                 <NavRailMobileButton />
                 <NavRailSettingsButton
                   isSettingsActive={isSettingsActive}

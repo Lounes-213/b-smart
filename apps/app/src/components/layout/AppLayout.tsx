@@ -38,6 +38,7 @@ import {
 } from "@/components/tools/tools-navigation";
 import { AppBreadcrumbs } from "./AppBreadcrumbs";
 import { PageTitleHeader } from "./PageTitleHeader";
+import { UserProfileAvatar } from "@/components/sidebar/UserProfileAvatar";
 import {
   PageTitleHookHost,
   usePageTitleValue,
@@ -420,29 +421,32 @@ function AppHeader({
       panel={pluginPanel}
       subPath={pluginPanelSubPath ?? ""}
     />
-  ) : usesProjectChromeStyle &&
-    projectId &&
-    !isProjectlessProjectId(projectId) ? (
-    <>
-      <Link
-        to={getSettingsProjectRoutePath(projectId)}
-        className={cn(
-          HEADER_ICON_BUTTON_CLASS,
-          "inline-flex items-center justify-center transition-colors",
-          "text-muted-foreground hover:bg-state-hover hover:text-foreground",
-        )}
-        aria-label="Project settings"
-      >
-        <Icon name="Settings" />
-      </Link>
-      {project ? (
-        <ProjectActionsMenu
-          project={project}
-          triggerClassName={HEADER_ICON_BUTTON_CLASS}
-        />
+  ) : (
+    <div className="flex items-center gap-1">
+      {usesProjectChromeStyle && projectId && !isProjectlessProjectId(projectId) ? (
+        <>
+          <Link
+            to={getSettingsProjectRoutePath(projectId)}
+            className={cn(
+              HEADER_ICON_BUTTON_CLASS,
+              "inline-flex items-center justify-center transition-colors",
+              "text-muted-foreground hover:bg-state-hover hover:text-foreground",
+            )}
+            aria-label="Project settings"
+          >
+            <Icon name="Settings" />
+          </Link>
+          {project ? (
+            <ProjectActionsMenu
+              project={project}
+              triggerClassName={HEADER_ICON_BUTTON_CLASS}
+            />
+          ) : null}
+        </>
       ) : null}
-    </>
-  ) : null;
+      <UserProfileAvatar size="compact" />
+    </div>
+  );
 
   return <AppPageHeader center={center} actions={actions} />;
 }

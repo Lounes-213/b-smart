@@ -187,7 +187,7 @@ export const comparison: Comparison = {
               and MIT-licensed, so you can use and change it for anything,
               including at work, and Claude Code and Codex run directly on the
               Claude and ChatGPT subscriptions you already have.{" "}
-              <a href="/download/macos">Download bb</a>.
+              <a href="/download/macos">Download b smart</a>.
             </p>
           ),
         },

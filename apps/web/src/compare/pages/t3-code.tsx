@@ -149,7 +149,7 @@ export const comparison: Comparison = {
               Yes: bb. It’s free for any team size and MIT-licensed, so you can
               use and change it for anything, including at work. Plugins add
               whatever you need without forking, and your agents work together
-              across providers. <a href="/download/macos">Download bb</a>.
+              across providers. <a href="/download/macos">Download b smart</a>.
             </p>
           ),
         },

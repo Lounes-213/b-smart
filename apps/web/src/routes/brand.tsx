@@ -18,17 +18,17 @@ interface LogoVariant {
 
 const VARIANTS: readonly LogoVariant[] = [
   {
-    file: "bb-logo-flat-black",
+    file: "bs-logo-flat-black",
     name: "Flat black",
     tile: "light",
   },
   {
-    file: "bb-logo-flat-white",
+    file: "bs-logo-flat-white",
     name: "Flat white",
     tile: "dark",
   },
   {
-    file: "bb-logo-shaded",
+    file: "bs-logo-shaded",
     name: "Shaded",
     tile: "light",
   },

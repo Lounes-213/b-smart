@@ -69,7 +69,11 @@ export function parseIncomingLink(
   if (!match) return { kind: "foreign" };
   const [, protocol, rest] = match;
   if (!protocol || rest === undefined) return { kind: "foreign" };
-  if (protocol.toLowerCase() === scheme) {
+  if (
+    protocol.toLowerCase() === scheme ||
+    protocol.toLowerCase() === "bs" ||
+    protocol.toLowerCase() === "bb"
+  ) {
     const { pathname, search } = splitPathAndSearch(rest);
     return { kind: "scheme", path: `${pathname}${search}` };
   }

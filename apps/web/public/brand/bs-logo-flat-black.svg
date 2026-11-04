@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="35.3 -376 511.9 409" role="img" aria-label="b smart" aria-labelledby="title">
+  <title id="title">b smart</title>
+  <defs>
+      <path id="b-stem" d="M 96 -320 L 96 -40"/>
+      <circle id="b-bowl" cx="190" cy="-108" r="93"/>
+      <path id="s-spine" d="M 452 -186C 452 -230 352 -228 352 -186C 352 -148 438 -156 438 -104C 438 -60 332 -64 332 -114"/>
+      <path id="spark" d="M455 22C458 46 470 57 493 60 470 63 458 74 455 98 452 74 440 63 417 60 440 57 452 46 455 22Z"/>
+  </defs>
+  <g transform="skewX(-9)" fill="none" stroke="#000000" stroke-linecap="round">
+      <g stroke-width="56"><use href="#b-stem"/><use href="#b-bowl"/></g>
+      <g stroke-width="52"><use href="#s-spine"/></g>
+      <use href="#spark" transform="translate(-36 -330) scale(0.8)" fill="#000000" stroke="none"/>
+    </g>
+</svg>

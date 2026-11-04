@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import QRCode from "qrcode";
 import { Icon } from "@bb/shared-ui/icon";
+import { BsLogo } from "@/components/ui/bs-logo";
 import { Button } from "@bb/shared-ui/button";
 import {
   Dialog,
@@ -114,7 +115,7 @@ export function NavRailMobileButton() {
         <DialogContent className="sm:max-w-md p-6 bg-surface border border-border rounded-2xl shadow-2xl">
           <DialogHeader className="text-center pb-2">
             <DialogTitle className="text-xl font-bold tracking-tight text-foreground flex items-center justify-center gap-2">
-              <Icon name="Smartphone" className="size-6 text-primary" />
+              <BsLogo className="size-6" />
               <span>Connect b smart Mobile</span>
             </DialogTitle>
             <p className="text-xs text-muted-foreground mt-1">

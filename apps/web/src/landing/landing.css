@@ -169,14 +169,16 @@ body {
    them from two declarations means the browser only fetches the one the
    winning rule needs — a pair of <img> toggled with display:none downloads
    both, on every page, for one visible mark. */
-.bb-mark {
+.bb-mark,
+.bs-mark {
   display: block;
   flex-shrink: 0;
   background-image: url("../assets/bb-icon.png");
   background-size: 100% 100%;
 }
 
-.dark .bb-mark {
+.dark .bb-mark,
+.dark .bs-mark {
   background-image: url("../assets/bb-icon-dark.png");
 }
 

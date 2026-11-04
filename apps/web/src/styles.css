@@ -14,13 +14,15 @@ body {
 
 /* The bb mark, matching landing.css: two assets, one element, so the browser
    only fetches the variant the winning declaration names. */
-.bb-mark {
+.bb-mark,
+.bs-mark {
   display: block;
   flex-shrink: 0;
   background-image: url("./assets/bb-icon.png");
   background-size: 100% 100%;
 }
 
-.dark .bb-mark {
+.dark .bb-mark,
+.dark .bs-mark {
   background-image: url("./assets/bb-icon-dark.png");
 }

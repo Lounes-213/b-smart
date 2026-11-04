@@ -112,7 +112,7 @@ export function renderExistingServerDialogHtml(
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
-  <title>bb is already running</title>
+  <title>b smart is already running</title>
   <style>
 ${DESKTOP_DIALOG_BASE_CSS}
 
@@ -180,7 +180,7 @@ export function openExistingServerDialog(
   const dialogWindow = createDesktopDialogWindow({
     parentWindow: args.parentWindow,
     preloadPath: args.preloadPath,
-    title: "bb is already running",
+    title: "b smart is already running",
     width: 460,
   });
 

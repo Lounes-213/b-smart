@@ -971,7 +971,7 @@ function HeroAppMock() {
       <div
         className="mock"
         data-construct
-        aria-label="Interactive preview of the bb app"
+        aria-label="Interactive preview of the b smart app"
       >
         <div className="mock-bar">
           <div className="bar-left">
@@ -1129,7 +1129,7 @@ function AgentChat() {
   return (
     <div
       className="tg"
-      aria-label="Texting the Crunch bot, which spawns a bb thread"
+      aria-label="Texting the Crunch bot, which spawns a b smart thread"
     >
       <div className="tg-bar">
         <ChevronLeft className="tg-back" />
@@ -1152,7 +1152,7 @@ function AgentChat() {
           <div className="tg-msg tg-in" style={{ animationDelay: "1.4s" }}>
             <span className="tg-bubble">
               On it. Spawning a worker thread.
-              <span className="tg-cmd mono">bb spawn "fix CI on main"</span>
+              <span className="tg-cmd mono">bs spawn "fix CI on main"</span>
             </span>
           </div>
           <div className="tg-msg tg-in" style={{ animationDelay: "2.4s" }}>
@@ -1178,7 +1178,7 @@ function AgentChat() {
                 </span>
               </div>
               <div className="tg-thread-title">Fix CI on main</div>
-              <div className="tg-thread-branch mono">bb/fix-ci-on-main</div>
+              <div className="tg-thread-branch mono">bs/fix-ci-on-main</div>
             </div>
           </div>
         </div>
@@ -1275,13 +1275,13 @@ function LandingPage() {
 
       <Band title="Fully customizable." flip visual={<CustomizeBuild />}>
         <p>
-          Almost anything in bb can be changed in a single prompt. Ask for your
+          Almost anything in b smart can be changed in a single prompt. Ask for your
           Linear issues and they appear: a panel in your sidebar, a{" "}
-          <code>bb linear</code> command, and a skill that teaches every agent
+          <code>bs linear</code> command, and a skill that teaches every agent
           to use it.
         </p>
         <p>
-          Many of bb&rsquo;s own features are built with the same tools you
+          Many of b smart&rsquo;s own features are built with the same tools you
           have. The GitHub integration, agent memory, scheduled jobs, and even
           remote access are all plugins.
         </p>
@@ -1304,12 +1304,12 @@ function LandingPage() {
       <Band title="The gang's all here" flip visual={<SpawnSidebar />}>
         <p>
           Claude Code, Codex, Cursor, Pi, OpenCode, Grok, omp, and Hermes all
-          live in bb. Give a task to whichever fits, and have one agent spawn
+          live in b smart. Give a task to whichever fits, and have one agent spawn
           and manage another, each in its own thread.
         </p>
         <p>
           Each runs on your own subscription: the provider plan you already pay
-          for, billed by them, not bb.
+          for, billed by them, not b smart.
         </p>
         <div className="providers">
           <ProviderChips />
@@ -1319,7 +1319,7 @@ function LandingPage() {
       <section className="statement" data-reveal>
         <h2 className="sec-title">Fork it. Make it your own.</h2>
         <p>
-          bb is MIT-licensed end to end. Fork the repo, customize the agents,
+          b smart is MIT-licensed end to end. Fork the repo, customize the agents,
           tools, and UI, and deploy your own build across your whole
           organization. It still runs local-first on your machines, on the
           provider subscriptions you already pay for.

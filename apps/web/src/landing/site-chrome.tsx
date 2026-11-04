@@ -332,7 +332,7 @@ export function SiteFooter({ current }: { current?: string }) {
         </li>
       </FooterColumn>
       <p className="footer-publisher">
-        © {new Date().getFullYear()} Terragon Labs, Inc.
+        © {new Date().getFullYear()} b smart. All rights reserved.
       </p>
     </footer>
   );

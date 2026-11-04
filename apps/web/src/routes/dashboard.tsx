@@ -58,7 +58,7 @@ function validateDashboardSearch(
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
-    meta: [{ title: "bb connect" }],
+    meta: [{ title: "b smart connect" }],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
   validateSearch: validateDashboardSearch,

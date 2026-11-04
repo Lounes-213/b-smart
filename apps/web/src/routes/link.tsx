@@ -47,7 +47,7 @@ function validateLinkSearch(search: Record<string, unknown>): LinkSearch {
 
 export const Route = createFileRoute("/link")({
   head: () => ({
-    meta: [{ title: "Sign in your bb" }],
+    meta: [{ title: "Sign in your b smart" }],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
   validateSearch: validateLinkSearch,
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/link")({
   component: LinkPage,
 });
 
-const BRAND = { title: "bb account", tagline: "Sign in your bb" } as const;
+const BRAND = { title: "b smart account", tagline: "Sign in your b smart" } as const;
 
 function linkPath(code: string): string {
   return code ? `/link?code=${encodeURIComponent(code)}` : "/link";

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/$slug")({
     (await import("../landing/landing-route-data")).landingRouteData(
       params.slug,
     ),
-  head: ({ loaderData }) => loaderData?.head ?? { meta: [{ title: "bb" }] },
+  head: ({ loaderData }) => loaderData?.head ?? { meta: [{ title: "b smart" }] },
   component: LandingRoute,
 });
 

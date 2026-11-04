@@ -8,7 +8,7 @@ export const Route = createFileRoute("/compare/$slug")({
     (await import("../compare/compare-route-data")).compareRouteData(
       params.slug,
     ),
-  head: ({ loaderData }) => loaderData?.head ?? { meta: [{ title: "bb" }] },
+  head: ({ loaderData }) => loaderData?.head ?? { meta: [{ title: "b smart" }] },
   component: CompareRoute,
 });
 

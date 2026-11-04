@@ -7,7 +7,7 @@ export const Route = createFileRoute("/guides/$slug")({
   staticData: { ownsCanonical: true },
   loader: async ({ params }) =>
     (await import("../guides/guide-page")).guideRouteData(params.slug),
-  head: ({ loaderData }) => loaderData?.head ?? { meta: [{ title: "bb" }] },
+  head: ({ loaderData }) => loaderData?.head ?? { meta: [{ title: "b smart" }] },
   component: GuidesRoute,
 });
 

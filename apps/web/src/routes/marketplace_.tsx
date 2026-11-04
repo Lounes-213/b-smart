@@ -37,7 +37,7 @@ export const Route = createFileRoute("/marketplace_")({
     if (notFound) {
       return {
         meta: [
-          { title: "Page not found — bb" },
+          { title: "Page not found — b smart" },
           { name: "robots", content: "noindex" },
         ],
         links: sharedLinks,

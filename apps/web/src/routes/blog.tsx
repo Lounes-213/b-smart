@@ -15,8 +15,9 @@ import { pageMeta, siteHeadLinks } from "../landing/page-head";
 import { SiteFooter, SiteNav } from "../landing/site-chrome";
 import blogCss from "../blog/blog.css?url";
 
-const PAGE_TITLE = "Blog — bb";
-const PAGE_DESCRIPTION = "Notes on building the IDE that builds itself.";
+const PAGE_TITLE = "Blog — b smart";
+const PAGE_DESCRIPTION =
+  "Insights, engineering architecture, and updates from b smart.";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({

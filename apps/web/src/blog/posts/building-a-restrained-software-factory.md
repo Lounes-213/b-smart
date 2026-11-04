@@ -1,100 +1,60 @@
 ---
-title: Building a (Restrained) Software Factory
-date: 2026-09-17
-lede: A practical guide to managing a fleet of agents without losing your sanity.
-coverSrc: /blog/building-a-restrained-software-factory/cover.jpg
-coverAlt: The bb logo made of thread in a textile factory
-sourceLabel: This post first appeared as an X Article
-sourceHref: https://x.com/sawyerhood/status/2100632943794503909
+title: Scaling Parallel Agents in b smart: Architecture & Best Practices
+date: 2026-10-25
+lede: A practical guide to managing and orchestrating a fleet of AI coding agents concurrently without conflicts or chaos.
+coverSrc: /og.png
+coverAlt: b smart multi-agent architecture
 ---
 
-***bb*** is probably best known for [extending itself](https://x.com/sawyerhood/status/2085039905529597982), but extensibility was a much later addition to the app. ***bb*** started as an agent orchestrator whose pitch was: **If you can do it in the editor, an agent in bb can do it too.** A big thing that spun out of this is that agents can orchestrate other agents, and it turns out this becomes a powerful primitive for making bb the command center for all of your agents. Some might even call it a *software factory.*
+As AI coding models advance, the bottleneck in software development is no longer code generation — it is **orchestration, coordination, and verification**. In **b smart**, our core principle is simple: **if an action can be performed in the editor, an agent in b smart can automate, verify, and deliver it.**
 
-I know how that sounds. I'm not going to tell you how to tokenmaxx and endlessly fire off your slop cannon. You don't have to have psychosis to automate the repetitive parts of your work: look for what you keep doing by hand, and use the tools at your disposal to make that less painful. The key is observability. bb lets you automate that work while still seeing what every agent is doing, and taking over when you need to.
-
-Here's how I've used bb to build my (restrained) software factory, one thread at a time.
+Managing multiple agents concurrently requires clear boundaries and robust architecture. Here is how developers structure high-efficiency agent fleets in **b smart**, one thread at a time.
 
 ## Level 1: Cross-Provider Sub-Threads
 
-Any agent inside bb can spawn other agents as child threads and talk to them. Those children don't have to use the same provider as the parent.
+In **b smart**, any primary agent can spawn specialized child threads and delegate tasks. The parent thread and its child threads do not need to use the same AI model or provider.
 
-A basic example: let's say you're using Fable through Claude Code to implement something. You can ask that agent to spawn a GPT-6 Astra worker to review the code. When a thread is spawned as a child of another, the parent gets notified when the child stops working. In our reviewer case then the parent thread can implement the feedback the child has for it.
+For instance, you can use a high-reasoning model (like **Claude Opus** or **GPT-4o**) to architect a feature and produce a comprehensive technical specification. That lead agent can then spawn fast, cost-effective workers to implement individual modules and write unit tests in parallel.
 
-![A thread under another](/blog/building-a-restrained-software-factory/sub-thread.png)
-*A thread under another*
+When a child thread finishes its assignment or encounters a blocker, **b smart** notifies the parent thread immediately, allowing the lead agent to integrate the code and proceed with verification.
 
-You aren't limited to spawning a single thread at a time! For example you can have a Fable / Astra worker interview you and create the plan for a feature and then have a series of cheaper models (like Meta Muse or GPT Luna) do the implementation for you..
+## Level 2: Isolated Git Worktrees
 
-I personally use large fan-out spawning like this sparingly. For most implementation work, a single agent does better than a swarm. Where it can pay off though is when there are a lot of decisions and deep thinking to be made up front, but the implementation itself is pretty straightforward and can use a cheaper model.
+The number one challenge when running multiple coding agents simultaneously is file contention. If two agents modify the same files in a single working directory, merge conflicts and broken builds are inevitable.
 
-## Level 2: Long-Lived Managers
+**b smart** solves this fundamentally by running each agent thread in its own isolated **Git worktree**:
 
-A few months ago I was really excited by the idea of manager agents: you talk to one agent and it does all of the orchestration across other agents for you. I wrote [an article about having a middle manager](https://www.sawyerhood.com/blog/hired-a-middle-manager), and the middleman project was a precursor to bb.
+- **Automatic Environment Isolation:** Each thread gets a clean, independent branch and working tree.
+- **Automated Lifecycle Hooks:** Commit `.bb-env-setup.sh` at your repo root, and **b smart** automatically configures dependencies, environment variables, and build tools when creating a new worktree.
+- **Zero Local Interference:** Your primary checkout remains undisturbed while agents run tests, install packages, and compile code in parallel.
 
-In retrospect I might have had a bit of psychosis and you can't just talk to a single agent to do all of your work (yet). But I do have a few long-lived managers for repetitive tasks I do on a regular basis.
+## Level 3: Long-Lived Manager Threads
 
-Here are two of these that I use on a daily basis.
+Rather than constantly writing prompts from scratch, **b smart** enables you to maintain long-lived manager threads for routine responsibilities:
 
-### Marketplace Manager
+### 1. Code Review & QA Verification
+A dedicated review thread that monitors incoming changes, executes test suites, checks linting standards, and provides constructive feedback before pull requests are opened.
 
-We have a plugin marketplace where people open PRs to submit their plugins to bb. I have a manager that every morning looks through the submissions, installs those plugins into a test bb instance, and clicks through to make sure they work at a basic level. Then it gives me a preliminary yes or no on whether we should allow them into the marketplace.
+### 2. Issue Triage & Bug Reproduction
+A manager agent that inspects incoming bug reports, creates minimal reproduction fixtures in isolated environments, and opens pull requests with verified patches.
 
-![The genesis prompt for the Marketplace manager](/blog/building-a-restrained-software-factory/marketplace-manager.jpg)
-*The genesis prompt for the Marketplace manager*
+### 3. Automated Dependency Upgrades
+A scheduled task that tests security patches and dependency bumps in isolated worktrees, ensuring that breaking changes are caught before human review.
 
-It keeps track of those reviews, including the submissions it rejected. If the author updates a submission, it checks the update against the previous review.
+## Level 4: Anywhere Access with Mobile Companion
 
-Oftentimes a manager grows organically. This started as a one-off thread that I gave instructions to and then over time I imbued it with more parameters and process until I've kept it around as the thread that spawns sub-threads to review all of the submissions every morning.
+Large builds, complex refactorings, and multi-file migrations take time. With **b smart**, you don't have to stay glued to your workstation.
 
-The main advantage to using a manager vs a skill is that you can give it feedback over time and let it accumulate. At one point it was treating too many things as blockers. I told it what I actually cared about for admission, it updated its review instructions, and it used them in later runs.
+Using the **b smart mobile companion** (Android & iOS), you receive real-time push notifications when an agent:
+- Needs your architectural decision or input.
+- Completes a long-running test suite or build.
+- Opens a pull request ready for your review.
 
-### Issue Report Manager
+You can inspect diffs, reply with feedback, or dispatch next steps right from your phone, whether you are on your local Wi-Fi or connected over 4G.
 
-Every morning, another manager collects a summary of recent bb issues for me. It checks for duplicates across every open issue and gives me an overview of recent themes. Maybe we broke something and there are several reports of it. Or maybe there's some longer-term tech debt we should get to.
+## Conclusion
 
-**A manager is a skill you can talk to.** You tell it what it got wrong and it changes. It's a lot like having a lightweight little OpenClaw for one particular responsibility.
+Structured agent orchestration transforms AI from an interesting toy into a serious software multiplier. By combining isolated worktrees, multi-provider dispatching, and mobile observability, **b smart** provides the command center for modern engineering.
 
-Once I've talked through a few issues or a theme with the issue report manager, I can ask it to take that context and spawn agents to implement fixes and open PRs. One long-running conversation, with context that keeps growing.
-
-Both of these managers run on a schedule through the Automations plugin, which I'll get to below.
-
-### Drag Work Onto a Manager
-
-You can reparent any thread into a manager, or into any other thread, by dragging it. Drop a thread onto a manager and ask it to take care of the next part. It doesn't have to be the agent that started the work. You can use this like Cursor projects. Have a manager that when you drag a thread on it it opens a PR, waits for CI to pass, and merges when it passes.
-
-video:/blog/building-a-restrained-software-factory/drag-thread.mp4|/blog/building-a-restrained-software-factory/drag-thread-poster.jpg|Just drag it!
-
-## Level 3: Plugin-Powered Orchestration
-
-Orchestration works fine out of the box, but if you really want to get into the nitty-gritty, plugins let you customize orchestration the same way you customize the rest of bb.
-
-### Automations
-
-The most basic one is the built-in Automations plugin, and it's one of the building blocks of my managers. You can schedule a thread to wake up every morning / every few hours, and the automation wakes the thread to do the work.
-
-### SlopCop
-
-Next is my own plugin, [SlopCop](https://getbb.app/marketplace/slopcop). It's a GitHub integration that lets you set up rules for events like an issue being opened, a PR being opened, or a certain GitHub handle being mentioned. From there it can spawn a new thread with a prompt template.
-
-I have a SlopCop rule that runs on every GitHub issue. An agent tries to reproduce the issue in a test environment and writes a reproduction report. If the fix is easy enough, the worker opens a PR automatically.
-
-### Workflows
-
-The Workflows plugin lets agents write code that orchestrates other agents, choosing a provider for each worker.
-
-This is another tool I only reach for when I have a specific use case. Large migrations are the classic one. If you need to fix a lint error across every file in a codebase, have Fable write a workflow that spawns a Luna worker per file or small group of files, then collects the changes for verification and PRs.
-
-![Example of a workflow to fix a collection of files](/blog/building-a-restrained-software-factory/workflow.jpg)
-*Example of a workflow to fix a collection of files*
-
-I really like using this across providers. Fable in particular is great at writing large workflows, while models like Muse and GPT-Luna punch above their weight for the price and you can have them do lots of repetitive work across the codebase for cheap.
-
-## Give It a Shot
-
-A few months ago I thought I'd talk to one agent and it would run everything. That hasn't happened (yet). What has worked for me is simpler. I've slowly been able to tweak how I work and build out systems that automate the repetitive parts of my day-to-day all while still having control in the end.
-
-The malleability of bb goes deeper than just plugins. The entire system can be the playground for your agents.
-
-- **Site:** [getbb.app](https://getbb.app/)
-
-- **GitHub:** [get-bb/bb](https://github.com/get-bb/bb)
+- **Explore b smart:** [https://b-smart-five.vercel.app](https://b-smart-five.vercel.app)
+- **Source Code:** [https://github.com/Lounes-213/b-smart](https://github.com/Lounes-213/b-smart)

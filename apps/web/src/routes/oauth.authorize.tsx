@@ -25,7 +25,7 @@ const OAUTH_AUTHORIZE_RESPONSE_HEADERS = {
 export const Route = createFileRoute("/oauth/authorize")({
   head: () => ({
     meta: [
-      { title: "Connect an app to your bb" },
+      { title: "Connect an app to your b smart" },
       { name: "robots", content: "noindex, nofollow" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],

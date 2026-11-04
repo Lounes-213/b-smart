@@ -6,7 +6,7 @@ import {
 } from "./release-notes-model";
 
 const RELEASE_NOTES_BASE_URL = "https://getbb.app/changelog";
-const SOURCE_REPOSITORY_URL = "https://github.com/get-bb/bb";
+const SOURCE_REPOSITORY_URL = "https://github.com/Lounes-213/b-smart";
 
 export type ReleaseNotesView = "inline" | "web";
 

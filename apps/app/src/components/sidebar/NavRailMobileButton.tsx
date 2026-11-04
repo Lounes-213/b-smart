@@ -19,9 +19,8 @@ interface ConnectStatusSnapshot {
   remoteClients: number;
 }
 
-export function NavRailMobileButton() {
+export function NavRailMobileButton({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<"remote" | "lan">("remote");
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<ConnectStatusSnapshot>({
@@ -29,20 +28,17 @@ export function NavRailMobileButton() {
     remoteClients: 0,
   });
 
-  const localIp = "192.168.1.72";
-  const port = window.location.port || "38886";
-  const lanUrl = `http://${localIp}:${port}`;
-  const remoteUrl = "https://b-smart-five.vercel.app";
-  const activeUrl = mode === "lan" ? lanUrl : remoteUrl;
+  // The official universal pairing URL that connects phone to b smart everywhere
+  const pairingUrl = "https://b-smart-five.vercel.app";
 
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
-    QRCode.toDataURL(activeUrl, {
+    QRCode.toDataURL(pairingUrl, {
       margin: 1,
-      width: 280,
+      width: 260,
       color: {
-        dark: "#0f172a",
+        dark: "#0a0a0a",
         light: "#ffffff",
       },
     }).then(
@@ -56,7 +52,7 @@ export function NavRailMobileButton() {
     return () => {
       cancelled = true;
     };
-  }, [open, activeUrl]);
+  }, [open, pairingUrl]);
 
   useEffect(() => {
     const checkStatus = () => {
@@ -73,7 +69,7 @@ export function NavRailMobileButton() {
   }, []);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(activeUrl);
+    navigator.clipboard.writeText(pairingUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -88,10 +84,11 @@ export function NavRailMobileButton() {
             type="button"
             variant="ghost"
             size="icon"
-            aria-label="Connect Mobile (b smart)"
+            aria-label="Connect Mobile (QR Code)"
             className={cn(
               SIDEBAR_RAIL_BUTTON_CLASS,
               "relative my-1 max-md:pointer-coarse:my-0",
+              className,
             )}
             onClick={() => setOpen(true)}
           >
@@ -107,70 +104,40 @@ export function NavRailMobileButton() {
         <TooltipContent side="right">
           {isMobileConnected
             ? "b smart Mobile: Connected"
-            : "Connect Mobile (b smart)"}
+            : "Connect Mobile with QR"}
         </TooltipContent>
       </Tooltip>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-md p-6 bg-surface border border-border rounded-2xl shadow-2xl">
-          <DialogHeader className="text-center pb-2">
-            <DialogTitle className="text-xl font-bold tracking-tight text-foreground flex items-center justify-center gap-2">
-              <BsLogo className="size-6" />
-              <span>Connect b smart Mobile</span>
+        <DialogContent className="sm:max-w-xs p-6 bg-surface border border-border rounded-3xl shadow-2xl text-center">
+          <DialogHeader className="text-center pb-1">
+            <DialogTitle className="text-lg font-bold tracking-tight text-foreground flex items-center justify-center gap-2">
+              <BsLogo className="size-5" />
+              <span>Connect with QR</span>
             </DialogTitle>
             <p className="text-xs text-muted-foreground mt-1">
-              Scanni had l-QR code b l'application <strong>b smart</strong> bach t-connecta direct.
+              Scanni had l-QR code b l-portable bach t-connecta direct.
             </p>
           </DialogHeader>
 
-          {/* Mode Switcher */}
-          <div className="flex bg-surface-recessed p-1 rounded-xl gap-1 border border-border/50 text-xs">
-            <button
-              type="button"
-              className={cn(
-                "flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-medium transition-all",
-                mode === "remote"
-                  ? "bg-surface shadow text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-              onClick={() => setMode("remote")}
-            >
-              <Icon name="Globe" className="size-4" />
-              <span>Remote (4G / Internet)</span>
-            </button>
-            <button
-              type="button"
-              className={cn(
-                "flex-1 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-medium transition-all",
-                mode === "lan"
-                  ? "bg-surface shadow text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-              onClick={() => setMode("lan")}
-            >
-              <Icon name="Laptop" className="size-4" />
-              <span>Same Wi-Fi (LAN)</span>
-            </button>
-          </div>
-
-          {/* QR Code Container */}
-          <div className="flex flex-col items-center justify-center py-4">
+          {/* Clean prominent QR Code */}
+          <div className="flex flex-col items-center justify-center my-4">
             <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-md">
               {qrDataUrl ? (
                 <img
                   src={qrDataUrl}
-                  alt="b smart mobile pairing QR code"
+                  alt="QR code to connect b smart mobile"
                   className="size-48 rounded-lg"
                 />
               ) : (
                 <div className="size-48 flex items-center justify-center text-xs text-slate-400">
-                  Generating QR code...
+                  Loading QR...
                 </div>
               )}
             </div>
 
-            {/* Live Connection Status Banner */}
-            <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-border/80 bg-surface-recessed">
+            {/* Live Connection Status */}
+            <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-border/70 bg-surface-recessed">
               {isMobileConnected ? (
                 <>
                   <span className="relative flex size-2">
@@ -185,32 +152,27 @@ export function NavRailMobileButton() {
                 <>
                   <span className="size-2 rounded-full bg-amber-400 animate-pulse" />
                   <span className="text-muted-foreground">
-                    Waiting for mobile phone to scan...
+                    Waiting for scan...
                   </span>
                 </>
               )}
             </div>
           </div>
 
-          {/* URL & Copy Row */}
-          <div className="flex items-center gap-2 p-2 rounded-xl bg-surface-recessed border border-border text-xs">
-            <span className="truncate flex-1 font-mono text-muted-foreground select-all px-1">
-              {activeUrl}
-            </span>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="h-7 px-2.5 gap-1 shrink-0 text-xs"
-              onClick={handleCopy}
-            >
-              <Icon
-                name={copied ? "Check" : "Copy"}
-                className={cn("size-3.5", copied && "text-emerald-500")}
-              />
-              <span>{copied ? "Copied" : "Copy"}</span>
-            </Button>
-          </div>
+          {/* Quick Copy Link */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="w-full gap-2 text-xs h-8 rounded-xl"
+            onClick={handleCopy}
+          >
+            <Icon
+              name={copied ? "Check" : "Copy"}
+              className={cn("size-3.5", copied && "text-emerald-500")}
+            />
+            <span>{copied ? "Link Copied!" : "Copy Connection Link"}</span>
+          </Button>
         </DialogContent>
       </Dialog>
     </>

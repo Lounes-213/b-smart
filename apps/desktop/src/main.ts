@@ -1709,7 +1709,7 @@ async function runStartupAction(
       actions: [],
       details: error instanceof Error ? error.message : String(error),
       logs: "",
-      title: "Could not open bb",
+      title: "Could not open b smart",
     });
   } finally {
     startupActionPending = false;
@@ -1824,7 +1824,7 @@ async function loadServerMovedView(move: DesktopServerMove): Promise<void> {
       ? "The old copy on this computer is locked after the move."
       : "The old copy on this computer was deleted.",
     logs: "",
-    title: `bb moved to ${move.toHostName}`,
+    title: `b smart moved to ${move.toHostName}`,
   });
 }
 
@@ -1869,7 +1869,7 @@ async function applyServerTarget(): Promise<void> {
           `Could not connect to the local bb server on ${process.platform === "darwin" ? "this Mac" : "this computer"}. ` +
           "Check that the port is free or that a compatible bb server is running.",
         logs: "",
-        title: "Could not connect to bb server",
+        title: "Could not connect to b smart server",
       });
       refreshApplicationMenu();
       return;
@@ -1917,7 +1917,7 @@ async function applyServerTarget(): Promise<void> {
           : "The desktop app could not establish a session for this Connect server. " +
             `(${result.code}: ${result.detail})`,
         logs: "",
-        title: "Could not authenticate with bb Connect",
+        title: "Could not authenticate with b smart Connect",
       });
       refreshApplicationMenu();
       return;
@@ -2211,8 +2211,8 @@ async function loadLoadingView(): Promise<void> {
     url: createLocalViewUrl({
       viewModel: {
         kind: "loading",
-        message: "Starting local services and opening the bb workspace.",
-        title: "Opening bb",
+        message: "Starting local services and opening the b smart workspace.",
+        title: "Opening b smart",
       },
     }),
   });
@@ -2224,8 +2224,8 @@ async function loadWindowsInstallerWaitView(): Promise<void> {
     url: createLocalViewUrl({
       viewModel: {
         kind: "loading",
-        message: "bb opens when the installer is done.",
-        title: "Finishing the bb update",
+        message: "b smart opens when the installer is done.",
+        title: "Finishing the b smart update",
       },
     }),
   });
@@ -2688,7 +2688,7 @@ async function startOwnedRuntime(
       )}.`,
       logs: bbProcess.logs.text(),
       actions: [],
-      title: "Could not start bb",
+      title: "Could not start b smart",
     });
     return null;
   }
@@ -2705,7 +2705,7 @@ async function startOwnedRuntime(
         : `Timed out waiting for bb at ${args.serverUrl}: ${raceResult.result.reason}.`,
     logs: bbProcess.logs.text(),
     actions: [],
-    title: "Could not start bb",
+    title: "Could not start b smart",
   });
   await stopOwnedRuntime();
   return null;
@@ -2788,7 +2788,7 @@ async function decideOnExistingServer(
         "process no longer matches the record. bb did not stop it. Stop it yourself, then open bb again.",
       logs: "",
       actions: [],
-      title: "Could not stop the running bb",
+      title: "Could not stop the running b smart",
     });
     return "quit";
   }
@@ -2797,7 +2797,7 @@ async function decideOnExistingServer(
       details: `bb could not stop process ${String(stopResult.pid)}, even after SIGKILL.`,
       logs: "",
       actions: [],
-      title: "Could not stop the running bb",
+      title: "Could not stop the running b smart",
     });
     return "quit";
   }
@@ -2808,7 +2808,7 @@ async function decideOnExistingServer(
         "Open bb again to see the copy that runs now.",
       logs: "",
       actions: [],
-      title: "Could not stop the running bb",
+      title: "Could not stop the running b smart",
     });
     return "quit";
   }
@@ -2817,7 +2817,7 @@ async function decideOnExistingServer(
       details: `The bb at ${probe.serverUrl} stopped, but the address is still in use.`,
       logs: "",
       actions: [],
-      title: "Could not stop the running bb",
+      title: "Could not stop the running b smart",
     });
     return "quit";
   }
@@ -3417,6 +3417,6 @@ void runDesktopApp().catch((error) => {
     details: message,
     logs: "",
     actions: [],
-    title: "Could not open bb",
+    title: "Could not open b smart",
   });
 });

@@ -18,7 +18,7 @@ const localViewTestCases: LocalViewTestCase[] = [
     viewModel: {
       kind: "loading",
       message: "Starting local services.",
-      title: "Opening bb",
+      title: "Opening b smart",
     },
   },
   {
@@ -28,7 +28,7 @@ const localViewTestCases: LocalViewTestCase[] = [
       details: "The local service failed to start.",
       kind: "error",
       logText: "Failed to bind port",
-      title: "Could not open bb",
+      title: "Could not open b smart",
     },
   },
 ];

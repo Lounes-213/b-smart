@@ -163,7 +163,7 @@ export function faqFree(contrast: ReactNode): CompareFaq {
         Yes, for one person or a whole team. The mobile app, remote machines,
         automations, and plugins are all included{contrast}. You pay only for
         the agent plans or API keys you already use, from any provider. The code
-        is on <a href="https://github.com/get-bb/bb">GitHub</a> under the MIT
+        is on <a href="https://github.com/Lounes-213/b-smart">GitHub</a> under the MIT
         license.
       </p>
     ),

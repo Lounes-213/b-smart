@@ -267,7 +267,7 @@ function PrivacyRoute() {
           <p>
             Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>{" "}
             with any question about this policy, or open an issue on{" "}
-            <a href="https://github.com/get-bb/bb">GitHub</a>.
+            <a href="https://github.com/Lounes-213/b-smart">GitHub</a>.
           </p>
         </div>
       </article>

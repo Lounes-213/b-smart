@@ -14,7 +14,7 @@ describe("site navigation", () => {
     const guideLinks = guideMenu().flatMap((item) =>
       "links" in item ? item.links : [item],
     );
-    expect(links).toHaveLength(6 + guideLinks.length);
+    expect(links).toHaveLength(7 + guideLinks.length);
     expect(html).toMatch(
       /<details class="nav-menu"><summary class="nav-current">Plugins/,
     );
@@ -61,7 +61,7 @@ describe("site navigation", () => {
       expect(footer).toContain(`<h2 class="footer-title">${title}</h2>`);
     }
     expect(footer).toContain(
-      'href="/compare/superset-alternative" aria-current="page">bb vs Superset',
+      'href="/compare/superset-alternative" aria-current="page">bs vs Superset',
     );
     expect(footer).not.toContain('href="/plugin-guide" aria-current="page"');
   });

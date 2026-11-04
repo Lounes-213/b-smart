@@ -32,7 +32,7 @@ export const BB_ROWS = {
   license: { feature: "Open-source license", bb: cell("yes", "MIT") },
   webAccess: {
     feature: "Web access from any browser",
-    bb: cell("yes", "With bb Connect"),
+    bb: cell("yes", "With b smart Connect"),
   },
   otherMachines: {
     feature: "Run agents on other machines",
@@ -87,25 +87,25 @@ export const FAQ_GET_STARTED: CompareFaq = {
   answer: (
     <ol>
       <li>
-        Download bb for <a href="/download/macos">macOS</a> (Apple Silicon),{" "}
+        Download b smart for <a href="/download/macos">macOS</a> (Apple Silicon),{" "}
         <a href={WINDOWS_DOWNLOAD_URL}>Windows (Alpha)</a>, or{" "}
         <a href="/download/linux">Linux (Alpha)</a>. On an Intel Mac, run{" "}
-        <code>npx bb-app@latest</code>, which needs Node.js 22.19 or later.
+        <code>npx b-smart@latest</code>, which needs Node.js 22.19 or later.
       </li>
       <li>
         Install and sign in to a coding agent, like Claude Code, Codex, Cursor,
         or OpenCode.
       </li>
-      <li>Open bb, add your project folder, and type your first request.</li>
+      <li>Open b smart, add your project folder, and type your first request.</li>
     </ol>
   ),
 };
 
 export const FAQ_CUSTOMIZE: CompareFaq = {
-  question: "Can I customize bb with plugins?",
+  question: "Can I customize b smart with plugins?",
   answer: (
     <p>
-      Yes. bb works out of the box, with worktrees, diff review, automations,
+      Yes. b smart works out of the box, with worktrees, diff review, automations,
       and the mobile app ready from your first thread. When you want more,
       install plugins from the <a href="/marketplace">marketplace</a> or ask an
       agent to build one. Plugins can add panels, commands, and new agents, and

@@ -212,7 +212,7 @@ const LATEST_RELEASE_URL = `/changelog#${LATEST_RELEASE.version.replaceAll(".", 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "b smart: agentic IDE · The IDE that builds itself" },
+      { title: "b smart · The Intelligent Multi-Agent Workspace" },
       { name: "description", content: SITE_DESCRIPTION },
       ...unfurlMeta("b smart", OG_DESCRIPTION, "/"),
     ],
@@ -1223,10 +1223,11 @@ function LandingPage() {
           <span className="updates-title">{LATEST_RELEASE_META.headline}</span>
           <ChevronRight className="updates-arrow" />
         </a>
-        <h1>The IDE that builds itself</h1>
+        <h1>The Intelligent Multi-Agent Workspace</h1>
         <p className="sub">
-          b smart can control, customize, and automate itself, laying the
-          groundwork for your own software factory.
+          Orchestrate AI coding agents, automate complex workflows, and build
+          software at the speed of thought with b smart. Private, local-first,
+          and fully extensible.
         </p>
 
         <InstallOptions placement="hero" />

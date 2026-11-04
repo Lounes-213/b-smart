@@ -239,7 +239,7 @@ function CompareTable({ comparison }: { comparison: Comparison }) {
             <th role="columnheader" scope="col" className="cmp-corner">
               {firstGroup?.title}
             </th>
-            <BrandHeader name="bb" logo={{ kind: "bb" }} us />
+            <BrandHeader name="b smart" logo={{ kind: "bb" }} us />
             <BrandHeader
               name={comparison.competitor.name}
               logo={comparison.competitor.logo}
@@ -419,7 +419,7 @@ export function ComparePage({ comparison }: { comparison: Comparison }) {
           <div className="cmp-logos">
             <span className="cmp-logo-item">
               <BrandMark logo={{ kind: "bb" }} className="cmp-logo" />
-              bb
+              b smart
             </span>
             <span className="cmp-vs">vs</span>
             <span className="cmp-logo-item">
@@ -439,7 +439,7 @@ export function ComparePage({ comparison }: { comparison: Comparison }) {
       <section className="cmp-section" data-reveal>
         <h2 id="cmp-table-title" className="sec-title cmp-table-title">
           <BrandMark logo={{ kind: "bb" }} className="cmp-table-title-logo" />
-          bb
+          b smart
           <span className="cmp-table-title-vs">vs</span>
           <BrandMark logo={competitor.logo} className="cmp-table-title-logo" />
           {competitor.name}

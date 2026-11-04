@@ -26,17 +26,17 @@ describe("canonicalHref", () => {
     {
       name: "the home page",
       matches: [match("/")],
-      href: "https://getbb.app/",
+      href: "https://b-smart-five.vercel.app/",
     },
     {
       name: "a leaf page",
       matches: [match("/"), match("/plugin-guide")],
-      href: "https://getbb.app/plugin-guide",
+      href: "https://b-smart-five.vercel.app/plugin-guide",
     },
     {
       name: "a trailing slash",
       matches: [match("/"), match("/blog/")],
-      href: "https://getbb.app/blog",
+      href: "https://b-smart-five.vercel.app/blog",
     },
     {
       name: "a leaf that is not found",
@@ -60,7 +60,7 @@ describe("canonicalHref", () => {
         match("/marketplace", { ownsCanonical: true }),
         match("/marketplace/advisor"),
       ],
-      href: "https://getbb.app/marketplace/advisor",
+      href: "https://b-smart-five.vercel.app/marketplace/advisor",
     },
   ])("returns the canonical for $name", ({ matches, href }) => {
     expect(canonicalHref(matches)).toBe(href);

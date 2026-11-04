@@ -4,11 +4,9 @@
 
 # b smart
 
-[![npm version](https://img.shields.io/npm/v/bb-app.svg)](https://www.npmjs.com/package/bb-app)
-[![Join Discord](https://img.shields.io/badge/Discord-Join%20server-5865F2?logo=discord&logoColor=white)](https://discord.gg/kvBU6tJhcJ)
+**The Intelligent Multi-Agent Workspace**
 
-b smart is an agentic IDE that builds itself. It can control, customize, and automate
-itself, laying the groundwork for your own software factory.
+b smart is a next-generation, local-first development workspace designed to orchestrate AI coding agents (Claude Code, Codex, Cursor, Pi, and custom agents). Build software faster with parallel agent threads, automated Git worktrees, deep extensibility, and mobile companion access.
 
 Every surface — the desktop app, web app, CLI, and HTTP API — is a first-class
 way to drive b smart. Work runs in threads you can follow live, steer at any point,
@@ -47,14 +45,13 @@ yellow icon, and auto-update feed.
 ### Or run it anywhere with npx
 
 ```bash
-npx bb-app@latest
+npx b-smart@latest
 ```
 
 Then open `http://localhost:38886`.
 
-To control b smart from outside b smart with the `bb` CLI, open **Settings → General →
-Command line** and choose **Install**. See
-[The bb Command On PATH](./docs/configuration.md#the-bb-command-on-path).
+To control b smart from outside b smart with the `bs` CLI, open **Settings → General →
+Command line** and choose **Install**.
 
 To run the newest automated build instead:
 

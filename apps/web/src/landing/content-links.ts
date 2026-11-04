@@ -79,7 +79,7 @@ export const guideMenu = once((): (ContentGroup | ContentLink)[] =>
 export const compareLinks = once((): ContentLink[] =>
   metas(COMPARE_MODULES)
     .map((meta) => ({
-      label: `bb vs ${meta.competitor.name}`,
+      label: `bs vs ${meta.competitor.name}`,
       href: `/compare/${meta.slug}`,
     }))
     .sort((a, b) => a.label.localeCompare(b.label)),

@@ -1,6 +1,7 @@
 {
   "name": "@bb/web",
   "version": "0.0.1",
+  "description": "b smart official web app and landing site",
   "type": "module",
   "private": true,
   "scripts": {

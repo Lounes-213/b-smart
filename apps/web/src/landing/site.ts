@@ -80,11 +80,11 @@ export function downloadHref(
 
 declare const __SITE_ORIGIN__: string;
 const SITE_URL = __SITE_ORIGIN__;
-export const SITE_TITLE = "b smart: the IDE that builds itself";
+export const SITE_TITLE = "b smart · The Intelligent Multi-Agent Workspace";
 export const SITE_DESCRIPTION =
-  "b smart can control, customize, and automate itself, laying the groundwork for your own software factory. Fully open source and local-first, with Claude Code, Codex, Cursor, Pi, OpenCode, Grok, omp, and Hermes.";
+  "b smart is an intelligent, local-first agentic workspace. Orchestrate Claude Code, Codex, Cursor, Pi, and custom AI agents seamlessly on your machine with total privacy and extensibility.";
 export const OG_DESCRIPTION =
-  "b smart can control, customize, and automate itself, laying the groundwork for your own software factory.";
+  "Orchestrate AI coding agents, automate complex workflows, and build software at the speed of thought with b smart.";
 
 export function unfurlMeta(
   title: string,
@@ -94,7 +94,7 @@ export function unfurlMeta(
     path: "/og.png",
     width: 2400,
     height: 1260,
-    alt: "b smart logo — The IDE that builds itself. Free, open source, and local-first.",
+    alt: "b smart logo — The Intelligent Multi-Agent Workspace. Free, open source, and local-first.",
   },
 ) {
   return [

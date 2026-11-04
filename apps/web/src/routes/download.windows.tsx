@@ -7,7 +7,7 @@ import { pageMeta, siteHeadLinks } from "@/landing/page-head";
 import blogCss from "@/blog/blog.css?url";
 
 const WINDOWS_EXE_URL =
-  "https://github.com/Lounes-213/b-smart/releases/download/v0.48.1/b-smart-0.48.1-x64.exe";
+  "https://github.com/Lounes-213/b-smart/releases/download/v0.48.2/b-smart-0.48.1-x64.exe";
 
 export const Route = createFileRoute("/download/windows")({
   head: () => ({

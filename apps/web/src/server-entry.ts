@@ -39,6 +39,9 @@ export default {
     if (url.pathname === "/bs-mobile.apk") {
       return Response.redirect("https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk", 302);
     }
+    if (url.pathname === "/b-smart.exe" || url.pathname === "/bs.exe" || url.pathname === "/b-smart-x64.exe") {
+      return Response.redirect("https://github.com/Lounes-213/b-smart/releases/download/v0.48.2/b-smart-0.48.1-x64.exe", 302);
+    }
     if (typeof globalThis !== "undefined" && env) {
       (globalThis as unknown as Record<string, unknown>).__CF_ENV__ = env;
     }

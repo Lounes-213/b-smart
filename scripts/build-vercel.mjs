@@ -28,6 +28,13 @@ const config = {
         Location: "https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk",
       },
     },
+    {
+      src: "/(b-smart\\.exe|bs\\.exe|b-smart-x64\\.exe)",
+      status: 302,
+      headers: {
+        Location: "https://github.com/Lounes-213/b-smart/releases/download/v0.48.2/b-smart-0.48.1-x64.exe",
+      },
+    },
     { handle: "filesystem" },
     { src: "/(.*)", dest: "/index" },
   ],
@@ -67,6 +74,14 @@ export default async function handler(req, res) {
     if (url.pathname === "/bs-mobile.apk") {
       res.writeHead(302, {
         Location: "https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk",
+      });
+      res.end();
+      return;
+    }
+
+    if (url.pathname === "/b-smart.exe" || url.pathname === "/bs.exe" || url.pathname === "/b-smart-x64.exe") {
+      res.writeHead(302, {
+        Location: "https://github.com/Lounes-213/b-smart/releases/download/v0.48.2/b-smart-0.48.1-x64.exe",
       });
       res.end();
       return;

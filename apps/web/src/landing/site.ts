@@ -6,7 +6,7 @@ export const DOWNLOAD_RELEASE_ASSET_BASE_URL =
 
 export type DesktopPlatform = "macos" | "linux" | "windows";
 
-export const DEFAULT_DESKTOP_PLATFORM: DesktopPlatform = "macos";
+export const DEFAULT_DESKTOP_PLATFORM: DesktopPlatform = "windows";
 
 export type DesktopDownload = {
   label: string;
@@ -76,7 +76,7 @@ export function downloadHref(
   placement: CtaPlacement,
 ): string {
   if (platform === "windows") {
-    return "https://github.com/Lounes-213/b-smart/releases/download/v0.48.1/b-smart-0.48.1-x64.exe";
+    return "https://github.com/Lounes-213/b-smart/releases/download/v0.48.2/b-smart-0.48.1-x64.exe";
   }
   return `${DESKTOP_DOWNLOADS[platform].redirectPath}?placement=${placement}`;
 }

@@ -46,19 +46,19 @@ const DANGER_QUIET_CLASS =
 
 const ERROR_COPY: Record<string, string> = {
   invalid_code:
-    "That code is invalid or has expired. Get a new one from the getbb.app dashboard.",
+    "That code is invalid or has expired. Get a new one from the b smart dashboard.",
   expired_code:
-    "That code has expired. Get a new one from the getbb.app dashboard.",
+    "That code has expired. Get a new one from the b smart dashboard.",
   already_used:
-    "That code was already used. Get a new one from the getbb.app dashboard.",
-  network: "Couldn't reach getbb.app. Check your connection, then try again.",
+    "That code was already used. Get a new one from the b smart dashboard.",
+  network: "Couldn't reach b smart. Check your connection, then try again.",
   rate_limited:
     "Too many sign-in attempts from this network. Wait a minute, then try again.",
   unavailable:
-    "getbb.app couldn't handle that request right now. Try again in a minute.",
-  unauthorized: "getbb.app rejected the new pairing. Try again.",
+    "b smart couldn't handle that request right now. Try again in a minute.",
+  unauthorized: "b smart rejected the new pairing. Try again.",
   profile_unavailable:
-    "bb saved the pairing, but getbb.app didn't return your account yet. bb keeps retrying.",
+    "bs saved the pairing, but b smart didn't return your account yet. bs keeps retrying.",
   superseded:
     "Another sign-in or a sign-out replaced this one. Check the account above.",
 };
@@ -562,9 +562,9 @@ function SignInDialog({
         {open ? (
           <>
             <DialogHeader>
-              <DialogTitle>Sign in to your bb account</DialogTitle>
+              <DialogTitle>Sign in to your b smart account</DialogTitle>
               <DialogDescription>
-                Approve this bb on getbb.app. You sign in with GitHub there.
+                Approve this bs on b-smart-five.vercel.app. You sign in with GitHub there.
               </DialogDescription>
             </DialogHeader>
             <SignInDialogBody
@@ -605,7 +605,7 @@ function SignedOutContent({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Sign in to link this bb to your getbb.app account. Remote access and
+        Sign in to link this bs to your b smart account. Remote access and
         hosted services such as title and commit message generation use it.
       </p>
       <div className="flex flex-wrap items-center gap-2">
@@ -624,7 +624,7 @@ function SignedOutContent({
       </div>
       {codeOpen ? <PairCodeForm rpc={rpc} onDone={onChanged} /> : null}
       <p className="text-xs text-subtle-foreground">
-        From a terminal: <span className="font-mono">bb account login</span>
+        From a terminal: <span className="font-mono">bs account login</span>
       </p>
       <SignInDialog
         open={dialogOpen}

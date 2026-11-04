@@ -35,6 +35,10 @@ const handler = createStartHandler(async (context) => {
 
 export default {
   fetch(request: Request, env: unknown, ctx: unknown) {
+    const url = new URL(request.url);
+    if (url.pathname === "/bs-mobile.apk") {
+      return Response.redirect("https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk", 302);
+    }
     if (typeof globalThis !== "undefined" && env) {
       (globalThis as unknown as Record<string, unknown>).__CF_ENV__ = env;
     }

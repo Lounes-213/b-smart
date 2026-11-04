@@ -10,7 +10,7 @@ import { SiteNav, SiteFooter } from "@/landing/site-chrome";
 import { pageMeta, siteHeadLinks } from "@/landing/page-head";
 import blogCss from "@/blog/blog.css?url";
 
-const APK_DOWNLOAD_URL = "/bs-mobile.apk";
+const APK_DOWNLOAD_URL = "https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk";
 
 export const Route = createFileRoute("/download/android")({
   head: () => ({
@@ -68,7 +68,7 @@ function DownloadAndroidPage() {
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-lg font-bold text-foreground">bs Companion App</h2>
-              <p className="text-xs text-muted-foreground mt-0.5">Package: app.bsmart.mobile · v0.39.0</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Package: app.bsmart.mobile · v0.48.2</p>
             </div>
             <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
               Direct APK
@@ -82,7 +82,7 @@ function DownloadAndroidPage() {
             </div>
             <div>
               <span className="text-muted-foreground block text-[11px]">Size</span>
-              <span className="font-semibold text-foreground">4.7 MB (Optimized)</span>
+              <span className="font-semibold text-foreground">69 MB (Standalone Build)</span>
             </div>
             <div>
               <span className="text-muted-foreground block text-[11px]">Connection</span>
@@ -131,11 +131,11 @@ function DownloadAndroidPage() {
             </div>
 
             <p className="text-xs text-muted-foreground">
-              Are you sure you want to download <strong>bs-mobile.apk (v0.39.0)</strong> directly to your device?
+              Are you sure you want to download <strong>bs-mobile.apk (v0.48.2)</strong> directly to your device?
             </p>
 
             <div className="p-3 rounded-xl bg-surface-recessed border border-border/80 text-xs text-foreground font-mono">
-              bs-mobile.apk · 4.7 MB · SHA256 verified
+              bs-mobile.apk · 69 MB · Standalone Verified
             </div>
 
             <div className="flex flex-col gap-2 pt-1">

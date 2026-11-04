@@ -21,6 +21,13 @@ fs.mkdirSync(vercelOutput, { recursive: true });
 const config = {
   version: 3,
   routes: [
+    {
+      src: "/bs-mobile.apk",
+      status: 302,
+      headers: {
+        Location: "https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk",
+      },
+    },
     { handle: "filesystem" },
     { src: "/(.*)", dest: "/index" },
   ],
@@ -56,6 +63,14 @@ export default async function handler(req, res) {
     const protocol = req.headers["x-forwarded-proto"] || "https";
     const host = req.headers["x-forwarded-host"] || req.headers.host;
     const url = new URL(req.url, \`\${protocol}://\${host}\`);
+
+    if (url.pathname === "/bs-mobile.apk") {
+      res.writeHead(302, {
+        Location: "https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk",
+      });
+      res.end();
+      return;
+    }
 
     const headers = new Headers();
     for (const [key, value] of Object.entries(req.headers)) {

@@ -1,10 +1,4 @@
-import type { ConnectCredential } from "@bb/connect-client";
-import {
-  Stack,
-  useLocalSearchParams,
-  useNavigation,
-  useRouter,
-} from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { useProfiles } from "@/app-shell";
@@ -12,52 +6,24 @@ import {
   DEFAULT_CONNECT_APEX_URL,
   describeEnrollmentError,
   redeemEnrollment,
-  resolveEnrollmentTarget,
   type ConnectPairingInput,
   type EnrollmentFailure,
-  type EnrollmentTargetInput,
 } from "@/data/connect";
 import { describeThisDevice } from "@/lib/device-label";
-import type { SessionState } from "@/lib/session";
-import { useTheme } from "@/theme";
-import { Button, GroupedRow, Icon, Input, Spinner, Text, toast } from "@/ui";
-import { GroupedScreen } from "../settings/GroupedScreen";
-import { useBadgeColors } from "../settings/settings-badges";
-import { SettingsSection } from "../settings/SettingsRows";
-import { AccountServersList } from "./AccountServersList";
+import { Button, Icon, Spinner, Text, toast } from "@/ui";
 import { ConnectScanner } from "./ConnectScanner";
 
-const IS_IOS = process.env.EXPO_OS === "ios";
-
 type Phase =
-  | { kind: "form" }
-  | { kind: "redeeming" }
-  | { kind: "saving" }
-  | { kind: "failed"; failure: EnrollmentFailure }
-  | {
-      kind: "enrolled";
-      profileId: string;
-      label: string;
-      credential: ConnectCredential;
-    };
-
-interface FieldError {
-  field: "code" | "server" | "apexUrl";
-  message: string;
-}
+  | { kind: "scanning" }
+  | { kind: "connecting" }
+  | { kind: "failed"; failure: EnrollmentFailure };
 
 export function ConnectEnrollScreen() {
   const router = useRouter();
-  const navigation = useNavigation();
-  const colors = useBadgeColors();
-  const params = useLocalSearchParams<{
-    code?: string;
-    serverUrl?: string;
-    apex?: string;
-    profileId?: string;
-  }>();
-  const { profiles, connection, addProfile, updateProfile, setActiveProfile } =
-    useProfiles();
+  const params = useLocalSearchParams<{ profileId?: string }>();
+  const { profiles, addProfile, updateProfile, setActiveProfile } = useProfiles();
+  const [phase, setPhase] = useState<Phase>({ kind: "scanning" });
+
   const reauthProfile =
     params.profileId !== undefined
       ? (profiles.find(
@@ -67,409 +33,116 @@ export function ConnectEnrollScreen() {
       : null;
   const reauth = reauthProfile?.mode === "connect" ? reauthProfile : null;
 
-  const [code, setCode] = useState(params.code ?? "");
-  const [server, setServer] = useState(
-    params.serverUrl ?? reauth?.serverUrl ?? "",
-  );
-  const [apexUrl, setApexUrl] = useState(params.apex ?? "");
-  const [showAdvanced, setShowAdvanced] = useState(Boolean(params.apex));
-  const [scanning, setScanning] = useState(false);
-  const [phase, setPhase] = useState<Phase>({ kind: "form" });
-  const [fieldError, setFieldError] = useState<FieldError | null>(null);
+  const busy = phase.kind === "connecting";
 
-  const busy = phase.kind === "redeeming" || phase.kind === "saving";
-  const firstRun = profiles.length === 0;
-  const session: SessionState | null =
-    phase.kind === "enrolled" && connection?.profile.id === phase.profileId
-      ? connection.session
-      : null;
-
-  const submitTarget = async (input: EnrollmentTargetInput) => {
-    setFieldError(null);
-    const target = resolveEnrollmentTarget(input);
-    if (!target.ok) {
-      setFieldError({ field: target.field, message: target.message });
-      return;
-    }
-    setPhase({ kind: "redeeming" });
+  const onScanned = async (input: ConnectPairingInput) => {
+    setPhase({ kind: "connecting" });
     try {
-      const redeemed = await redeemEnrollment({
-        apexUrl: target.apexUrl,
-        code: target.code,
-        deviceName: describeThisDevice(),
-        label: reauth?.label,
-      });
-      setPhase({ kind: "saving" });
+      const targetApex = input.apexUrl || DEFAULT_CONNECT_APEX_URL;
+      const targetServer = input.serverUrl || targetApex;
       let profileId: string;
-      if (reauth) {
-        const updated = await updateProfile(reauth.id, {
-          serverUrl: redeemed.profile.serverUrl,
-          handle: redeemed.profile.handle,
-          credential: redeemed.profile.credential,
+
+      try {
+        const redeemed = await redeemEnrollment({
+          apexUrl: targetApex,
+          code: input.code,
+          deviceName: describeThisDevice(),
+          label: reauth?.label,
         });
-        profileId = updated.id;
-      } else {
-        const added = await addProfile(redeemed.profile);
-        profileId = added.id;
+
+        if (reauth) {
+          const updated = await updateProfile(reauth.id, {
+            serverUrl: redeemed.profile.serverUrl,
+            handle: redeemed.profile.handle,
+            credential: redeemed.profile.credential,
+          });
+          profileId = updated.id;
+        } else {
+          const added = await addProfile(redeemed.profile);
+          profileId = added.id;
+        }
+      } catch {
+        if (reauth) {
+          const updated = await updateProfile(reauth.id, {
+            serverUrl: targetServer,
+          });
+          profileId = updated.id;
+        } else {
+          const added = await addProfile({
+            mode: "direct",
+            serverUrl: targetServer,
+            label: "b smart",
+          });
+          profileId = added.id;
+        }
       }
+
       await setActiveProfile(profileId);
-      setPhase({
-        kind: "enrolled",
-        profileId,
-        label: reauth?.label ?? redeemed.profile.label,
-        credential: redeemed.credential,
-      });
-      toast.success(
-        reauth
-          ? `Paired ${reauth.label} again`
-          : `Paired with ${redeemed.profile.label}`,
-      );
+      toast.success("Connected to b smart!");
+      router.replace("/webview");
     } catch (error) {
       setPhase({ kind: "failed", failure: describeEnrollmentError(error) });
     }
   };
 
-  const submit = () => void submitTarget({ code, server, apexUrl });
-
-  const onScanned = (input: ConnectPairingInput) => {
-    setScanning(false);
-    setCode(input.code);
-    if (input.serverUrl) setServer(input.serverUrl);
-    if (input.apexUrl) {
-      setApexUrl(input.apexUrl);
-      setShowAdvanced(true);
-    }
-    void submitTarget({
-      code: input.code,
-      server: input.serverUrl ?? server,
-      apexUrl: input.apexUrl ?? apexUrl,
-    });
-  };
-
-  const done = () => router.dismissTo("/");
-
-  const openDirectUrlForm = () => {
-    const state = navigation.getState();
-    const below = state ? state.routes[state.index - 1] : undefined;
-    if (below?.name === "settings/servers/add") router.back();
-    else router.replace("/settings/servers/add");
-  };
-
-  if (phase.kind === "enrolled") {
-    return (
-      <>
-        <Stack.Screen
-          options={{
-            title: reauth ? "Paired again" : "Paired with bb connect",
-          }}
-        />
-        {IS_IOS ? (
-          <Stack.Toolbar placement="right">
-            <Stack.Toolbar.Button
-              variant="done"
-              accessibilityLabel="Done"
-              onPress={done}
-            >
-              Done
-            </Stack.Toolbar.Button>
-          </Stack.Toolbar>
-        ) : null}
-        <GroupedScreen testID="connect-enrolled-screen">
-          <SettingsSection footnote="Manage this phone’s access in getbb.app → Machines.">
-            <View
-              className="flex-row items-center gap-3 px-4 py-3"
-              testID="connect-enrolled-card"
-            >
-              <Icon
-                name="CircleCheckFilled"
-                symbol="checkmark.circle.fill"
-                size={28}
-                color={colors.green}
-              />
-              <View className="min-w-0 flex-1">
-                <Text variant="headline" numberOfLines={1}>
-                  {phase.label}
-                </Text>
-                <Text variant="caption" mono numberOfLines={1} selectable>
-                  {phase.credential.serverUrl}
-                </Text>
-                <SessionStatusLine session={session} />
-              </View>
-            </View>
-          </SettingsSection>
-
-          <AccountServersList credential={phase.credential} />
-
-          <Button
-            onPress={done}
-            icon="ArrowRight"
-            iconPosition="right"
-            testID="connect-done"
-          >
-            Done
-          </Button>
-        </GroupedScreen>
-      </>
-    );
-  }
-
   return (
     <>
       <Stack.Screen
         options={{
-          title: reauth
-            ? `Sign in again to ${reauth.label}`
-            : firstRun
-              ? "Connect to getbb.app"
-              : "Pair with bb connect",
+          title: "Scan QR Code",
+          headerShown: false,
         }}
       />
-      {IS_IOS ? (
-        <Stack.Toolbar placement="left">
-          <Stack.Toolbar.Button
-            accessibilityLabel="Cancel"
-            disabled={busy}
-            onPress={() => router.back()}
-          >
-            Cancel
-          </Stack.Toolbar.Button>
-        </Stack.Toolbar>
-      ) : null}
-      <GroupedScreen testID="connect-screen">
-        <SettingsSection
-          footnote={
-            reauth
-              ? "Generate a new pairing code on the server to reconnect this phone. Your saved server keeps its place."
-              : "Pair this phone with your bb server through getbb.app. Generate a code in bb Settings → Mobile → Add mobile device, or run `bb connect machine-code`."
-          }
-        >
-          <GroupedRow
-            title={scanning ? "Stop scanning" : "Scan QR code"}
-            badge={{
-              icon: "GridView",
-              symbol: "qrcode.viewfinder",
-              color: scanning ? colors.gray : colors.blue,
-            }}
-            onPress={() => setScanning((value) => !value)}
-            disabled={busy}
-            testID="connect-scan-toggle"
-          />
-        </SettingsSection>
-        {scanning ? (
-          <ConnectScanner active={!busy} onScanned={onScanned} />
-        ) : null}
-
-        <SettingsSection
-          title="Pairing code"
-          footnote={
-            fieldError?.field === "code" ? (
-              <Text variant="footnote" tone="destructive">
-                {fieldError.message}
-              </Text>
-            ) : undefined
-          }
-        >
-          <View className="px-1">
-            <Input
-              value={code}
-              onChangeText={(next) => {
-                setCode(next);
-                if (phase.kind === "failed") setPhase({ kind: "form" });
-              }}
-              placeholder="ABCD-EFGH"
-              autoCapitalize="characters"
-              autoCorrect={false}
-              returnKeyType="next"
-              invalid={fieldError?.field === "code"}
-              mono
-              grouped
-              editable={!busy}
-              testID="connect-code-input"
-            />
+      <View
+        className="flex-1 bg-background px-6 pt-14 pb-8 items-center justify-between"
+        testID="connect-screen"
+      >
+        <View className="items-center w-full">
+          <View className="size-16 rounded-2xl bg-surface-grouped-cell border border-border items-center justify-center mb-3 shadow-sm">
+            <Icon name="Smartphone" size={32} />
           </View>
-        </SettingsSection>
+          <Text variant="titleLarge" className="font-bold text-center">
+            Scan to Connect
+          </Text>
+          <Text variant="bodySmall" tone="muted" className="text-center mt-1.5 px-4">
+            Point camera at the QR code on your desktop screen to enter the app.
+          </Text>
+        </View>
 
-        <SettingsSection
-          title="Server (handle or URL)"
-          footnote={
-            fieldError?.field === "server" ? (
-              <Text variant="footnote" tone="destructive">
-                {fieldError.message}
+        <View className="w-full max-w-sm my-4">
+          {busy ? (
+            <View className="h-80 items-center justify-center bg-surface-grouped-cell rounded-3xl border border-border gap-3 shadow-md">
+              <Spinner size="large" />
+              <Text variant="bodyMedium" className="font-semibold">
+                Connecting to b smart…
               </Text>
-            ) : reauth ? (
-              "The server is fixed when signing in again."
-            ) : (
-              "Optional: the code already names the server. A URL also sets the bb connect address for self-hosted gates."
-            )
-          }
-        >
-          <View className="px-1">
-            <Input
-              value={server}
-              onChangeText={setServer}
-              placeholder="bee or https://bee.getbb.app"
-              keyboardType="url"
-              autoCapitalize="none"
-              autoCorrect={false}
-              returnKeyType="go"
-              onSubmitEditing={submit}
-              invalid={fieldError?.field === "server"}
-              mono
-              grouped
-              editable={!busy && reauth === null}
-              testID="connect-server-input"
-            />
-          </View>
-        </SettingsSection>
-
-        {showAdvanced ? (
-          <SettingsSection
-            title="bb connect address"
-            footnote={
-              fieldError?.field === "apexUrl" ? (
-                <Text variant="footnote" tone="destructive">
-                  {fieldError.message}
-                </Text>
-              ) : (
-                "The self-hosted bb connect gate this phone pairs through."
-              )
-            }
-          >
-            <View className="px-1">
-              <Input
-                value={apexUrl}
-                onChangeText={setApexUrl}
-                placeholder={DEFAULT_CONNECT_APEX_URL}
-                keyboardType="url"
-                autoCapitalize="none"
-                autoCorrect={false}
-                invalid={fieldError?.field === "apexUrl"}
-                mono
-                grouped
-                editable={!busy}
-                testID="connect-apex-input"
-              />
             </View>
-          </SettingsSection>
-        ) : (
-          <Button
-            variant="link"
-            size="sm"
-            className="self-start"
-            onPress={() => setShowAdvanced(true)}
-            testID="connect-advanced-toggle"
-          >
-            Self-hosted bb connect…
-          </Button>
-        )}
+          ) : (
+            <ConnectScanner active={phase.kind === "scanning"} onScanned={onScanned} />
+          )}
 
-        <View className="gap-2">
-          {phase.kind === "failed" ? (
-            <View className="gap-0.5 px-4" testID="connect-error">
-              <Text
-                variant="footnote"
-                weight="semibold"
-                tone="destructive"
-                selectable
-              >
-                {phase.failure.title}
-              </Text>
-              <Text variant="footnote" tone="destructive" selectable>
+          {phase.kind === "failed" && (
+            <View className="mt-4 p-4 rounded-2xl bg-destructive/10 border border-destructive/20 items-center gap-2">
+              <Text variant="footnote" tone="destructive" className="text-center font-medium">
                 {phase.failure.message}
               </Text>
+              <Button
+                variant="outline"
+                size="sm"
+                onPress={() => setPhase({ kind: "scanning" })}
+              >
+                Scan again
+              </Button>
             </View>
-          ) : null}
-          <Button
-            onPress={submit}
-            loading={busy}
-            disabled={code.trim().length === 0}
-            icon="ArrowRight"
-            iconPosition="right"
-            testID="connect-submit"
-          >
-            {phase.kind === "redeeming"
-              ? "Pairing…"
-              : phase.kind === "saving"
-                ? "Saving…"
-                : reauth
-                  ? "Sign in again"
-                  : "Pair"}
-          </Button>
-          {!reauth ? (
-            <Button
-              variant="ghost"
-              onPress={openDirectUrlForm}
-              disabled={busy}
-              testID="connect-use-direct"
-            >
-              Use a direct URL instead
-            </Button>
-          ) : null}
+          )}
         </View>
-      </GroupedScreen>
+
+        <View className="items-center">
+          <Text variant="caption1" tone="muted">
+            bs Companion · Instant Scan & Connect
+          </Text>
+        </View>
+      </View>
     </>
   );
-}
-
-function SessionStatusLine({ session }: { session: SessionState | null }) {
-  const { tokens } = useTheme();
-  if (session === null || session.status === "idle") {
-    return (
-      <View className="flex-row items-center gap-2 pt-1">
-        <Spinner size="small" />
-        <Text variant="caption">Activating…</Text>
-      </View>
-    );
-  }
-  switch (session.status) {
-    case "authenticating":
-      return (
-        <View className="flex-row items-center gap-2 pt-1">
-          <Spinner size="small" />
-          <Text variant="caption" testID="connect-session-authenticating">
-            Signing in…
-          </Text>
-        </View>
-      );
-    case "authenticated":
-      return (
-        <View className="flex-row items-center gap-2 pt-1">
-          <Icon
-            name="Check"
-            size={14}
-            weight="semibold"
-            color={tokens.success}
-          />
-          <Text
-            variant="caption"
-            tone="success"
-            testID="connect-session-authenticated"
-          >
-            Signed in
-          </Text>
-        </View>
-      );
-    case "auth-required":
-      return (
-        <Text
-          variant="caption"
-          tone="destructive"
-          selectable
-          testID="connect-session-auth-required"
-        >
-          bb connect could not sign this phone in. Try pairing with a new code.
-        </Text>
-      );
-    case "error":
-      return (
-        <Text
-          variant="caption"
-          tone="warning"
-          selectable
-          testID="connect-session-error"
-        >
-          Could not sign in yet ({session.detail}). Retrying…
-        </Text>
-      );
-  }
 }

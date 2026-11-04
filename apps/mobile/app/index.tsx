@@ -12,6 +12,6 @@ export default function HomeRoute() {
       </View>
     );
   }
-  if (profiles.length === 0) return <Redirect href="/settings/servers/add" />;
+  if (profiles.length === 0) return <Redirect href="/connect" />;
   return <Redirect href="/webview" />;
 }

@@ -336,8 +336,11 @@ export function ProfileWebViewScreen() {
     );
   }
 
+  if (profile === null) {
+    return <Redirect href="/connect" />;
+  }
+
   if (
-    profile === null ||
     loadScope === null ||
     sourceUrl === null ||
     handshake === null

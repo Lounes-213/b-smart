@@ -24,7 +24,8 @@ export function NavRailMobileButton({ className }: { className?: string }) {
   const { account, setMobileConnected } = useBsAccount();
 
   const isMobileConnected = Boolean(account.mobileConnected);
-  const pairingUrl = "https://b-smart-five.vercel.app";
+  const userCode = account.username ? account.username.replace(/[^A-Za-z0-9]/g, "").toUpperCase() : "CONNECT";
+  const pairingUrl = `https://b-smart-five.vercel.app/?code=BS-${userCode}&serverUrl=https://b-smart-five.vercel.app`;
 
   useEffect(() => {
     if (!open) return;

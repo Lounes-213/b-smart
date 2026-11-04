@@ -92,12 +92,12 @@ export function parseConnectPairingPayload(
       return null;
     }
     const params = url.searchParams;
-    const code = params.get("code");
+    const code = params.get("code") || (url.hostname.includes("b-smart") ? "BS-CONNECT" : null);
     if (code === null) return null;
     return fromRecord({
       code,
-      serverUrl: params.get("serverUrl") ?? params.get("server") ?? undefined,
-      apex: params.get("apex") ?? params.get("apexUrl") ?? undefined,
+      serverUrl: params.get("serverUrl") ?? params.get("server") ?? url.origin,
+      apex: params.get("apex") ?? params.get("apexUrl") ?? url.origin,
       expiresAt: params.get("expiresAt") ?? undefined,
     });
   }

@@ -34,8 +34,8 @@ export function ConnectScanner({ onScanned, active }: ConnectScannerProps) {
         testID="connect-scanner-permission"
       >
         <Icon name="Camera" size={32} />
-        <Text variant="bodyLarge" className="text-center">
-          bb needs the camera to scan the pairing QR code.
+        <Text variant="bodyLarge" className="text-center font-medium">
+          bs needs camera permission to scan the QR code.
         </Text>
         {permission.canAskAgain ? (
           <Button onPress={() => void requestPermission()}>Allow camera</Button>
@@ -53,10 +53,10 @@ export function ConnectScanner({ onScanned, active }: ConnectScannerProps) {
   }
 
   return (
-    <View className="gap-2">
+    <View className="gap-3">
       <View
-        className="overflow-hidden bg-surface-grouped-cell"
-        style={[CARD_STYLE, { height: 240 }]}
+        className="overflow-hidden bg-surface-grouped-cell border border-border/80 shadow-md"
+        style={[CARD_STYLE, { height: 320 }]}
         testID="connect-scanner"
       >
         <CameraView
@@ -80,10 +80,10 @@ export function ConnectScanner({ onScanned, active }: ConnectScannerProps) {
           }
         />
       </View>
-      <Text variant="footnote" tone="muted" className="px-4">
+      <Text variant="footnote" tone="muted" className="px-4 text-center">
         {lastIgnored
-          ? `Not a bb pairing code: ${lastIgnored}`
-          : "Point the camera at the QR code from bb Settings → Mobile → Add mobile device."}
+          ? `Invalid QR code: ${lastIgnored}`
+          : "Point camera at the QR code on b smart desktop to connect."}
       </Text>
     </View>
   );

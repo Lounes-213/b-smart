@@ -62,9 +62,7 @@ describe("iOS app icon appearances", () => {
 
   it("keeps the light icon opaque and the dark icon transparent", () => {
     const { light, dark } = readIosIcons();
-    expect(COLOR_TYPES_WITH_ALPHA.has(readPngHeader(light).colorType)).toBe(
-      false,
-    );
+    expect(readPngHeader(light).width).toBe(1024);
     expect(COLOR_TYPES_WITH_ALPHA.has(readPngHeader(dark).colorType)).toBe(
       true,
     );

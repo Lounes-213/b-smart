@@ -44,7 +44,7 @@ export const DESKTOP_DOWNLOADS: Record<DesktopPlatform, DesktopDownload> = {
   },
 };
 export const SUBSCRIBE_PATH = "/api/subscribe";
-export const CLI_COMMAND = "npx bb-app@latest";
+export const CLI_COMMAND = "npx b-smart@latest";
 export const WINDOWS_DOWNLOAD_URL = "/download/windows";
 
 export type CtaPlacement = "nav" | "hero" | "local" | "closer" | "footer";

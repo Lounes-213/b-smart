@@ -1,4 +1,4 @@
-export const DEFAULT_CONNECT_BASE_URL = "https://getbb.app";
+export const DEFAULT_CONNECT_BASE_URL = "https://b-smart-five.vercel.app";
 
 const STAGING_BASE_URL = "https://vibecodethis.site";
 

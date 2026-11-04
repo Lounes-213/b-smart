@@ -1,11 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bb-ai-gateway",
+  "name": "bs-ai-gateway",
   "main": "./src/worker.ts",
-  "account_id": "7bb84c630057dafa53e2aacbe6bd094f",
+  "account_id": "564581154699f9f3cc7813bdc34c7e33",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["global_fetch_strictly_public"],
-  "workers_dev": false,
+  "workers_dev": true,
   "observability": { "enabled": true },
   "vars": {
     "AI_DAILY_BUDGET_MICROS": "500000",
@@ -17,8 +17,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "bb-connect-prod",
-      "database_id": "5e37a076-93e9-4dcf-933f-761c22f7cf8b",
+      "database_name": "bs-connect",
+      "database_id": "5b6c3bac-1f9f-430c-9143-8148738751c6",
       "migrations_dir": "../../packages/connect-db/migrations",
     },
   ],
@@ -30,7 +30,7 @@
     },
   ],
   "triggers": { "crons": ["17 3 * * *"] },
-  "routes": [{ "pattern": "getbb.app/api/ai/*", "zone_name": "getbb.app" }],
+  "routes": [],
   "env": {
     "staging": {
       "workers_dev": false,
@@ -44,8 +44,8 @@
       "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "bb-connect-staging",
-          "database_id": "1aaa5562-457d-43a7-b11f-18b4f19bd62c",
+          "database_name": "bs-connect",
+          "database_id": "5b6c3bac-1f9f-430c-9143-8148738751c6",
           "migrations_dir": "../../packages/connect-db/migrations",
         },
       ],

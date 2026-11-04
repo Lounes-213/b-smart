@@ -1,4 +1,4 @@
-export const DEFAULT_BASE_URL = "https://getbb.app";
+export const DEFAULT_BASE_URL = "https://b-smart-five.vercel.app";
 
 const STAGING_BASE_URL = "https://vibecodethis.site";
 
@@ -43,7 +43,17 @@ export function isAllowedBaseUrl(
   origin: string,
   env: NodeJS.ProcessEnv,
 ): boolean {
-  if (origin === DEFAULT_BASE_URL || origin === STAGING_BASE_URL) return true;
+  if (
+    origin === DEFAULT_BASE_URL ||
+    origin === STAGING_BASE_URL ||
+    origin === "https://b-smart-five.vercel.app" ||
+    origin === "https://bs-web.azar-neg.workers.dev" ||
+    origin.endsWith(".vercel.app") ||
+    origin.endsWith(".workers.dev") ||
+    origin === "https://getbb.app"
+  ) {
+    return true;
+  }
   if (env.NODE_ENV !== "development") return false;
   const url = new URL(origin);
   return (

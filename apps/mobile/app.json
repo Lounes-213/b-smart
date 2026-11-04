@@ -9,7 +9,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "app.getbb.mobile",
+      "bundleIdentifier": "app.bsmart.mobile",
       "supportsTablet": true,
       "icon": {
         "light": "./assets/icon.png",
@@ -26,10 +26,10 @@
         },
         "UIBackgroundModes": ["remote-notification"]
       },
-      "associatedDomains": ["applinks:getbb.app", "applinks:*.getbb.app"]
+      "associatedDomains": ["applinks:b-smart-five.vercel.app"]
     },
     "android": {
-      "package": "app.getbb.mobile",
+      "package": "app.bsmart.mobile",
       "permissions": ["android.permission.MODIFY_AUDIO_SETTINGS"],
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF",
@@ -45,17 +45,17 @@
           "data": [
             {
               "scheme": "https",
-              "host": "*.getbb.app",
+              "host": "b-smart-five.vercel.app",
               "pathPrefix": "/threads/"
             },
             {
               "scheme": "https",
-              "host": "*.getbb.app",
+              "host": "b-smart-five.vercel.app",
               "pathPrefix": "/projects/"
             },
             {
               "scheme": "https",
-              "host": "*.getbb.app",
+              "host": "b-smart-five.vercel.app",
               "pathPrefix": "/settings/"
             }
           ],

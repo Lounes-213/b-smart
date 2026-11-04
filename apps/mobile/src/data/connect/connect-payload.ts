@@ -4,7 +4,7 @@ import {
   serverUrlForHandle,
 } from "@bb/connect-client";
 
-export const DEFAULT_CONNECT_APEX_URL = "https://getbb.app";
+export const DEFAULT_CONNECT_APEX_URL = "https://b-smart-five.vercel.app";
 
 export interface ConnectPairingInput {
   code: string;

@@ -36,8 +36,8 @@
   // zone route (backed by a proxied `*` DNS record). The apex + www are
   // custom domains on bb-web and take precedence over this route.
   "vars": {
-    "BASE_DOMAIN": "getbb.app",
-    "NEXT_BASE_DOMAIN": "next.getbb.app",
+    "BASE_DOMAIN": "b-smart-five.vercel.app",
+    "NEXT_BASE_DOMAIN": "b-smart-five.vercel.app",
     "PRESENCE_WRITES": "on-change",
     "WORKER_HELD_RESPONSES": "on",
   },
@@ -85,8 +85,8 @@
       "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "bb-connect-staging",
-          "database_id": "1aaa5562-457d-43a7-b11f-18b4f19bd62c",
+          "database_name": "bs-connect",
+          "database_id": "5b6c3bac-1f9f-430c-9143-8148738751c6",
           "migrations_dir": "../../packages/connect-db/migrations",
         },
       ],

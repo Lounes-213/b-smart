@@ -17,5 +17,5 @@ export function canonicalHref(
     return null;
   }
   const path = page.pathname === "/" ? "/" : page.pathname.replace(/\/+$/, "");
-  return `https://getbb.app${path}`;
+  return `https://b-smart-five.vercel.app${path}`;
 }

@@ -47,7 +47,7 @@ function validateLinkSearch(search: Record<string, unknown>): LinkSearch {
 
 export const Route = createFileRoute("/link")({
   head: () => ({
-    meta: [{ title: "Sign in your b smart" }],
+    meta: [{ title: "Sign in to b smart" }],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
   validateSearch: validateLinkSearch,
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/link")({
   component: LinkPage,
 });
 
-const BRAND = { title: "b smart account", tagline: "Sign in your b smart" } as const;
+const BRAND = { title: "b smart account", tagline: "Sign in to your b smart" } as const;
 
 function linkPath(code: string): string {
   return code ? `/link?code=${encodeURIComponent(code)}` : "/link";
@@ -69,7 +69,7 @@ function hostOf(url: string): string {
 function decisionErrorCopy(error: string, maxServers: number): string {
   switch (error) {
     case "expired":
-      return "This code expired. Run bb account login on your bb to get a new one.";
+      return "This code expired. Run bs account login on your b smart to get a new one.";
     case "used":
       return "This code was already used.";
     case "denied":
@@ -79,9 +79,9 @@ function decisionErrorCopy(error: string, maxServers: number): string {
     case "not-found":
       return "That server no longer exists. Pick another.";
     case "confirm-replace":
-      return "A bb is now linked to that server. Type the code to replace it.";
+      return "A b smart is now linked to that server. Type the code to replace it.";
     case "code-mismatch":
-      return "That code doesn't match this request. Type the code your bb shows.";
+      return "That code doesn't match this request. Type the code your b smart shows.";
     default:
       return claimErrorCopy(error, maxServers);
   }
@@ -98,7 +98,7 @@ function LinkPage() {
         destination={() => linkPath(code)}
         title={BRAND.title}
         tagline={BRAND.tagline}
-        description="Sign in to link your bb to your getbb.app account."
+        description="Sign in to link your b smart to your b smart account."
       />
     );
   }
@@ -112,28 +112,28 @@ function LinkView({ code, view }: { code: string; view: LinkRequestView }) {
     case "expired":
       return (
         <Notice heading="This code expired">
-          Run <code className="font-mono">bb account login</code> on your bb to
+          Run <code className="font-mono">bs account login</code> on your b smart to
           get a new one.
         </Notice>
       );
     case "used":
       return (
         <Notice heading="This code was already used">
-          Each code signs in one bb once. Run{" "}
-          <code className="font-mono">bb account login</code> again if you need
+          Each code signs in one b smart once. Run{" "}
+          <code className="font-mono">bs account login</code> again if you need
           a new one.
         </Notice>
       );
     case "denied":
       return (
         <Notice heading="Request denied">
-          Your bb was not signed in. You can close this page.
+          Your b smart was not signed in. You can close this page.
         </Notice>
       );
     case "approved":
       return (
-        <Notice heading="Your bb is signed in">
-          Return to your bb; it finishes signing in on its own. It will be
+        <Notice heading="Your b smart is signed in">
+          Return to your b smart; it finishes signing in on its own. It will be
           reachable at{" "}
           <code className="font-mono text-foreground">
             {hostOf(view.serverUrl)}
@@ -189,10 +189,10 @@ function CodeEntry({
     <Shell title={BRAND.title} tagline={BRAND.tagline}>
       <WebCard>
         <h3 className="text-base font-semibold tracking-tight">
-          Enter the code from your bb
+          Enter the code from your b smart
         </h3>
         <p className="mt-1 mb-4 text-sm text-muted-foreground">
-          Run <code className="font-mono">bb account login</code> on your bb to
+          Run <code className="font-mono">bs account login</code> on your b smart to
           get a code.
         </p>
         <form className="space-y-3" onSubmit={submit}>
@@ -246,7 +246,7 @@ function RequestHeader({
       {showCode ? (
         <>
           <p className="mt-2.5 text-sm text-muted-foreground">
-            Check that your bb shows this code:
+            Check that your b smart shows this code:
           </p>
           <p className="mt-2.5 mb-4 rounded-lg border border-dashed border-border bg-surface-recessed px-4 py-3 text-center font-mono text-2xl font-semibold tracking-widest">
             {request.userCode}
@@ -254,7 +254,7 @@ function RequestHeader({
         </>
       ) : (
         <p className="mt-2.5 mb-4 text-sm text-muted-foreground">
-          Only approve a request you started on your own bb.
+          Only approve a request you started on your own b smart.
         </p>
       )}
     </>
@@ -295,9 +295,9 @@ function ClaimHandleStep({
     <Shell title={BRAND.title} tagline={BRAND.tagline}>
       <WebCard>
         <RequestHeader request={request} showCode />
-        <h4 className="text-sm font-semibold">First, pick your address</h4>
+        <h4 className="text-sm font-semibold">Choose your workspace address</h4>
         <p className="mt-1 mb-3 text-sm text-muted-foreground">
-          Your account gets a permanent address, and your first bb lives there.
+          Your account gets a private workspace link to access your b smart agents remotely.
         </p>
         <ClaimField
           layout="card"
@@ -389,7 +389,7 @@ function ChooseServerStep({
     <Shell title={BRAND.title} tagline={BRAND.tagline}>
       <WebCard>
         <RequestHeader request={view.request} showCode={!replacing} />
-        <h4 className="text-sm font-semibold">Where should this bb live?</h4>
+        <h4 className="text-sm font-semibold">Where should this b smart live?</h4>
         <div className="mt-2 flex flex-col gap-1.5" role="radiogroup">
           {view.servers.map((server) => {
             const selected =
@@ -407,8 +407,8 @@ function ChooseServerStep({
                 }
                 detail={
                   server.connected
-                    ? "Replace the bb linked here"
-                    : "Not linked to a bb yet"
+                    ? "Replace the b smart linked here"
+                    : "Not linked to a b smart yet"
                 }
               />
             );
@@ -420,11 +420,11 @@ function ChooseServerStep({
               setError(null);
               setChoice({ kind: "new" });
             }}
-            title="New server"
+            title="New workspace"
             detail={
               atCap
-                ? `You've reached the limit of ${view.maxServers} bbs.`
-                : "Give this bb its own address"
+                ? `You've reached the limit of ${view.maxServers} devices.`
+                : "Give this b smart its own address"
             }
           />
         </div>
@@ -435,7 +435,7 @@ function ChooseServerStep({
               layout="card"
               serverUrlTemplate={view.serverUrlTemplate}
               initial={view.suggestedLabel}
-              previewLead="This bb will live at"
+              previewLead="This b smart will live at"
               buildSubmitLabel={(label) =>
                 label ? `Approve and claim ${label}` : "Approve"
               }
@@ -460,7 +460,7 @@ function ChooseServerStep({
             {selectedServer !== undefined && replacing ? (
               <>
                 <p className="rounded-lg border border-surface-destructive-border bg-surface-destructive px-3 py-2 text-xs text-destructive-text">
-                  The bb currently linked to{" "}
+                  The b smart currently linked to{" "}
                   <b className="font-semibold">
                     {hostOf(selectedServer.serverUrl)}
                   </b>{" "}
@@ -468,7 +468,7 @@ function ChooseServerStep({
                 </p>
                 <div className="mt-3 space-y-1.5">
                   <Label htmlFor="link-replace-code">
-                    Type the code your bb shows
+                    Type the code your b smart shows
                   </Label>
                   <Input
                     id="link-replace-code"

@@ -309,6 +309,13 @@ export function ProfileWebViewScreen() {
                 Try again
               </Button>
             ) : null}
+            <Button
+              testID="shell-scan-qr"
+              variant="outline"
+              onPress={() => router.push("/connect")}
+            >
+              Scan QR code
+            </Button>
             {screen.action === "re-pair" ? (
               <Button
                 testID="shell-repair"

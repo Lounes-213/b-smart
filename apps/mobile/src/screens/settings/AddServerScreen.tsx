@@ -29,7 +29,7 @@ function defaultLabel(serverUrl: string): string {
 }
 
 const URL_HELP =
-  "Use your server’s LAN or Tailscale address. Your phone must be able to reach it.";
+  "Enter your b smart cloud or server address. You can also connect with bs connect above.";
 
 export function AddServerScreen() {
   const router = useRouter();
@@ -135,7 +135,7 @@ export function AddServerScreen() {
                 if (submit.phase === "failed") setSubmit({ phase: "idle" });
               }}
               onBlur={() => setUrlTouched(true)}
-              placeholder="https://bs.example.ts.net"
+              placeholder="https://b-smart-five.vercel.app"
               keyboardType="url"
               textContentType="URL"
               autoCapitalize="none"

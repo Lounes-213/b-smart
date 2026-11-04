@@ -3,5 +3,27 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/client",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/link",
+      "destination": "https://bs-web.azar-neg.workers.dev/link"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "https://bs-web.azar-neg.workers.dev/dashboard"
+    },
+    {
+      "source": "/api/auth/:match*",
+      "destination": "https://bs-web.azar-neg.workers.dev/api/auth/:match*"
+    },
+    {
+      "source": "/api/account/:match*",
+      "destination": "https://bs-web.azar-neg.workers.dev/api/account/:match*"
+    },
+    {
+      "source": "/api/connect/:match*",
+      "destination": "https://bs-web.azar-neg.workers.dev/api/connect/:match*"
+    }
+  ]
 }

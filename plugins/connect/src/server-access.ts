@@ -22,7 +22,7 @@ export function createServerAccessCloud(
   };
 }
 
-const SIGN_IN_REQUIRED = "Sign in to your bb account to use bb connect";
+const SIGN_IN_REQUIRED = "Sign in to your b smart account to use bs connect";
 
 const grantSchema = z.object({
   connectMachineId: z.string().min(1),

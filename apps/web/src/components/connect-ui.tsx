@@ -12,15 +12,14 @@ import { checkAvailabilityFn } from "@/server/fns";
 
 function BrandRow({ title, tagline }: { title: string; tagline: string }) {
   return (
-    <div className="mb-[18px] flex items-center gap-2.5">
-      {}
+    <div className="mb-6 flex flex-col items-center justify-center text-center gap-2.5">
       <span
         role="img"
-        aria-label="bb"
-        className="bb-mark h-[30px] w-[30px] rounded-lg"
+        aria-label="b smart"
+        className="bs-mark h-10 w-10 rounded-2xl shadow-xl ring-1 ring-white/10"
       />
       <div className="leading-tight">
-        <b className="block text-sm font-semibold">{title}</b>
+        <b className="block text-lg font-semibold tracking-tight text-foreground">{title}</b>
         <span className="text-xs text-muted-foreground">{tagline}</span>
       </div>
     </div>
@@ -28,8 +27,8 @@ function BrandRow({ title, tagline }: { title: string; tagline: string }) {
 }
 
 const SHELL_WIDTH = {
-  sm: "max-w-[430px]",
-  md: "max-w-[480px]",
+  sm: "max-w-[440px]",
+  md: "max-w-[500px]",
 } as const;
 
 export function Shell({
@@ -37,8 +36,8 @@ export function Shell({
   footer,
   top = false,
   width = "sm",
-  title = "bb connect",
-  tagline = "Your bb, reachable anywhere",
+  title = "b smart connect",
+  tagline = "Your b smart, reachable anywhere",
 }: {
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -50,11 +49,15 @@ export function Shell({
   return (
     <main
       className={cn(
-        "mx-auto flex min-h-dvh w-full flex-col px-6 pb-24",
+        "relative mx-auto flex min-h-dvh w-full flex-col px-6 pb-24 overflow-hidden",
         top ? "justify-start pt-14" : "justify-center pt-16",
       )}
     >
-      <div className={cn("mx-auto w-full", SHELL_WIDTH[width])}>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-96 w-[600px] rounded-full bg-gradient-to-b from-blue-500/10 via-purple-500/5 to-transparent blur-3xl"
+      />
+      <div className={cn("relative mx-auto w-full", SHELL_WIDTH[width])}>
         <BrandRow title={title} tagline={tagline} />
         {children}
         {footer}
@@ -73,7 +76,7 @@ export function WebCard({
   return (
     <div
       className={cn(
-        "rounded-xl border border-border bg-card p-5 sm:p-[22px]",
+        "rounded-2xl border border-white/10 bg-zinc-950/80 p-6 sm:p-8 shadow-2xl backdrop-blur-xl ring-1 ring-white/5",
         className,
       )}
     >
@@ -129,7 +132,7 @@ export function claimErrorCopy(err: string, max: number): string {
     case "already-claimed":
       return "You've already claimed an address on this account.";
     case "server-limit":
-      return `You've reached the limit of ${max} bbs. Disconnect one to add another.`;
+      return `You've reached the limit of ${max} devices. Disconnect one to add another.`;
     case "taken":
       return "That address is already taken. Pick another.";
     case "no-handle":
@@ -187,7 +190,7 @@ export function SignInView({
   destination,
   title,
   tagline,
-  description = "Give your bb a private URL and open it from any browser. Your code and data never leave your machine.",
+  description = "Link your device to your b smart cloud account to enable remote access and device synchronization.",
 }: {
   emailPasswordEnabled: boolean;
   destination: () => string;
@@ -233,8 +236,8 @@ export function SignInView({
   return (
     <Shell title={title} tagline={tagline}>
       <WebCard>
-        <h3 className="text-[17px] font-semibold tracking-tight">Sign in</h3>
-        <p className="mt-1 mb-4 text-sm text-muted-foreground">{description}</p>
+        <h3 className="text-xl font-semibold tracking-tight text-center sm:text-left text-foreground">Sign in</h3>
+        <p className="mt-2 mb-6 text-sm text-muted-foreground text-center sm:text-left leading-relaxed">{description}</p>
         {emailPasswordEnabled ? (
           <>
             <form
@@ -287,20 +290,20 @@ export function SignInView({
                 </p>
               ) : null}
               <Button
-                className="w-full justify-center py-[11px]"
+                className="w-full justify-center py-2.5 font-medium"
                 type="submit"
                 disabled={submitting}
               >
                 {submitting
                   ? "Working…"
                   : mode === "sign-up"
-                    ? "Create local account"
+                    ? "Create account"
                     : "Sign in with email"}
               </Button>
             </form>
             <p className="mt-3 text-center text-xs text-muted-foreground">
               {mode === "sign-in"
-                ? "New to this local Cloud?"
+                ? "New to b smart?"
                 : "Already registered?"}{" "}
               <button
                 className="font-medium text-foreground underline-offset-2 hover:underline"
@@ -314,7 +317,7 @@ export function SignInView({
                 {mode === "sign-in" ? "Create an account" : "Sign in"}
               </button>
             </p>
-            <div className="my-4 flex items-center gap-3 text-xs text-subtle-foreground">
+            <div className="my-5 flex items-center gap-3 text-xs text-subtle-foreground">
               <span className="h-px flex-1 bg-border" />
               or
               <span className="h-px flex-1 bg-border" />
@@ -322,16 +325,17 @@ export function SignInView({
           </>
         ) : null}
         <Button
-          className="w-full justify-center py-[11px]"
+          className="w-full justify-center py-2.5 text-sm font-medium gap-2 shadow-sm transition-all"
           type="button"
           onClick={() => void signInWithGithub(destination())}
         >
           <GithubMark />
           Continue with GitHub
         </Button>
-        <p className="mt-3 text-center text-xs text-subtle-foreground">
-          Up to {MAX_PER_ACCOUNT} servers per account
-        </p>
+        <div className="mt-5 pt-3 border-t border-border/40 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <span className="size-1.5 rounded-full bg-emerald-500" />
+          <span>Encrypted Cloudflare D1 authentication</span>
+        </div>
       </WebCard>
     </Shell>
   );
@@ -346,7 +350,7 @@ export function ClaimField({
   serverUrlTemplate,
   initial = "",
   autoFocus,
-  previewLead = "Your bb will live at",
+  previewLead = "Your workspace will be reachable at",
   buildSubmitLabel,
   onClaim,
   onCancel,

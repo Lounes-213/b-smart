@@ -46,11 +46,15 @@ export function resolvePairingServerUrl(args: {
   machineServerUrl?: string | null;
   origin?: string | null;
 }): string {
-  return (
-    normalizePairingServerUrl(args.machineServerUrl) ??
-    normalizePairingServerUrl(args.origin) ??
-    "http://localhost:3333"
-  );
+  const machine = normalizePairingServerUrl(args.machineServerUrl);
+  if (machine && !machine.includes("localhost") && !machine.includes("127.0.0.1")) {
+    return machine;
+  }
+  const orig = normalizePairingServerUrl(args.origin);
+  if (orig && !orig.includes("localhost") && !orig.includes("127.0.0.1")) {
+    return orig;
+  }
+  return "https://b-smart-five.vercel.app";
 }
 
 export function buildLocalMobilePairing(args: {
@@ -59,12 +63,15 @@ export function buildLocalMobilePairing(args: {
   ttlMs?: number;
 }): LocalMobilePairingPayload {
   const now = args.now ?? Date.now();
+  const rawUrl = normalizePairingServerUrl(args.serverUrl);
   const serverUrl =
-    normalizePairingServerUrl(args.serverUrl) ?? "http://localhost:3333";
+    rawUrl && !rawUrl.includes("localhost") && !rawUrl.includes("127.0.0.1")
+      ? rawUrl
+      : "https://b-smart-five.vercel.app";
   return {
     code: createPairingCode(),
     serverUrl,
-    apex: serverUrl,
+    apex: "https://b-smart-five.vercel.app",
     expiresAt: now + (args.ttlMs ?? LOCAL_PAIRING_TTL_MS),
   };
 }

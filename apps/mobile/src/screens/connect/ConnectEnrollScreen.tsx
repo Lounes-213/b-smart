@@ -40,7 +40,13 @@ export function ConnectEnrollScreen() {
     setPhase({ kind: "connecting" });
     try {
       const targetApex = input.apexUrl || DEFAULT_CONNECT_APEX_URL;
-      const targetServer = input.serverUrl || targetApex;
+      const cleanServer =
+        input.serverUrl &&
+        !input.serverUrl.includes("localhost") &&
+        !input.serverUrl.includes("127.0.0.1")
+          ? input.serverUrl
+          : targetApex;
+      const targetServer = cleanServer || DEFAULT_CONNECT_APEX_URL;
       let profileId: string;
 
       try {
@@ -51,30 +57,46 @@ export function ConnectEnrollScreen() {
           label: reauth?.label,
         });
 
+        const safeRedeemedUrl =
+          redeemed.profile.serverUrl &&
+          !redeemed.profile.serverUrl.includes("localhost") &&
+          !redeemed.profile.serverUrl.includes("127.0.0.1")
+            ? redeemed.profile.serverUrl
+            : DEFAULT_CONNECT_APEX_URL;
+
         if (reauth) {
           const updated = await updateProfile(reauth.id, {
-            serverUrl: redeemed.profile.serverUrl,
+            serverUrl: safeRedeemedUrl,
             handle: redeemed.profile.handle,
             credential: redeemed.profile.credential,
           });
           profileId = updated.id;
         } else {
-          const added = await addProfile(redeemed.profile);
+          const added = await addProfile({
+            ...redeemed.profile,
+            serverUrl: safeRedeemedUrl,
+          });
           profileId = added.id;
         }
       } catch (error) {
         const localPairing =
           input.serverUrl !== null && input.apexUrl === input.serverUrl;
         if (!localPairing) throw error;
+        const fallbackServer =
+          targetServer &&
+          !targetServer.includes("localhost") &&
+          !targetServer.includes("127.0.0.1")
+            ? targetServer
+            : DEFAULT_CONNECT_APEX_URL;
         if (reauth) {
           const updated = await updateProfile(reauth.id, {
-            serverUrl: targetServer,
+            serverUrl: fallbackServer,
           });
           profileId = updated.id;
         } else {
           const added = await addProfile({
             mode: "direct",
-            serverUrl: targetServer,
+            serverUrl: fallbackServer,
             label: "b smart",
           });
           profileId = added.id;

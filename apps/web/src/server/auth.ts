@@ -23,7 +23,12 @@ export function createAuth(env: Env) {
     appName: "b smart",
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.APP_URL,
-    trustedOrigins: [env.APP_URL, subdomainOrigin],
+    trustedOrigins: [
+      env.APP_URL,
+      subdomainOrigin,
+      "https://b-smart-five.vercel.app",
+      "https://bs-web.azar-neg.workers.dev",
+    ],
     database: drizzleAdapter(db, {
       provider: "sqlite",
       schema: { user, session, account, verification },

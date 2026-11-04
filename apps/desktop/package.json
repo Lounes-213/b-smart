@@ -2,7 +2,7 @@
   "name": "@bb/desktop",
   "version": "0.48.1",
   "private": true,
-  "description": "macOS, Linux, and Windows Electron shell for bb",
+  "description": "macOS, Linux, and Windows Electron shell for b smart",
   "main": "dist/main.js",
   "os": [
     "darwin",

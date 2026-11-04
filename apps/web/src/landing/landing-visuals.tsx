@@ -6,6 +6,7 @@ import AttachmentIcon from "@hugeicons/core-free-icons/AttachmentIcon";
 import GitBranchIcon_ from "@hugeicons/core-free-icons/GitBranchIcon";
 import Loading03Icon from "@hugeicons/core-free-icons/Loading03Icon";
 import SidebarLeftIcon from "@hugeicons/core-free-icons/SidebarLeftIcon";
+import SmartPhone01Icon from "@hugeicons/core-free-icons/SmartPhone01Icon";
 import Tick02Icon from "@hugeicons/core-free-icons/Tick02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
@@ -56,7 +57,19 @@ export function InstallOptions({ placement }: { placement: CtaPlacement }) {
             </DownloadLink>
           </span>
           <span className="install-note install-note-touch">
-            bb runs on macOS, Windows, and Linux
+            b smart runs on macOS, Windows, Linux, and Mobile
+          </span>
+        </span>
+        <span className="install-choice">
+          <a
+            href="/download/android"
+            className="btn btn-secondary btn-install install-download flex items-center justify-center gap-2"
+          >
+            <HugeiconsIcon icon={SmartPhone01Icon} className="btn-ic" aria-hidden />
+            Mobile App (APK)
+          </a>
+          <span className="install-note">
+            Android APK · Connect anywhere
           </span>
         </span>
         <span className="install-choice">

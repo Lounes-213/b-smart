@@ -224,6 +224,12 @@ export function SiteNav({
         >
           <HugeiconsIcon icon={GithubIcon} />
         </GitHubLink>
+        <a
+          href="/download/android"
+          className="btn btn-secondary btn-sm nav-download"
+        >
+          Mobile App
+        </a>
         <DesktopDownloadButton
           placement="nav"
           platform={platform}
@@ -277,8 +283,11 @@ export function SiteFooter({ current }: { current?: string }) {
       <FooterColumn title="Product">
         <li>
           <DownloadLink placement="footer" platform={platform}>
-            Download
+            Desktop App
           </DownloadLink>
+        </li>
+        <li>
+          <a href="/download/android">Mobile App (Android APK)</a>
         </li>
         <li>
           <a href="/marketplace">Plugins</a>

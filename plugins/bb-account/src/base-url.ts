@@ -1,4 +1,4 @@
-export const DEFAULT_BASE_URL = "https://b-smart-five.vercel.app";
+export const DEFAULT_BASE_URL = "https://bs-web.azar-neg.workers.dev";
 
 const STAGING_BASE_URL = "https://vibecodethis.site";
 

@@ -75,6 +75,9 @@ export function downloadHref(
   platform: DesktopPlatform,
   placement: CtaPlacement,
 ): string {
+  if (platform === "windows") {
+    return "https://github.com/Lounes-213/b-smart/releases/download/v0.48.1/b-smart-0.48.1-x64.exe";
+  }
   return `${DESKTOP_DOWNLOADS[platform].redirectPath}?placement=${placement}`;
 }
 

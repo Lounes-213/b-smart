@@ -1715,7 +1715,7 @@ function blockedPluginReason(
 ): string {
   const version = item.version;
   return item.reasons.length === 0
-    ? `${version} isn’t compatible with this bb`
+    ? `${version} isn’t compatible with this server`
     : `${version}: ${item.reasons.join("; ")}`;
 }
 

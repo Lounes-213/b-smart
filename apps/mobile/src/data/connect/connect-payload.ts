@@ -92,7 +92,9 @@ export function parseConnectPairingPayload(
       return null;
     }
     const params = url.searchParams;
-    const code = params.get("code") || (url.hostname.includes("b-smart") ? "BS-CONNECT" : null);
+    const code =
+      params.get("code") ||
+      (url.hostname.includes("b-smart") ? "BS-CONNECT" : null);
     if (code === null) return null;
     return fromRecord({
       code,
@@ -145,7 +147,7 @@ export function resolveEnrollmentTarget(
       return {
         ok: false,
         field: "apexUrl",
-        message: "The bb connect address must be an http(s) URL.",
+        message: "The bs connect address must be an http(s) URL.",
       };
     }
   }

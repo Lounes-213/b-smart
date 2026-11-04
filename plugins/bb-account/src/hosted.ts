@@ -177,7 +177,13 @@ function endpoint(origin: string, path: string): URL {
 }
 
 function isBSmartRemote(baseUrl: string): boolean {
-  return baseUrl.includes("b-smart") || baseUrl.includes("vercel.app");
+  return (
+    baseUrl.includes("b-smart") ||
+    baseUrl.includes("vercel.app") ||
+    baseUrl.includes("workers.dev") ||
+    baseUrl.includes("bs-web") ||
+    baseUrl.includes("azar-neg")
+  );
 }
 
 export async function fetchProfile(
@@ -227,14 +233,14 @@ export async function fetchProfile(
       };
     }
     throw new HostedRequestError(
-      `getbb.app returned HTTP ${response.status} for the account profile`,
+      `b smart cloud returned HTTP ${response.status} for the account profile`,
       response.status,
     );
   }
   const parsed = profileResponseSchema.safeParse(body);
   if (!parsed.success) {
     throw new HostedRequestError(
-      "getbb.app returned an account profile bb doesn't understand",
+      "b smart cloud returned an account profile bs doesn't understand",
       response.status,
     );
   }
@@ -249,12 +255,18 @@ export async function startLink(
   try {
     response = await send(endpoint(baseUrl, "/api/account/link/start"), {
       method: "POST",
-      headers: { accept: "application/json", "content-type": "application/json" },
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ clientName }),
     });
   } catch (error) {
     if (isBSmartRemote(baseUrl)) {
-      const randomHex = Math.random().toString(36).substring(2, 10).toUpperCase();
+      const randomHex = Math.random()
+        .toString(36)
+        .substring(2, 10)
+        .toUpperCase();
       const deviceCode = `bbdev_${randomHex}`;
       const userCode = `BS-${randomHex.substring(0, 4)}`;
       return {
@@ -270,7 +282,10 @@ export async function startLink(
   const body = await readJson(response);
   if (!response.ok) {
     if (isBSmartRemote(baseUrl)) {
-      const randomHex = Math.random().toString(36).substring(2, 10).toUpperCase();
+      const randomHex = Math.random()
+        .toString(36)
+        .substring(2, 10)
+        .toUpperCase();
       const deviceCode = `bbdev_${randomHex}`;
       const userCode = `BS-${randomHex.substring(0, 4)}`;
       return {
@@ -282,20 +297,20 @@ export async function startLink(
       };
     }
     throw new HostedRequestError(
-      `getbb.app returned HTTP ${response.status} when starting sign-in`,
+      `b smart cloud returned HTTP ${response.status} when starting sign-in`,
       response.status,
     );
   }
   const parsed = linkStartResponseSchema.safeParse(body);
   if (!parsed.success) {
     throw new HostedRequestError(
-      "getbb.app returned a sign-in link bb doesn't understand",
+      "b smart cloud returned a sign-in link bs doesn't understand",
       response.status,
     );
   }
   if (new URL(parsed.data.verificationUrl).origin !== new URL(baseUrl).origin) {
     throw new HostedRequestError(
-      "getbb.app returned a sign-in link for a different site",
+      "b smart cloud returned a sign-in link for a different site",
       response.status,
     );
   }
@@ -310,7 +325,10 @@ export async function pollLink(
   try {
     response = await send(endpoint(baseUrl, "/api/account/link/poll"), {
       method: "POST",
-      headers: { accept: "application/json", "content-type": "application/json" },
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ deviceCode }),
     });
   } catch (error) {
@@ -358,14 +376,14 @@ export async function pollLink(
       };
     }
     throw new HostedRequestError(
-      `getbb.app returned HTTP ${response.status} while waiting for approval`,
+      `b smart cloud returned HTTP ${response.status} while waiting for approval`,
       response.status,
     );
   }
   const parsed = linkPollResponseSchema.safeParse(body);
   if (!parsed.success) {
     throw new HostedRequestError(
-      "getbb.app returned a sign-in status bb doesn't understand",
+      "b smart cloud returned a sign-in status bs doesn't understand",
       response.status,
     );
   }
@@ -424,7 +442,7 @@ export async function redeemCode(
   if (!parsed.success) {
     throw new RedeemError(
       "network",
-      "getbb.app returned a pairing response bb doesn't understand",
+      "b smart cloud returned a pairing response bs doesn't understand",
     );
   }
   return {
@@ -449,7 +467,7 @@ export async function disconnectServer(
       return;
     }
     throw new HostedRequestError(
-      `getbb.app returned HTTP ${response.status}`,
+      `b smart cloud returned HTTP ${response.status}`,
       response.status,
     );
   }

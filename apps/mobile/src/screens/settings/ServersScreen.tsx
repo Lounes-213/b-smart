@@ -170,12 +170,12 @@ export function ServersScreen() {
                 value={
                   IS_IOS
                     ? profile.mode === "connect"
-                      ? "bb connect"
+                      ? "bs connect"
                       : "Direct"
                     : undefined
                 }
                 selected={profile.id === activeProfile?.id}
-                accessibilityLabel={`${profile.label}, ${profile.mode === "connect" ? "bb connect" : "Direct"}, ${profile.serverUrl}`}
+                accessibilityLabel={`${profile.label}, ${profile.mode === "connect" ? "bs connect" : "Direct"}, ${profile.serverUrl}`}
                 trailing={
                   IS_IOS ? (
                     profile.id === activeProfile?.id ? (

@@ -183,7 +183,7 @@ export function PluginDetailReleaseStatus({
       <div className="min-w-0">
         <p className="text-xs leading-relaxed text-muted-foreground">
           {blockedReasons[0] === undefined
-            ? `${blockedVersion} isn’t compatible with this bb.`
+            ? `${blockedVersion} isn’t compatible with this server.`
             : sentence(blockedReasons[0])}{" "}
           {plugin.version} remains installed. Keep using it and check again when
           a compatible plugin version is available.

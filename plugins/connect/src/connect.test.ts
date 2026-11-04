@@ -1469,7 +1469,7 @@ describe("connect plugin", () => {
       lastRemoteActivityAt: null,
       shares: [],
     });
-    expect(initial.dashboardUrl).toBe("https://getbb.app/dashboard");
+    expect(initial.dashboardUrl).toBe(`${DEFAULT_CONNECT_BASE_URL}/dashboard`);
     expect(initial.nextRetryAt).toBeNull();
     expect(harness.needsConfigurationMessages).toEqual([]);
   });

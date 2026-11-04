@@ -241,7 +241,7 @@ describe("syncPushRegistration", () => {
         registration: null,
         lastOutcome: null,
       }),
-    ).toBe("Push needs HTTPS or bb connect");
+    ).toBe("Push needs HTTPS or bs connect");
   });
 
   it("removes an existing registration after a profile changes to plain HTTP", async () => {

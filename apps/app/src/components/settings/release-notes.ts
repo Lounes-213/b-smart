@@ -5,7 +5,7 @@ import {
   type SourceUpdateNotes,
 } from "./release-notes-model";
 
-const RELEASE_NOTES_BASE_URL = "https://getbb.app/changelog";
+const RELEASE_NOTES_BASE_URL = "https://b-smart-five.vercel.app/changelog";
 const SOURCE_REPOSITORY_URL = "https://github.com/Lounes-213/b-smart";
 
 export type ReleaseNotesView = "inline" | "web";

@@ -21,7 +21,8 @@ type Phase =
 export function ConnectEnrollScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ profileId?: string }>();
-  const { profiles, addProfile, updateProfile, setActiveProfile } = useProfiles();
+  const { profiles, addProfile, updateProfile, setActiveProfile } =
+    useProfiles();
   const [phase, setPhase] = useState<Phase>({ kind: "scanning" });
 
   const reauthProfile =
@@ -61,7 +62,10 @@ export function ConnectEnrollScreen() {
           const added = await addProfile(redeemed.profile);
           profileId = added.id;
         }
-      } catch {
+      } catch (error) {
+        const localPairing =
+          input.serverUrl !== null && input.apexUrl === input.serverUrl;
+        if (!localPairing) throw error;
         if (reauth) {
           const updated = await updateProfile(reauth.id, {
             serverUrl: targetServer,
@@ -101,10 +105,14 @@ export function ConnectEnrollScreen() {
           <View className="size-16 rounded-2xl bg-surface-grouped-cell border border-border items-center justify-center mb-3 shadow-sm">
             <Icon name="Smartphone" size={32} />
           </View>
-          <Text variant="titleLarge" className="font-bold text-center">
+          <Text variant="headline" className="font-bold text-center">
             Scan to Connect
           </Text>
-          <Text variant="bodySmall" tone="muted" className="text-center mt-1.5 px-4">
+          <Text
+            variant="caption"
+            tone="muted"
+            className="text-center mt-1.5 px-4"
+          >
             Point camera at the QR code on your desktop screen to enter the app.
           </Text>
         </View>
@@ -113,17 +121,24 @@ export function ConnectEnrollScreen() {
           {busy ? (
             <View className="h-80 items-center justify-center bg-surface-grouped-cell rounded-3xl border border-border gap-3 shadow-md">
               <Spinner size="large" />
-              <Text variant="bodyMedium" className="font-semibold">
+              <Text variant="body" className="font-semibold">
                 Connecting to b smart…
               </Text>
             </View>
           ) : (
-            <ConnectScanner active={phase.kind === "scanning"} onScanned={onScanned} />
+            <ConnectScanner
+              active={phase.kind === "scanning"}
+              onScanned={onScanned}
+            />
           )}
 
           {phase.kind === "failed" && (
             <View className="mt-4 p-4 rounded-2xl bg-destructive/10 border border-destructive/20 items-center gap-2">
-              <Text variant="footnote" tone="destructive" className="text-center font-medium">
+              <Text
+                variant="footnote"
+                tone="destructive"
+                className="text-center font-medium"
+              >
                 {phase.failure.message}
               </Text>
               <Button
@@ -138,7 +153,7 @@ export function ConnectEnrollScreen() {
         </View>
 
         <View className="items-center">
-          <Text variant="caption1" tone="muted">
+          <Text variant="caption" tone="muted">
             bs Companion · Instant Scan & Connect
           </Text>
         </View>

@@ -191,10 +191,10 @@ function SignOutDialog({
         {open ? (
           <>
             <DialogHeader>
-              <DialogTitle>Sign out of your bb account?</DialogTitle>
+              <DialogTitle>Sign out of your bs account?</DialogTitle>
               <DialogDescription>
-                b smart forgets this bs. Remote access and hosted services
-                stop until you sign in again.
+                b smart forgets this bs. Remote access and hosted services stop
+                until you sign in again.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -332,8 +332,8 @@ function ProfilePendingContent({
     <div className="space-y-4">
       <p className="flex items-center gap-2 text-sm text-muted-foreground">
         <Icon name="Spinner" className="size-4 animate-spin" />
-        This bb is paired with getbb.app, but hasn't loaded your account yet. It
-        keeps retrying.
+        This server is paired with b smart cloud, but hasn't loaded your account
+        yet. It keeps retrying.
       </p>
       <div className="-mx-4 flex flex-wrap items-center gap-3 border-t border-border-seam px-4 pt-3">
         <span className="min-w-0 text-xs text-muted-foreground">
@@ -350,7 +350,7 @@ function signOutNotice(result: SignOutResult): ReactNode {
   if (result.revocation !== "failed") return null;
   return (
     <p className="text-xs text-destructive-text">
-      Signed out here, but getbb.app didn't confirm it revoked this server (
+      Signed out here, but b smart cloud didn't confirm it revoked this server (
       {result.message}). Remove it from{" "}
       <UrlLink href={result.dashboardUrl} target="_blank" rel="noreferrer">
         your dashboard
@@ -449,14 +449,15 @@ function DirectGithubForm({
       let name = clean;
       let avatarUrl = `https://github.com/${clean}.png`;
       try {
-        const res = await fetch(`https://api.github.com/users/${encodeURIComponent(clean)}`);
+        const res = await fetch(
+          `https://api.github.com/users/${encodeURIComponent(clean)}`,
+        );
         if (res.ok) {
           const gh = await res.json();
           name = gh.name || gh.login || clean;
           avatarUrl = gh.avatar_url || avatarUrl;
         }
-      } catch {
-      }
+      } catch {}
       const status = await rpc.call("directGithubLogin", {
         githubLogin: clean,
         name,
@@ -473,7 +474,10 @@ function DirectGithubForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-3 pt-2">
       <div className="space-y-1 text-left">
-        <label htmlFor="direct-github-account-input" className="text-xs font-medium text-foreground">
+        <label
+          htmlFor="direct-github-account-input"
+          className="text-xs font-medium text-foreground"
+        >
           GitHub Username
         </label>
         <div className="relative">
@@ -497,8 +501,14 @@ function DirectGithubForm({
         disabled={loading || !username.trim()}
         className="w-full gap-2 text-xs h-9"
       >
-        {loading ? <Icon name="Spinner" className="size-4 animate-spin" /> : <Icon name="Github" className="size-4" />}
-        <span>{loading ? "Connecting to b smart…" : "Connect with GitHub directly"}</span>
+        {loading ? (
+          <Icon name="Spinner" className="size-4 animate-spin" />
+        ) : (
+          <Icon name="Github" className="size-4" />
+        )}
+        <span>
+          {loading ? "Connecting to b smart…" : "Connect with GitHub directly"}
+        </span>
       </Button>
     </form>
   );
@@ -528,7 +538,8 @@ function SignInDialogBody({
           <p>{startError}</p>
         </div>
         <p className="text-xs text-muted-foreground">
-          In b smart, your workspace connection is linked to your GitHub account. You can connect directly below:
+          In b smart, your workspace connection is linked to your GitHub
+          account. You can connect directly below:
         </p>
         <DirectGithubForm rpc={rpc} onDone={onLogin} />
         <div className="pt-2 border-t border-border flex justify-end">
@@ -561,7 +572,7 @@ function SignInDialogBody({
   }
   return (
     <SignInPanel
-      status="Waiting for you to approve this bb. You can approve from any device."
+      status="Waiting for you to approve this server. You can approve from any device."
       instruction={
         <>
           Finish signing in on{" "}
@@ -653,7 +664,8 @@ function SignInDialog({
             <DialogHeader>
               <DialogTitle>Sign in to your b smart account</DialogTitle>
               <DialogDescription>
-                Approve this bs on b-smart-five.vercel.app. You sign in with GitHub there.
+                Approve this bs on b-smart-five.vercel.app. You sign in with
+                GitHub there.
               </DialogDescription>
             </DialogHeader>
             <SignInDialogBody
@@ -701,8 +713,8 @@ function SignedOutContent({
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         Sign in to link this bs to your b smart account. Remote access and
-        hosted services such as title and commit message generation use it.
-        In b smart, connection is powered by your GitHub profile.
+        hosted services such as title and commit message generation use it. In b
+        smart, connection is powered by your GitHub profile.
       </p>
       <div className="flex flex-wrap items-center gap-2">
         <Button type="button" onClick={() => setDialogOpen(true)}>
@@ -767,7 +779,7 @@ function AccountSettingsSection() {
   if (loadError !== null && state === null) {
     return (
       <p className="text-sm text-destructive-text">
-        Failed to load your bb account: {loadError}
+        Failed to load your bs account: {loadError}
       </p>
     );
   }
@@ -805,7 +817,7 @@ function AccountSettingsSection() {
 export default definePluginApp((app) => {
   app.slots.settingsSection({
     id: "account",
-    description: "The getbb.app account this bb is signed in to.",
+    description: "The b smart account this server is signed in to.",
     component: AccountSettingsSection,
   });
 });

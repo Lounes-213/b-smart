@@ -8,7 +8,7 @@ import {
   marketplaceResponseStatus,
 } from "./marketplace/marketplace-response-status.js";
 
-const fetch = createStartHandler(async (context) => {
+const handler = createStartHandler(async (context) => {
   const pathname = new URL(context.request.url).pathname;
   const status = marketplaceResponseStatus(
     pathname,
@@ -33,4 +33,11 @@ const fetch = createStartHandler(async (context) => {
     : updatedResponse;
 });
 
-export default { fetch };
+export default {
+  fetch(request: Request, env: unknown, ctx: unknown) {
+    if (typeof globalThis !== "undefined" && env) {
+      (globalThis as unknown as Record<string, unknown>).__CF_ENV__ = env;
+    }
+    return handler(request);
+  },
+};

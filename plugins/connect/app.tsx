@@ -103,29 +103,29 @@ const PAIR_ERROR_COPY: Record<ConnectPairErrorCode, PairErrorCopy> = {
     tail: " — each code works once.",
   },
   network: {
-    lead: "Couldn't reach getbb.app.",
+    lead: "Couldn't reach b smart cloud.",
     linkLabel: "Open the dashboard",
     tail: " — check your connection, then try again.",
   },
   unauthorized: {
-    lead: "getbb.app rejected the new pairing.",
+    lead: "b smart cloud rejected the new pairing.",
     linkLabel: "Get a new code",
     tail: " and try again.",
   },
   profile_unavailable: {
-    lead: "This bb saved the pairing, but getbb.app hasn't returned your account yet.",
+    lead: "This server saved the pairing, but b smart cloud hasn't returned your account yet.",
     linkLabel: "Open the dashboard",
-    tail: " — bb keeps retrying, and remote access starts once it does.",
+    tail: " — it keeps retrying, and remote access starts once it does.",
   },
   superseded: {
     lead: "Another sign-in or a sign-out replaced this one.",
     linkLabel: "Open the dashboard",
-    tail: " — check which account this bb uses under bb account.",
+    tail: " — check which account this server uses under bs account.",
   },
   account_unavailable: {
-    lead: "The bb account plugin is off.",
+    lead: "The bs account plugin is off.",
     linkLabel: "Open the dashboard",
-    tail: " — turn bb account on under Plugins, then try again.",
+    tail: " — turn bs account on under Plugins, then try again.",
   },
 };
 
@@ -219,7 +219,7 @@ function asStatus(payload: unknown): ConnectStatus | null {
     dashboardUrl:
       typeof record.dashboardUrl === "string"
         ? record.dashboardUrl
-        : "https://getbb.app/dashboard",
+        : "https://b-smart-five.vercel.app/dashboard",
     lastError: typeof record.lastError === "string" ? record.lastError : null,
     nextRetryAt:
       typeof record.nextRetryAt === "number" ? record.nextRetryAt : null,
@@ -541,15 +541,15 @@ function PairForm({
 
 function signInStartErrorText(error: unknown): string {
   if (isUnavailableError(error)) {
-    return "The bb account plugin is off. Turn it on under Plugins, then try again.";
+    return "The bs account plugin is off. Turn it on under Plugins, then try again.";
   }
   switch (accountErrorCode(error)) {
     case "rate_limited":
       return "Too many sign-in attempts from this network. Wait a minute, then try again.";
     case "unavailable":
-      return "getbb.app couldn't start sign-in right now. Try again in a minute.";
+      return "b smart cloud couldn't start sign-in right now. Try again in a minute.";
     default:
-      return "Couldn't reach getbb.app to start sign-in. Check your connection, then try again.";
+      return "Couldn't reach b smart cloud to start sign-in. Check your connection, then try again.";
   }
 }
 
@@ -601,15 +601,15 @@ function MobilePairingCard({
         >
           <QrCodeImage
             value={qrText}
-            alt="QR code to pair the bb mobile app"
+            alt="QR code to pair the bs mobile app"
             className="size-40"
           />
         </div>
         <div className="min-w-0 flex-1 space-y-2">
           <p className="text-sm">
             {expired
-              ? "Generate a new code, then scan it or enter it in the bb mobile app."
-              : "Scan this with the bb mobile app, or enter the code by hand."}
+              ? "Generate a new code, then scan it or enter it in the bs mobile app."
+              : "Scan this with the bs mobile app, or enter the code by hand."}
           </p>
           <div className="flex max-w-xs items-center gap-1 rounded-lg border border-border bg-surface-recessed py-1 pl-3.5 pr-1">
             <span
@@ -757,7 +757,7 @@ function AddMobileDeviceSection({ dashboardUrl }: { dashboardUrl: string }) {
               in the dashboard, then try again.
             </>
           ) : errorCode === "not_paired" ? (
-            "This bb is signed out. Open Manage to sign in, then try again."
+            "This server is signed out. Open Manage to sign in, then try again."
           ) : (
             "Couldn't reach the Connect service to create a code — check your connection, then try again."
           )}
@@ -1081,7 +1081,7 @@ function TurnOffDialog({
             <p className="text-sm text-muted-foreground">
               <span className="font-medium text-foreground">{host}</span> will
               stop working on all devices until you turn remote access back on.
-              This bb stays signed in to your bb account.
+              This server stays signed in to your bs account.
             </p>
             <DialogFooter>
               <Button
@@ -1168,7 +1168,7 @@ function AccountSignInCard({ onSignedIn }: { onSignedIn: () => void }) {
           {starting ? (
             <Icon name="Spinner" className="size-4 animate-spin" />
           ) : null}
-          Sign in to your bb account
+          Sign in to your bs account
         </Button>
         {error !== null ? (
           <p className="text-xs text-destructive-text">{error}</p>
@@ -1238,7 +1238,7 @@ function NotPairedContent({
   return (
     <div className="@container/connect-controls space-y-4">
       <p className="text-sm text-muted-foreground">
-        Remote access uses your bb account. Once you sign in, this bb gets a
+        Remote access uses your bs account. Once you sign in, this server gets a
         private URL like{" "}
         <span className="rounded bg-surface-recessed px-1.5 py-0.5 font-mono text-xs text-foreground">
           you.{dashboardHost}
@@ -1263,8 +1263,8 @@ function NotPairedContent({
       ) : null}
 
       <p className="text-xs text-subtle-foreground">
-        Only your {dashboardHost} account can open this bb. Manage the account
-        under Plugins → bb account.
+        Only your {dashboardHost} account can open this server. Manage the
+        account under Plugins → bs account.
       </p>
     </div>
   );
@@ -1303,7 +1303,7 @@ function TurnOffControls({
     );
   }, [rpc, onChanged, onTurnedOff]);
 
-  const host = status.url !== null ? hostOf(status.url) : "this bb";
+  const host = status.url !== null ? hostOf(status.url) : "this server";
 
   return (
     <>
@@ -1363,7 +1363,7 @@ function ConnectedContent({
 
       <TurnOffControls
         status={status}
-        note="Turning off keeps this bb signed in to your bb account."
+        note="Turning off keeps this server signed in to your bs account."
         onChanged={onChanged}
         onTurnedOff={onTurnedOff}
       />
@@ -1401,7 +1401,7 @@ function ReconnectingContent({
 
       <div className="space-y-2 pointer-events-none opacity-60 saturate-[0.85]">
         <p className="text-sm text-muted-foreground">
-          Your bb will be reachable again at:
+          Your server will be reachable again at:
         </p>
         {status.url !== null ? (
           <UrlHero url={status.url} showOpen={false} />
@@ -1412,7 +1412,7 @@ function ReconnectingContent({
 
       <TurnOffControls
         status={status}
-        note="Remote devices can't reach this bb right now. Local access is unaffected."
+        note="Remote devices can't reach this server right now. Local access is unaffected."
         onChanged={onChanged}
         onTurnedOff={onTurnedOff}
       />
@@ -1460,7 +1460,7 @@ function OffContent({
         </Button>
       </div>
       <p className="text-sm text-muted-foreground">
-        This bb stays signed in to your bb account. Turn remote access on to
+        This server stays signed in to your bs account. Turn remote access on to
         reach it again
         {status.url !== null ? ` at ${hostOf(status.url)}` : ""}.
       </p>
@@ -1627,7 +1627,7 @@ const MOBILE_APP_INSTALL_OPTIONS: readonly {
 ];
 
 const SETUP_GUIDE_DESCRIPTION =
-  "A private web address for your bb server, like me.getbb.app, to use bb from any browser or your phone. Your projects and files stay on your machines.";
+  "A private web address for your bs server, like me.b-smart.app, to use bs from any browser or your phone. Your projects and files stay on your machines.";
 
 const PAIRING_CODE_RENEW_BEFORE_MS = 15_000;
 const PAIRING_CODE_RETRY_MS = 15_000;
@@ -1706,7 +1706,7 @@ function AppInstallQr({ platform }: { platform: MobilePlatform }) {
     <div className="flex items-center gap-3">
       <QrCodeImage
         value={install.url}
-        alt={`QR code to install bb on ${install.label}`}
+        alt={`QR code to install bs on ${install.label}`}
         className="size-16 shrink-0 p-1"
       />
       <div className="flex flex-col items-start gap-2">
@@ -1734,9 +1734,9 @@ function machineCodeErrorText(
     case "machine_limit":
       return `Your ${dashboardHost} account has reached its device limit. Revoke a device you no longer use in the dashboard to pair this phone.`;
     case "not_paired":
-      return "This bb is signed out of your bb account, so it can't pair a phone.";
+      return "This server is signed out of your bs account, so it can't pair a phone.";
     case "network":
-      return "Couldn't reach getbb.app for a pairing code. bb keeps trying.";
+      return "Couldn't reach b smart cloud for a pairing code. The server keeps trying.";
   }
 }
 
@@ -1852,7 +1852,7 @@ function PairingCode({
     <div className="flex items-stretch gap-3">
       <QrCodeImage
         value={encodeMobilePairingPayload(pairing.payload)}
-        alt="QR code to pair the bb mobile app"
+        alt="QR code to pair the bs mobile app"
         className="size-16 shrink-0 p-1"
       />
       <CodeDisplay
@@ -1887,7 +1887,7 @@ function PhonePairingSteps({
           <AppInstallToggles
             label={
               <span className="text-foreground">
-                Install the bb app on your phone:
+                Install the bs app on your phone:
               </span>
             }
             openPlatform={openPlatform}
@@ -1900,7 +1900,7 @@ function PhonePairingSteps({
         </>
       ) : (
         <>
-          <p className="text-foreground">Open the bb app and scan this code:</p>
+          <p className="text-foreground">Open the bs app and scan this code:</p>
           <div className="w-full">
             <PairingCode pairing={pairing} dashboardHost={dashboardHost} />
           </div>
@@ -1927,7 +1927,7 @@ function ConnectOnSetupRow({
   return (
     <SetupOptionRow
       icon="ComputerCloud"
-      title="bb connect"
+      title="bs connect"
       footer={
         showsSteps ? (
           <PhonePairingSteps
@@ -1948,7 +1948,7 @@ function ConnectOnSetupRow({
             />
           </span>
           <p className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1 text-foreground @max-xl/onboarding:flex-col @max-xl/onboarding:items-start">
-            <span>bb connect is on</span>
+            <span>bs connect is on</span>
             {url === null ? null : (
               <>
                 <span
@@ -2023,7 +2023,7 @@ function setupGuideLoginPanel(
         variant={{
           kind: "code",
           code: login.userCode,
-          label: "bb connect sign-in code",
+          label: "bs connect sign-in code",
           onCopyCode: (code) => void copyTextWithSdkToast(code),
         }}
       />
@@ -2042,7 +2042,7 @@ function setupGuideLoginContent(login: AccountLogin["login"]): ReactNode {
           aria-hidden
           className="size-3.5 shrink-0 animate-spin text-subtle-foreground"
         />
-        Signed in. Turning on bb connect…
+        Signed in. Turning on bs connect…
       </p>
     );
   }
@@ -2127,7 +2127,7 @@ function ConnectSetupGuideSection({
   return (
     <SetupOptionRow
       icon="ComputerCloud"
-      title="bb connect"
+      title="bs connect"
       description={SETUP_GUIDE_DESCRIPTION}
       panel={
         connecting
@@ -2161,8 +2161,8 @@ function ConnectSetupGuideSection({
                 className="size-3.5 shrink-0 animate-spin text-subtle-foreground"
               />
               {connectingState === "reconnecting"
-                ? "bb connect is reconnecting…"
-                : "bb connect is starting…"}
+                ? "bs connect is reconnecting…"
+                : "bs connect is starting…"}
             </p>
           ) : turnOnError !== null ? null : (
             setupGuideLoginContent(login)
@@ -2173,7 +2173,7 @@ function ConnectSetupGuideSection({
           ) : null}
           {loadError !== null ? (
             <SetupGuideError>
-              Couldn't load bb connect: {loadError}
+              Couldn't load bs connect: {loadError}
             </SetupGuideError>
           ) : null}
         </>
@@ -2186,7 +2186,7 @@ export default definePluginApp((app) => {
   app.slots.settingsSection({
     id: "remote-access",
     description:
-      "Use this bb from any device, anywhere — powered by getbb.app.",
+      "Use this server from any device, anywhere — powered by b smart.",
     component: ConnectSettingsSection,
   });
   app.slots.settingsSection({

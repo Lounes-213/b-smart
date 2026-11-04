@@ -1246,8 +1246,8 @@ export function DevicesStep({
         title="Open bb from any browser"
         description={
           connect.status === "unavailable"
-            ? "bb connect is turned off on this server. Enable its plugin to get a private getbb.app address."
-            : "bb connect gives this bb a private getbb.app address that only you can open."
+            ? "bs connect is turned off on this server. Enable its plugin to get a private bs address."
+            : "bs connect gives this server a private address that only you can open."
         }
         action={
           connect.status === "on" ? (
@@ -1488,8 +1488,8 @@ export function ConnectUnavailableRow() {
   return (
     <SetupOptionRow
       icon="ComputerCloud"
-      title="bb connect"
-      description="bb connect is turned off on this server. Turn on its plugin to get a private getbb.app address."
+      title="bs connect"
+      description="bs connect is turned off on this server. Turn on its plugin to get a private address."
     />
   );
 }

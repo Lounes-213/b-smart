@@ -2,6 +2,7 @@
 import { act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { loadPluginApp, renderSlot } from "@get-bb/plugin-sdk/testing/app";
+import { mobileAppDownloads } from "@bb/domain";
 import { CONNECT_REALTIME_CHANNEL, type ConnectStatus } from "@/src/types";
 
 const app = await loadPluginApp(() => import("./app"));
@@ -125,9 +126,11 @@ describe("connect settings section", () => {
       },
     );
 
-    await slot.findByRole("button", { name: "Sign in to your bb account" });
+    await slot.findByRole("button", { name: /Sign in to your b[bs] account/ });
     slot.getByText("you.bb.localhost:42745");
-    slot.getByText(/Only your bb\.localhost:42745 account can open this bb/);
+    slot.getByText(
+      /Only your bb\.localhost:42745 account can open this (bb|server)/,
+    );
   });
 
   it("signs in through bb account, shows the code, and waits for approval", async () => {
@@ -154,7 +157,7 @@ describe("connect settings section", () => {
     );
 
     const signIn = await slot.findByRole("button", {
-      name: "Sign in to your bb account",
+      name: /Sign in to your b[bs] account/,
     });
     vi.useFakeTimers();
     await act(async () => fireEvent.click(signIn));
@@ -207,7 +210,7 @@ describe("connect settings section", () => {
       },
     );
     const signIn = await slot.findByRole("button", {
-      name: "Sign in to your bb account",
+      name: /Sign in to your b[bs] account/,
     });
     vi.useFakeTimers();
     await act(async () => fireEvent.click(signIn));
@@ -236,9 +239,11 @@ describe("connect settings section", () => {
       { sdk: account.sdk, rpc: { status: () => status() } },
     );
     fireEvent.click(
-      await slot.findByRole("button", { name: "Sign in to your bb account" }),
+      await slot.findByRole("button", {
+        name: /Sign in to your b[bs] account/,
+      }),
     );
-    await slot.findByText(/The bb account plugin is off/);
+    await slot.findByText(/The b[bs] account plugin is off/);
   });
 
   it("auto-submits a normalized 4-4 pairing code through bb account and applies live paired status", async () => {
@@ -638,7 +643,7 @@ describe("connect settings section", () => {
     slot.getByRole("button", { name: "Copy pairing code" });
     slot.getByText(/Code expires in 9:5\d/);
     const qr = (await slot.findByRole("img", {
-      name: "QR code to pair the bb mobile app",
+      name: /QR code to pair the b[bs] mobile app/,
     })) as HTMLImageElement;
     expect(qr.src.startsWith("data:image/png")).toBe(true);
   });
@@ -738,7 +743,7 @@ describe("connect settings section", () => {
     fireEvent.click(slot.getByRole("button", { name: "Turn off" }));
 
     await slot.findByText("Turn off remote access?");
-    await slot.findByText(/stays signed in to your bb account/);
+    await slot.findByText(/stays signed in to your b[bs] account/);
     fireEvent.click(slot.getAllByRole("button", { name: "Turn off" }).at(-1)!);
 
     await waitFor(() =>
@@ -868,8 +873,8 @@ describe("connect setup guide section", () => {
     );
 
     await slot.findByRole("button", { name: "Set up" });
-    slot.getByText(/A private web address for your bb server/);
-    expect(slot.queryByText("Install the bb app on your phone:")).toBeNull();
+    slot.getByText(/A private web address for your b[bs] server/);
+    expect(slot.queryByText(/Install the b[bs] app on your phone:/)).toBeNull();
     expect(slot.queryByRole("button", { name: "iPhone" })).toBeNull();
     expect(slot.rpcCalls.map((call) => call.method)).not.toContain(
       "createMachineCode",
@@ -956,7 +961,7 @@ describe("connect setup guide section", () => {
     await act(async () => fireEvent.click(setUp));
     await act(async () => vi.advanceTimersByTimeAsync(2_000));
     await act(async () => vi.advanceTimersByTimeAsync(100));
-    expect(slot.getByText("bb connect is on")).toBeTruthy();
+    expect(slot.getByText(/b[bs] connect is on/)).toBeTruthy();
     expect(
       slot.rpcCalls.filter((call) => call.method === "setRemoteAccess"),
     ).toHaveLength(1);
@@ -1031,7 +1036,7 @@ describe("connect setup guide section", () => {
     );
     await act(async () => {});
     fireEvent.click(setUp);
-    await slot.findByText("bb connect is on");
+    await slot.findByText(/b[bs] connect is on/);
     slot.getByText("https://workstation.getbb.app");
   });
 
@@ -1057,8 +1062,10 @@ describe("connect setup guide section", () => {
       },
     );
 
-    await slot.findByText("Install the bb app on your phone:");
-    expect(slot.queryByText("Open the bb app and scan this code:")).toBeNull();
+    await slot.findByText(/Install the b[bs] app on your phone:/);
+    expect(
+      slot.queryByText(/Open the b[bs] app and scan this code:/),
+    ).toBeNull();
     expect(slot.queryByRole("img")).toBeNull();
     expect(slot.queryByRole("button", { name: "Set up" })).toBeNull();
     expect(slot.rpcCalls.map((call) => call.method)).not.toContain(
@@ -1066,9 +1073,11 @@ describe("connect setup guide section", () => {
     );
     await openPairingStep(slot);
     await slot.findByText("PAIR-CODE");
-    slot.getByText("Open the bb app and scan this code:");
-    expect(slot.queryByText("Install the bb app on your phone:")).toBeNull();
-    await slot.findByRole("img", { name: "QR code to pair the bb mobile app" });
+    slot.getByText(/Open the b[bs] app and scan this code:/);
+    expect(slot.queryByText(/Install the b[bs] app on your phone:/)).toBeNull();
+    await slot.findByRole("img", {
+      name: /QR code to pair the b[bs] mobile app/,
+    });
 
     await act(async () => vi.advanceTimersByTimeAsync(3_000));
     expect(slot.rpcCalls).toContainEqual({
@@ -1081,8 +1090,10 @@ describe("connect setup guide section", () => {
     await act(async () => vi.advanceTimersByTimeAsync(3_000));
     expect(slot.getByText("Phone paired")).toBeTruthy();
     expect(slot.queryByText("PAIR-CODE")).toBeNull();
-    expect(slot.queryByText("Install the bb app on your phone:")).toBeNull();
-    expect(slot.queryByText("Open the bb app and scan this code:")).toBeNull();
+    expect(slot.queryByText(/Install the b[bs] app on your phone:/)).toBeNull();
+    expect(
+      slot.queryByText(/Open the b[bs] app and scan this code:/),
+    ).toBeNull();
   });
 
   it("re-mints the pairing code before it expires", async () => {
@@ -1160,27 +1171,33 @@ describe("connect setup guide section", () => {
     );
 
     fireEvent.click(await slot.findByRole("button", { name: "Android" }));
-    await slot.findByRole("img", { name: "QR code to install bb on Android" });
+    await slot.findByRole("img", {
+      name: /QR code to install b[bs] on Android/,
+    });
     slot.getByText("Scan with your phone's camera.");
     fireEvent.click(slot.getByRole("button", { name: "iPhone" }));
-    await slot.findByRole("img", { name: "QR code to install bb on iPhone" });
+    await slot.findByRole("img", {
+      name: /QR code to install b[bs] on iPhone/,
+    });
     expect(slot.getAllByRole("img")).toHaveLength(1);
     fireEvent.click(slot.getByRole("button", { name: "Copy install link" }));
     await waitFor(() =>
       expect(slot.experimental_clipboardWrites).toContainEqual({
-        text: "https://testflight.apple.com/join/T9MayTMb",
+        text: mobileAppDownloads.ios,
       }),
     );
 
     await openPairingStep(slot);
-    await slot.findByRole("img", { name: "QR code to pair the bb mobile app" });
+    await slot.findByRole("img", {
+      name: /QR code to pair the b[bs] mobile app/,
+    });
     expect(slot.getAllByRole("img")).toHaveLength(1);
     slot.getByText("PAIR-CODE");
 
     fireEvent.click(
       slot.getByRole("button", { name: "Don't have the app yet?" }),
     );
-    slot.getByText("Install the bb app on your phone:");
+    slot.getByText(/Install the b[bs] app on your phone:/);
     expect(slot.queryByText("PAIR-CODE")).toBeNull();
     expect(slot.queryByRole("img")).toBeNull();
   });
@@ -1211,8 +1228,8 @@ describe("connect setup guide section", () => {
       { rpc: { status: () => connected() } },
     );
 
-    await slot.findByText("bb connect is on");
-    expect(slot.queryByText("Install the bb app on your phone:")).toBeNull();
+    await slot.findByText(/b[bs] connect is on/);
+    expect(slot.queryByText(/Install the b[bs] app on your phone:/)).toBeNull();
     expect(slot.rpcCalls.map((call) => call.method)).not.toContain(
       "createMachineCode",
     );

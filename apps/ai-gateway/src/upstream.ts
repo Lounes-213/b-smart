@@ -70,8 +70,8 @@ function upstreamHeaders(apiKey: string): Record<string, string> {
   return {
     authorization: `Bearer ${apiKey}`,
     "content-type": "application/json",
-    "HTTP-Referer": "https://getbb.app",
-    "X-Title": "bb",
+    "HTTP-Referer": "https://b-smart-five.vercel.app",
+    "X-Title": "b smart",
   };
 }
 

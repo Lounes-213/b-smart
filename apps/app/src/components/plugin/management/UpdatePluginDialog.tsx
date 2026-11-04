@@ -218,7 +218,7 @@ function UpdatePluginDialogContent({
               className="size-4 shrink-0 text-warning"
               aria-hidden
             />
-            <span>{blocked} isn&rsquo;t compatible with this bb</span>
+            <span>{blocked} isn&rsquo;t compatible with this server</span>
           </div>
           <DetailsDisclosure summary="Details" defaultExpanded>
             <div className="space-y-1.5">

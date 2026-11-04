@@ -91,7 +91,7 @@ function pluginMarketplaceUrl({
   if (marketplace !== CURATED_PLUGIN_MARKETPLACE_NAME || entryId === null) {
     return null;
   }
-  return `https://getbb.app/marketplace/${encodeURIComponent(entryId)}`;
+  return `https://b-smart-five.vercel.app/marketplace/${encodeURIComponent(entryId)}`;
 }
 
 function copyMarketplaceLinkItems(

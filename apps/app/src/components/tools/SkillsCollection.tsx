@@ -238,7 +238,7 @@ const SKILLS_BROWSE_DESCRIPTION = (
   </>
 );
 const SKILLS_LIBRARY_DESCRIPTION =
-  "The skills on this bb host — yours, your providers', and those bundled with plugins. They work with every agent you use in bb.";
+  "The skills on this bs host — yours, your providers', and those bundled with plugins. They work with every agent you use in bs.";
 
 const PREFETCH_HOVER_INTENT_MS = 150;
 

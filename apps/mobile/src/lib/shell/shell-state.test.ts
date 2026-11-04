@@ -78,7 +78,7 @@ describe("resolveShellScreenState", () => {
       kind: "error",
       title: "Could not sign in",
       detail:
-        "bb connect could not renew this phone’s sign-in. Pair again to reconnect.",
+        "bs connect could not renew this phone’s sign-in. Pair again to reconnect.",
       action: "re-pair",
     });
   });

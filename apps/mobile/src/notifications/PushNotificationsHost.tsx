@@ -66,7 +66,7 @@ export function PushNotificationsHost() {
       });
       if (!profile) {
         if (target.threadId === null) {
-          toast.error("Could not open bb", {
+          toast.error("Could not open bs", {
             description: "None of your saved servers sent this notification.",
           });
         } else {
@@ -212,7 +212,7 @@ function FirstRunPrompt({
       controller={sheet}
       title="Get notified when a thread needs you?"
       cancelLabel={process.env.EXPO_OS === "ios" ? "Cancel" : null}
-      message="bb can send a push notification when a thread finishes, hits an error, or is waiting for your input. You can change this per server in Settings."
+      message="bs can send a push notification when a thread finishes, hits an error, or is waiting for your input. You can change this per server in Settings."
       actions={[
         {
           key: "enable",

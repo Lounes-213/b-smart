@@ -1302,6 +1302,20 @@ async function readConnectAccountCookie(
   return cookie === undefined ? null : { name, value: cookie.value };
 }
 
+function normalizeHttpBaseUrl(raw: string | null | undefined): string | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  if (trimmed.length === 0) return null;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:")
+      return null;
+    return parsed.origin;
+  } catch {
+    return null;
+  }
+}
+
 function resolveConnectAccountUrl(): string {
   const target = serverTargetStore?.getTarget();
   const serverUrl =
@@ -1311,22 +1325,35 @@ function resolveConnectAccountUrl(): string {
         cachedConnectCredential?.serverUrl ??
         null);
   if (serverUrl !== null) {
-    return deriveConnectBaseUrl(serverUrl);
+    try {
+      const normalized = normalizeHttpBaseUrl(deriveConnectBaseUrl(serverUrl));
+      if (normalized !== null) return normalized;
+      desktopLogger.warn(
+        `[desktop] ignoring unusable bb Connect server URL: ${serverUrl}`,
+      );
+    } catch (error) {
+      desktopLogger.warn(
+        `[desktop] could not derive bb Connect URL from ${serverUrl}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
   }
   try {
-    return resolveDefaultConnectBaseUrl(process.env);
+    const normalized = normalizeHttpBaseUrl(
+      resolveDefaultConnectBaseUrl(process.env),
+    );
+    if (normalized !== null) return normalized;
   } catch (error) {
     desktopLogger.warn(
       `[desktop] using ${DEFAULT_CONNECT_BASE_URL} for bb Connect: ${error instanceof Error ? error.message : String(error)}`,
     );
-    return DEFAULT_CONNECT_BASE_URL;
   }
+  return DEFAULT_CONNECT_BASE_URL;
 }
 
 async function readConnectAccountSession(): Promise<ConnectAccountSession | null> {
-  const serverUrls = listMenuConnectServers().map(
-    (server) => new URL(server.url).origin,
-  );
+  const serverUrls = listMenuConnectServers()
+    .map((server) => normalizeHttpBaseUrl(server.url))
+    .filter((url): url is string => url !== null);
   if (serverUrls.length === 0) {
     serverUrls.push(
       serverUrlForHandle(
@@ -1336,9 +1363,13 @@ async function readConnectAccountSession(): Promise<ConnectAccountSession | null
     );
   }
   for (const serverUrl of serverUrls) {
-    const cookie = await readConnectAccountCookie(
-      deriveConnectBaseUrl(serverUrl),
-    );
+    let accountUrl: string;
+    try {
+      accountUrl = deriveConnectBaseUrl(serverUrl);
+    } catch {
+      continue;
+    }
+    const cookie = await readConnectAccountCookie(accountUrl);
     if (cookie !== null) {
       return { serverUrl, cookie };
     }
@@ -1723,12 +1754,23 @@ function openConnectSignIn(parentWindow: BrowserWindow | null): void {
   }
   const target = serverTargetStore?.getTarget();
   const targetUrl = target?.kind === "connect" ? target.server.url : null;
-  const accountUrl = resolveConnectAccountUrl();
-  const accountHost = new URL(accountUrl).hostname;
-  const cookieName = connectAccountCookieName(accountUrl);
-  const signInUrl = new URL("/dashboard", accountUrl);
-  if (targetUrl !== null) {
-    signInUrl.searchParams.set("returnTo", targetUrl);
+  let accountUrl: string;
+  let accountHost: string;
+  let cookieName: string;
+  let signInUrl: URL;
+  try {
+    accountUrl = resolveConnectAccountUrl();
+    accountHost = new URL(accountUrl).hostname;
+    cookieName = connectAccountCookieName(accountUrl);
+    signInUrl = new URL("/dashboard", accountUrl);
+    if (targetUrl !== null) {
+      signInUrl.searchParams.set("returnTo", targetUrl);
+    }
+  } catch (error) {
+    desktopLogger.warn(
+      `[desktop] could not build bb Connect sign-in URL: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    return;
   }
   const signInWindow = new BrowserWindow({
     height: 720,

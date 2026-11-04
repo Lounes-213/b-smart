@@ -1,5 +1,5 @@
 export const mobileAppDownloads = {
-  ios: "https://testflight.apple.com/join/T9MayTMb",
+  ios: "https://github.com/Lounes-213/b-smart/releases/latest",
   android:
-    "https://github.com/get-bb/bb/releases/download/android-testing/bb-android.apk",
+    "https://github.com/Lounes-213/b-smart/releases/latest/download/bs-mobile.apk",
 };

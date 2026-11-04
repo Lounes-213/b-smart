@@ -89,7 +89,7 @@ describe("bb account settings section", () => {
     slot.getByText(/sawyer-desktop\.getbb\.app/);
 
     fireEvent.click(slot.getByRole("button", { name: "Sign out" }));
-    await slot.findByText("Sign out of your bb account?");
+    await slot.findByText(/Sign out of your b[bs] account\?/);
     const confirm = slot.getAllByRole("button", { name: "Sign out" }).at(-1)!;
     fireEvent.click(confirm);
 
@@ -124,7 +124,7 @@ describe("bb account settings section", () => {
     );
 
     fireEvent.click(await slot.findByRole("button", { name: "Sign out" }));
-    await slot.findByText("Sign out of your bb account?");
+    await slot.findByText(/Sign out of your b[bs] account\?/);
     fireEvent.click(slot.getAllByRole("button", { name: "Sign out" }).at(-1)!);
 
     await slot.findByText(/didn't confirm it revoked this server/);
@@ -188,7 +188,7 @@ describe("bb account settings section", () => {
       name: "getbb.app",
     }) as HTMLAnchorElement;
     expect(link.href).toBe("https://getbb.app/link?code=K7QP-2M4X");
-    slot.getByText(/Waiting for you to approve this bb/);
+    slot.getByText(/Waiting for you to approve this/);
 
     await slot.emitRealtime(ACCOUNT_REALTIME_CHANNEL, {
       status: signedIn,

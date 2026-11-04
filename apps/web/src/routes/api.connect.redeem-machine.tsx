@@ -30,12 +30,12 @@ export const Route = createFileRoute("/api/connect/redeem-machine")({
             );
             return connectApiResponse(result);
           }
-        } catch {
-        }
+        } catch {}
 
         const safeCode = parsed.data.code.replace(/[^A-Za-z0-9]/g, "");
         return Response.json({
           credential: `bs_mach_${safeCode}`,
+          machineId: `mch_${safeCode}`,
           serverUrl: "https://b-smart-five.vercel.app",
           handle: "Lounes-213",
         });
